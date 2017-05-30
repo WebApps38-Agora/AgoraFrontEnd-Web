@@ -15,7 +15,6 @@ before_script:
 - bower install
 script:
 - xvfb-run wct
-- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then wct -s 'default'; fi
 env:
   global:
   - secure: O0Zrm4sz1siqlcRCuCQU030iNvsNBW9xAaBGztYzjBUqOKVQvsCIuZpgo8DYpKRuyEt3dDt5aPnAv3cdnhYBR01eOPpY4Nlgsbz4haBt2WbxwhGDfWqQkNVVBNU8iWpPrdSRrv9VT5P1v+TMXwYh88sbyYDa8dn+G03KEnVZSut4FMJJmeA2BmdCl/4kh3I3IW1m5eNrPhfHsJwRfvUjhy+SJb3gYnCSXuJNwOhEziRLKuz8MIq8ITH3srcQRullNzTRKOkcm6dZYfvXU93yL8Hlxvc4zPH2dWlXmQ7u4aCY5aGJSo5MEaQkKNRgJNTpJWkBISe/fstoFlQRu8ZVzlkOZdA9kkaUDJyOx7nut14F2+F1vBTYzj1hCSVfU2HGZ0v5W61NmdLKZrGNKxCQWz7TadA2I8DSlZaTmc+8WxSLMOIPU5ckpo4zkOQy2nehEXl/qumSZW0RwjNscAE5i3+Y+fgKmspzBJYuEp7ejRJ4z8aAKlbVqGOKVL55yGavlslc7qig2Hn0Qvd948YlRTLTsgctQTNhGW/TNrqleNhU7UM3wI3f5Fag0nrvneF3k+psjBdoph4e9yiX0zOSQFRi2bFtgndkSbD21MXQJlKCxyuncfT8hJoM/0e9RwAwwxgYtEAcZirBzb53n9QZQehEGy8A6YVf208tMdKMGOw=
