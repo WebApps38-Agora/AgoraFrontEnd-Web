@@ -10,7 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 
-<dom-module id="page404">
+<dom-module id="page-404">
   <template>
     <style>
       :host {
@@ -24,8 +24,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
-    class MyView404 extends Polymer.Element {
-      static get is() { return 'page404'; }
+    class Page404 extends Polymer.Element {
+      static get is() { return 'page-404'; }
       static get properties() {
         return {
           // This shouldn't be neccessary, but the Analyzer isn't picking up
@@ -35,6 +35,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     }
 
-    window.customElements.define(MyView404.is, MyView404);
+    window.customElements.define(Page404.is, Page404);
   </script>
 </dom-module>

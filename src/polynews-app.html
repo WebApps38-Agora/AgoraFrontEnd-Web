@@ -23,15 +23,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="my-icons.html">
 
 <link rel="lazy-import" href="topic-index.html">
-
 <link rel="lazy-import" href="page404.html">
 
-<dom-module id="polynews">
+<dom-module id="polynews-app">
   <template>
     <style>
       :host {
-        --app-primary-color: #4285f4;
-        --app-secondary-color: black;
+        --app-primary-color: #ADBFCE;
+        --app-white-color: #F4FAFF;
+        --app-black-color: #525456;
+        --app-light-color: #DEE3E8;
+        --app-dark-color: #4F6170;
 
         display: block;
       }
@@ -100,19 +102,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <iron-pages
             selected="[[page]]"
             attr-for-selected="name"
-            fallback-selection="page404"
+            fallback-selection="page-404"
             role="main">
           <topic-index name="topic-index"></topic-index>
-          <page404 name="page404"></page404>
+          <page-404 name="page-404"></page-404>
         </iron-pages>
       <!-- </app-header-layout> -->
     <!-- </app-drawer-layout> -->
   </template>
 
   <script>
-    class Polynews extends Polymer.Element {
+    class PolynewsApp extends Polymer.Element {
 
-      static get is() { return 'polynews'; }
+      static get is() { return 'polynews-app'; }
 
       static get properties() {
         return {
@@ -170,10 +172,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       _showPage404() {
-        this.page = 'page404';
+        this.page = 'page-404';
       }
     }
 
-    window.customElements.define(Polynews.is, Polynews);
+    window.customElements.define(PolynewsApp.is, PolynewsApp);
   </script>
 </dom-module>

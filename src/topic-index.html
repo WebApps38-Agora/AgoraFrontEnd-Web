@@ -1,6 +1,9 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/app-layout/app-grid/app-grid-style.html">
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="topic-index">
@@ -10,7 +13,7 @@
         display: block;
         --app-grid-columns: 3;
         --app-grid-gutter: 1rem;
-        --app-grid-expandible-item-columns: 3;
+        --app-grid-expandible-item-columns: 2;
         --paper-icon-button-ink-color: white;
       }
 
@@ -39,15 +42,22 @@
       }
 
       /* Every other row should be an expendanded item */
-      .item:nth-child(4n + 1) {
-        height: 40vmax;
+      .item:nth-child(5n + 1) {
         @apply --app-grid-expandible-item;
+      }
+
+      .item:nth-child(5n + 1), .item:nth-child(5n + 2) {
+        height: 40vmax;
       }
 
       @media(max-width: 799px) {
 
         .centered-container {
           margin: 10px 5px;
+        }
+
+        .item:nth-child(5n+2) {
+          height: inherit;
         }
 
         :host {
@@ -65,6 +75,14 @@
     </style>
 
     <div class="centered">
+      <!-- TODO: change below to topics.isEmpty()  -->
+      <template is="dom-if" if="{{!topics.length}}">
+        <div class="missing">
+          <iron-icon class="big-icon" icon="inbox"></iron-icon>
+          <h1>Bad News!</h1>
+          <p>It seems that we are out of news topics. Come back later for more!</p>
+        </div>
+      </template>
       <ul class="app-grid" id="topics">
         <template is="dom-repeat" items="{{topics}}" as="topic">
           <li class="item" style$="background-image: url('{{topic.image}}');">
@@ -86,8 +104,8 @@
             type: Array,
             value() {
               return [
-                {title: 'Title 1', image:'../images/test images/big_test.jpg'},
-                {title: 'Title 2', image:'../images/test images/med_test.jpg'}
+                {title: 'Title 1', image:'../images/test_images/big_test.jpg'},
+                {title: 'Title 2', image:'../images/test_images/med_test.jpg'}
               ];
             }
           }
