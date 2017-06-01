@@ -76,13 +76,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <link rel="import" href="src/polynews-app.html">
 
     <!-- Add any global styles for body, document, etc. -->
-    <style>
+    <style include="polynews-app">
+      html {
+        background-color: #4F6170;
+      }
       body {
         margin: 0;
         font-family: 'Raleway',  sans-serif;
         line-height: 1.5;
-        min-height: 100vh;
-        background-color: #eeeeee;
       }
 
       body:before {

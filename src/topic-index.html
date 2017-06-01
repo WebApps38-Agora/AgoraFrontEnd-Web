@@ -16,6 +16,7 @@
         --app-grid-gutter: 1rem;
         --app-grid-expandible-item-columns: 2;
         --paper-icon-button-ink-color: white;
+        background: var(--app-white-color);
       }
 
       ul {
@@ -27,9 +28,6 @@
         height: 250px;
         position: relative;
         box-shadow: none;
-        /*background-color: white;
-        background-size: cover;
-        background-position: center center;*/
       }
 
       .item-bg {
@@ -103,7 +101,9 @@
 
     </style>
 
-    <div class="centered">
+    <polynews-nav withSidebar="false"></polynews-nav>
+
+    <div class="main centered">
       <template is="dom-if" if="{{!topics.length}}">
         <div class="missing">
           <iron-icon class="big-icon" icon="inbox"></iron-icon>
@@ -114,7 +114,8 @@
       <ul class="app-grid" id="topics">
         <template is="dom-repeat" items="{{topics}}" as="topic">
           <li class="item">
-            <iron-image class="item-bg"
+            <iron-image preload
+                        class="item-bg"
                         sizing="cover"
                         src="{{topic.image}}"></iron-image>
             <div class="item-title">{{topic.title}}</div>
@@ -141,10 +142,6 @@
                 {title: 'Title 1', image:'../images/test_images/big_test.jpg'},
                 {title: 'Title 1', image:'../images/test_images/big_test.jpg'},
                 {title: 'Title 1', image:'../images/test_images/big_test.jpg'},
-                {title: 'Title 2', image:'../images/test_images/sml_test.jpg'},
-                {title: 'Title 3', image:'../images/test_images/big_test.jpg'},
-                {title: 'Title 2', image:'../images/test_images/sml_test.jpg'},
-                {title: 'Title 3', image:'../images/test_images/big_test.jpg'},
                 {title: 'Title 2', image:'../images/test_images/sml_test.jpg'},
                 {title: 'Title 3', image:'../images/test_images/big_test.jpg'},
                 {title: 'Title 4', image:'../images/test_images/med_test.jpg'}

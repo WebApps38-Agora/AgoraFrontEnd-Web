@@ -4,30 +4,80 @@
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
-
-<link rel="import" href="my-icons.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="my-icons.html">
+
+<link rel="lazy-import" href="reaction-bar.html">
 
 <dom-module id="article-list">
   <template>
-    <style>
-        :host {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
+    <style include="shared-styles iron-flex">
+      :host {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
 
-        iron-list {
-          @apply --layout-flex;
-        }
+      .pad {
+        padding: 1rem;
+      }
+
+      iron-list {
+        height: calc(100vh - var(--app-nav-size));
+      }
+
+      .article {
+        height: calc((100vh - var(--app-nav-size))/5);
+        background: white;
+        width: 100%;
+        border-left: 1px var(--app-dark-color) solid;
+        border-top: 1px var(--app-dark-color) solid;
+      }
+
+      .article:first-of-type {
+        border-top: none;
+      }
+
+      a:hover, a:visited, a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      p {
+        margin-top: 0.3rem;
+        margin-left: 0.5rem;
+        font-size: 0.8rem;
+      }
+
+      h3 {
+        line-height: 1.5rem;
+      }
+
     </style>
 
-  <iron-list items="[[articles]]" as="item">
+  <iron-list id="headline-list" items="[[articles]]" as="item">
     <template>
-      <div class="article">
-        <div class="headline">
-          {{item.headline}}
-        </div>
+      <div class="article layout vertical">
+        <a class="hvr-underline-from-left flex" href="{{item.url}}" target="_blank">
+          <div class="pad">
+            <div class="layout horizontal">
+              <!-- <iron-image preload
+                          src="#"
+                          sizing="contain"
+                          style="width:40px;height:40px;background-color:grey;
+                                 margin-right: 0.5rem;"></iron-image> -->
+                <h3 class="headline flex">
+                  {{item.headline}}
+                </h3>
+            </div>
+              <p class="source">
+                from {{_computeSource(item.source)}}
+              </p>
+            </div>
+          </div>
+        </a>
       </div>
     </template>
   </iron-list>
@@ -40,8 +90,13 @@
 
       static get properties() {
         return {
-          articles: Array
+          articles: Array,
+          selectedArticle: Object
         };
+      }
+
+      _computeSource(url) {
+        return url;
       }
     }
 

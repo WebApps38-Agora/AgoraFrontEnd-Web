@@ -4,7 +4,7 @@ import sys
 name = sys.argv[1]
 print()
 if (name):
-    with open("../src/{}.html".format(name), "w") as f:
+    with open("src/{}.html".format(name), "w") as f:
 
         s = ("""<link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
