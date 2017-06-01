@@ -1,0 +1,91 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="test_ajax-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>[[prop1]]!</h2>
+    <template is="dom-repeat" items="[[repos.items]]">
+      <div> [[item.snippet.title]] </div>
+      <!-- <div> [[item.snippet.description]] </div> -- -->
+    </template>
+
+    <template is="dom-repeat" items="[[headlines]]">
+      <div> [[item.first]] </div>
+    </template>
+
+    <template is="dom-repeat" items="[[repos2.items]]">
+      <div> [[item.snippet.title]] </div>
+      <!-- <div> [[item.snippet.description]] </div> -->
+    </template>
+
+
+    <iron-ajax
+      auto
+      url="https://www.googleapis.com/youtube/v3/search"
+      params='{"part":"snippet", "q":"melee", "key":
+      "AIzaSyCOA_LympCG7Ehhuz1ro2Qkx4t4BxJ3W5M", "type": "video", "maxResults":"5"}'
+      handle-as="json"
+      on-response="handleResponse"
+      debounce-duration="300">
+    </iron-ajax>
+
+    <iron-ajax
+      id="dick"
+      url="https://www.googleapis.com/youtube/v3/search"
+      params=""
+      handle-as="json"
+      on-response="handleResponse2"
+      debounce-duration="300">
+    </iron-ajax>
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class Test_ajaxApp extends Polymer.Element {
+      static get is() { return 'test_ajax-app'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'da shiz-whiz'
+          }
+        };
+      }
+      constructor() {
+        super();
+
+        this.headlines = [
+          {first: 'Guardian', id: 'view5'}
+        ]; 
+        this.repos = {items: [{snippet: {title:"loading......"}}]};
+      }
+
+      handleResponse(data) {
+        this.repos = data.detail.response;
+        <!-- console.log(this.repos); -->
+        console.log(this.repos.nextPageToken);
+        this.$.dick.params = {"part":"snippet", "pageToken": this.repos.nextPageToken, "q":"melee", "key": "AIzaSyCOA_LympCG7Ehhuz1ro2Qkx4t4BxJ3W5M", "type": "video", "maxResults":"5"}
+        console.log(this.$.dick.params);
+        this.$.dick.generateRequest();
+      }
+    
+      handleResponse2(data) {
+        this.repos2 = data.detail.response;
+        console.log(this.repos.nextPageToken);
+      }
+
+    }
+
+    window.customElements.define(Test_ajaxApp.is, Test_ajaxApp);
+  </script>
+</dom-module>

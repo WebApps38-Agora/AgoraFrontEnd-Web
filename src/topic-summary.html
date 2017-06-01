@@ -1,0 +1,118 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+
+<link rel="import" href="ajax_test.html">
+<link rel="import" href="my-icons.html">
+
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<dom-module id="topic-summary">
+  <template>
+    <style include="iron-flex iron-flex-alignment">
+      :host {
+        display: block;
+        --app-drawer-width: 320px;
+      }
+
+    .container {
+      @apply(--layout-horizontal);
+    }
+      body {
+        margin: 0;
+        font-family: 'Roboto', 'Noto', sans-serif;
+        background-color: #eee;
+      }
+
+      app-toolbar {
+        background-color: #4285f4;
+        color: #fff;
+      }
+
+      app-drawer {
+        --app-drawer-content-container: {
+          background-color: #B0BEC5;
+        }
+      }
+
+      paper-icon-item {
+        display: block;
+      }
+
+      .drawer-contents {
+        height: 100%;
+        overflow-y: auto;
+      }
+
+    </style>
+
+    <body>
+    <app-header slot="header" condenses reveals effects="waterfall">
+      <app-toolbar>
+        <div main-title>Polynews</div>
+        <paper-icon-button icon="my-icons:menu" onclick="drawer.toggle()"></paper-icon-button>
+      </app-toolbar>
+    </app-header>
+
+    <!-- Main content -->
+    <!-- app-header-layout has-scrolling-region -->
+    <div class="container">
+      <div>One</div>
+      <div class="flex">Two</div>
+      <div>Three</div>
+    </div>
+
+    <!-- If no summary so far display message -->
+    <template is="dom-if" if="True">
+      <h1>Be the first!</h1>
+      <p>Do you have a point to make on this topic?</p>
+    </template>
+
+    <test_ajax-app></test_ajax-app>
+
+      <!-- Drawer content -->
+      <app-drawer id="drawer" slot="drawer" align="right" swipe-open>
+        <div class="drawer-contents">
+          <paper-icon-item>
+           <paper-icon-button icon="my-icons:menu" onclick="drawer.toggle()"></paper-icon-button>
+          </paper-icon-item>
+
+          <paper-icon-item class="horizontal layout end">
+            <iron-icon icon="my-icons:chevron-right" item-icon slot="item-icon"></iron-icon>
+            <span>inbox</span>
+          </paper-icon-item>
+        </div>
+      </app-drawer>
+    </body>
+
+
+  </template>
+
+  <script type="text/javascript">
+    class TopicSummary extends Polymer.Element {
+      static get is() { return 'topic-summary'; }
+
+      static get properties() {
+        return {
+          topics: {
+            type: String,
+            value: "topic"
+          }
+        }
+      }
+    }
+
+    window.customElements.define(TopicSummary.is, TopicSummary);
+  </script>
+</dom-module>
