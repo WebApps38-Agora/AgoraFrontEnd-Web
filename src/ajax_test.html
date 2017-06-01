@@ -9,38 +9,30 @@
         display: block;
       }
     </style>
-    <h2>[[prop1]]!</h2>
-    <template is="dom-repeat" items="[[repos.items]]">
-      <div> [[item.snippet.title]] </div>
-      <!-- <div> [[item.snippet.description]] </div> -- -->
+    <template is="dom-repeat" items="[[repos]]">
+      <h1> [[index]] </h1>
+      <div> Headline: [[item.headline]] </div>
+      <div> description: [[item.description]] </div>
+      <div> source: [[item.source]] </div>
+      <div> url: [[item.url]] </div>
     </template>
 
-    <template is="dom-repeat" items="[[headlines]]">
-      <div> [[item.first]] </div>
-    </template>
-
-    <template is="dom-repeat" items="[[repos2.items]]">
-      <div> [[item.snippet.title]] </div>
-      <!-- <div> [[item.snippet.description]] </div> -->
-    </template>
-
+    <!-- <iron-ajax -->
+    <!--   auto -->
+    <!--   url="https://www.googleapis.com/youtube/v3/search" -->
+    <!--   params='{"part":"snippet", "q":"melee", "key": -->
+    <!--   "AIzaSyCOA_LympCG7Ehhuz1ro2Qkx4t4BxJ3W5M", "type": "video", "maxResults":"5"}' -->
+    <!--   handle-as="json" -->
+    <!--   on-response="handleResponse" -->
+    <!--   debounce-duration="300"> -->
+    <!-- </iron-ajax> -->
 
     <iron-ajax
       auto
-      url="https://www.googleapis.com/youtube/v3/search"
-      params='{"part":"snippet", "q":"melee", "key":
-      "AIzaSyCOA_LympCG7Ehhuz1ro2Qkx4t4BxJ3W5M", "type": "video", "maxResults":"5"}'
+      id="request"
+      url="http://127.0.0.1:8000/articles"
       handle-as="json"
       on-response="handleResponse"
-      debounce-duration="300">
-    </iron-ajax>
-
-    <iron-ajax
-      id="dick"
-      url="https://www.googleapis.com/youtube/v3/search"
-      params=""
-      handle-as="json"
-      on-response="handleResponse2"
       debounce-duration="300">
     </iron-ajax>
 
@@ -72,17 +64,24 @@
 
       handleResponse(data) {
         this.repos = data.detail.response;
-        <!-- console.log(this.repos); -->
-        console.log(this.repos.nextPageToken);
-        this.$.dick.params = {"part":"snippet", "pageToken": this.repos.nextPageToken, "q":"melee", "key": "AIzaSyCOA_LympCG7Ehhuz1ro2Qkx4t4BxJ3W5M", "type": "video", "maxResults":"5"}
-        console.log(this.$.dick.params);
-        this.$.dick.generateRequest();
+        console.log(this.repos);
+        //this.$.request.url = "http://127.0.0.1:8000/topics"
+        //this.$.request.on-response = "handleTopic"
+        //this.$.request.generateRequest();
       }
+
+      //handleTopic(data) {
+      //  this.repos.topic-name = data.detail.response;
+      //  console.log(this.repos.topic-name);
+      //}
     
-      handleResponse2(data) {
-        this.repos2 = data.detail.response;
-        console.log(this.repos.nextPageToken);
-      }
+      //handleResponse2(data) {
+      //  this.repos2 = data.detail.response;
+      //  console.log(this.repos.nextPageToken);
+      //console.log(this.repos.nextPageToken);
+      //this.$.request.params = {"part":"snippet", "pageToken": this.repos.nextPageToken, "q":"melee", "key": "AIzaSyCOA_LympCG7Ehhuz1ro2Qkx4t4BxJ3W5M", "type": "video", "maxResults":"5"}
+      //this.$.request.generateRequest();
+      //}
 
     }
 
