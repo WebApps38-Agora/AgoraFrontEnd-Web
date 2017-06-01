@@ -18,6 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="my-icons.html">
@@ -30,7 +31,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
     <style>
       :host {
-        --app-primary-color: #ADBFCE;
+        --app-primary-color: #ADBFCE7;
         --app-white-color: #F4FAFF;
         --app-black-color: #525456;
         --app-light-color: #DEE3E8;
@@ -39,13 +40,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
 
-      app-drawer-layout:not([narrow]) [drawer-toggle] {
+      /*app-drawer-layout:not([narrow]) [drawer-toggle] {
         display: none;
-      }
+      }*/
 
       app-header {
         color: #fff;
-        background-color: var(--app-primary-color);
+        background-color: var(--app-dark-color);
       }
 
       app-header paper-icon-button {
@@ -78,27 +79,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         data="{{routeData}}"
         tail="{{subroute}}"></app-route>
 
-    <!-- <app-drawer-layout fullbleed> -->
-      <!-- Drawer content -->
-      <!-- <app-drawer id="drawer" slot="drawer">
-        <app-toolbar>Menu</app-toolbar>
-        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="view1" href="view1">View One</a>
-          <a name="view2" href="view2">View Two</a>
-          <a name="view3" href="view3">View Three</a>
-          <a name="topic-index" href="topic-index">Topic Index</a>
-        </iron-selector>
-      </app-drawer> -->
-
+    <app-drawer-layout fullbleed>
       <!-- Main content -->
-      <!-- <app-header-layout has-scrolling-region> -->
+      <app-header-layout has-scrolling-region>
 
-        <!-- <app-header slot="header" condenses reveals effects="waterfall">
+        <app-header slot="header" condenses fixed reveals effects="waterfall">
           <app-toolbar>
-            <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-            <div main-title>My App</div>
+            <iron-icon class="big-icon" style="margin-right: 1rem" icon="home"></iron-icon>
+            <div main-title>Polynews</div>
           </app-toolbar>
-        </app-header> -->
+        </app-header>
 
         <iron-pages
             selected="[[page]]"
@@ -109,8 +99,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <topic-summary name="topic-summary"></topic-summary>
           <page-404 name="page-404"></page-404>
         </iron-pages>
-      <!-- </app-header-layout> -->
-    <!-- </app-drawer-layout> -->
+      </app-header-layout>
+    </app-drawer-layout>
   </template>
 
   <script>
