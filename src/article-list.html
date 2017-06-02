@@ -4,6 +4,7 @@
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="shared-styles.html">
@@ -47,7 +48,6 @@
 
       p {
         margin-top: 0.3rem;
-        margin-left: 0.5rem;
         font-size: 0.8rem;
       }
 
@@ -55,7 +55,17 @@
         line-height: 1.5rem;
       }
 
+      .article-text {
+        padding: 0.25em;
+      }
+
     </style>
+
+  <template is="dom-if" if="{{!articles.length}}">
+    <div class="missing">
+      <h3>We don't have any headlines on this topic</h3>
+    </div>
+  </template>
 
   <iron-list id="headline-list" items="[[articles]]" as="item">
     <template>
@@ -63,18 +73,19 @@
         <a class="hvr-underline-from-left flex" href="{{item.url}}" target="_blank">
           <div class="pad">
             <div class="layout horizontal">
-              <!-- <iron-image preload
+              <iron-image preload
                           src="#"
                           sizing="contain"
-                          style="width:40px;height:40px;background-color:grey;
-                                 margin-right: 0.5rem;"></iron-image> -->
-                <h3 class="headline flex">
+                          style="width:40px; height:40px; background-color:grey;
+                                 margin: 0.5rem; margin-left: 0"></iron-image>
+              <div class="article-text flex">
+                <h3 class="headline">
                   {{item.headline}}
                 </h3>
-            </div>
-              <p class="source">
-                from {{_computeSource(item.source)}}
-              </p>
+                <p class="source">
+                  from {{_computeSource(item.source)}}
+                </p>
+              </div>
             </div>
           </div>
         </a>

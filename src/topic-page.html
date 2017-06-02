@@ -7,14 +7,19 @@
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs-icons.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 
 <link rel="import" href="ajax_test.html">
 <link rel="import" href="article-list.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="topic-summary.html">
 
 <dom-module id="topic-page">
   <template>
-    <style include="shared-styles">
+    <style include="shared-styles iron-flex">
       :host {
         width: 100%;
         height: 100%;
@@ -29,40 +34,58 @@
       }
 
       .centered {
-        height: calc(100% - 2rem);
-        padding: 1rem;
+        height: 100%;
         background: white;
       }
 
       .topic-main-space {
-        width: calc(100% - 300px);
-        padding: 0;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        background-color: var(--app-white-color);
       }
 
       .topic-side-space {
         width: 300px;
       }
 
+      .topic-panel {
+        height: calc(100% - 64px - 1rem);
+        padding: 1rem;
+      }
+
+      paper-tabs {
+        bottom: 0;
+        background: var(--app-dark-color);
+        width: 100%;
+        color: white;
+      }
+
     </style>
 
     <polynews-nav with-sidebar></polynews-nav>
 
-    <div class="main">
-      <div class="topic-main-space">
+    <div class="main layout horizontal">
+      <div class="topic-main-space flex">
         <div class="centered sm-shadow">
           <!-- If no summary so far display message -->
           <!-- <template is="dom-if" if="True">
             <h1>Be the first!</h1>
             <p>Do you have a point to make on this topic?</p>
           </template> -->
-          <iron-pages
-              selected="[[page]]"
-              attr-for-selected="name"
-              role="main">
-            <topic-summary name="topic-summary"></topic-summary>
-            <!-- <topic-article-view name="topic-article-view"></topic-article-view> -->
-          </iron-pages>
-          <test_ajax-app></test_ajax-app>
+          <div class="topic-panel">
+            <iron-pages selected="{{panel}}" attr-for-selected="name">
+              <topic-summary name="topic-summary" topic="{{topic}}"></topic-summary>
+              <!-- <topic-comments name="topic-comments" topic="{{topic}}"></topic-comments>
+              <topic-stats name="topic-stats" topic="{{topic}}"></topic-stats> -->
+              <!-- <topic-article-view name="topic-article-view"></topic-article-view> -->
+            </iron-pages>
+          </div>
+          <!-- <test_ajax-app></test_ajax-app> -->
+          <paper-tabs selected="{{panel}}" attr-for-selected="name" align-bottom>
+            <paper-tab name="topic-summary">SUMMARY</paper-tab>
+            <paper-tab name="topic-comments">COMMENTS</paper-tab>
+            <paper-tab name="topic-stats">STATS</paper-tab>
+          </paper-tabs>
         </div>
       </div>
 
@@ -80,72 +103,13 @@
       static get properties() {
         return {
           topic: Object,
-
+          panel: {
+            type: String,
+            value: "topic-summary"
+          },
           articles: {
             type: Array,
-            value() {
-              return [{
-                        headline: "Trump urged to retain Paris climate deal by UN chief",
-                        description: "The UN chief joins leaders of the EU and China in stressing the importance of the Paris agreement.",
-                        url: "http://www.bbc.co.uk/news/world-asia-40118690",
-                        source: "http://127.0.0.1:8000/sources/bbc-news/",
-                        topics: [
-                            "http://127.0.0.1:8000/topics/1/"
-                        ]
-                    },
-                    {
-                        headline: "Jeremy Corbyn and Theresa May clash over post-Brexit Britain",
-                        description: "Labour and Tory leaders say what they want for post-Brexit Britain - with a week to go to polling day.",
-                        url: "http://www.bbc.co.uk/news/election-2017-40112003",
-                        source: "http://127.0.0.1:8000/sources/bbc-news/",
-                        topics: [
-                            "http://127.0.0.1:8000/topics/2/"
-                        ]
-                    },{
-                        headline: "Trump urged to retain Paris climate deal by UN chief",
-                        description: "The UN chief joins leaders of the EU and China in stressing the importance of the Paris agreement.",
-                        url: "http://www.bbc.co.uk/news/world-asia-40118690",
-                        source: "http://127.0.0.1:8000/sources/bbc-news/",
-                        topics: [
-                            "http://127.0.0.1:8000/topics/1/"
-                        ]
-                    },
-                    {
-                        headline: "Jeremy Corbyn and Theresa May clash over post-Brexit Britain",
-                        description: "Labour and Tory leaders say what they want for post-Brexit Britain - with a week to go to polling day.",
-                        url: "http://www.bbc.co.uk/news/election-2017-40112003",
-                        source: "http://127.0.0.1:8000/sources/bbc-news/",
-                        topics: [
-                            "http://127.0.0.1:8000/topics/2/"
-                        ]
-                    },{
-                        headline: "Trump urged to retain Paris climate deal by UN chief",
-                        description: "The UN chief joins leaders of the EU and China in stressing the importance of the Paris agreement.",
-                        url: "http://www.bbc.co.uk/news/world-asia-40118690",
-                        source: "http://127.0.0.1:8000/sources/bbc-news/",
-                        topics: [
-                            "http://127.0.0.1:8000/topics/1/"
-                        ]
-                    },
-                    {
-                        headline: "Jeremy Corbyn and Theresa May clash over post-Brexit Britain",
-                        description: "Labour and Tory leaders say what they want for post-Brexit Britain - with a week to go to polling day.",
-                        url: "http://www.bbc.co.uk/news/election-2017-40112003",
-                        source: "http://127.0.0.1:8000/sources/bbc-news/",
-                        topics: [
-                            "http://127.0.0.1:8000/topics/2/"
-                        ]
-                    },
-                    {
-                        headline: "Manchester attack: Saffie Roussos mum 'told of her death'",
-                        description: "The mother and sister of Manchester attack victim Saffie Roussos are now said to be \"out of danger\".",
-                        url: "http://www.bbc.co.uk/news/uk-england-manchester-40118243",
-                        source: "http://127.0.0.1:8000/sources/bbc-news/",
-                        topics: [
-                            "http://127.0.0.1:8000/topics/3/"
-                        ]
-                    }];
-            }
+            value: []
           }
         }
       }
