@@ -4,6 +4,7 @@
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 
 <link rel="import" href="shared-styles.html">
 
@@ -16,6 +17,7 @@
         --app-grid-gutter: 1rem;
         --app-grid-expandible-item-columns: 2;
         --paper-icon-button-ink-color: white;
+        background: var(--app-white-color);
       }
 
       ul {
@@ -24,12 +26,8 @@
       }
 
       .item {
-        height: 250px;
         position: relative;
         box-shadow: none;
-        /*background-color: white;
-        background-size: cover;
-        background-position: center center;*/
       }
 
       .item-bg {
@@ -37,7 +35,6 @@
         width: 100%; height: 100%;
         position: relative;
         z-index: 4;
-        -webkit-filter: grayscale(50%);
       }
 
       .item, .item-bg {
@@ -55,7 +52,6 @@
       }
 
       .item:hover > .item-bg {
-        -webkit-filter: grayscale(0%);
       }
 
       .item-title {
@@ -64,7 +60,7 @@
         bottom: 0;
         left: 0;
         right: 0;
-        background-color: rgba(0, 0, 0, 0.2);
+        background-color: rgba(0, 0, 0, 0.5);
         color: white;
         font-weight: 400;
         padding: 16px;
@@ -73,6 +69,10 @@
       /* Every other row should be an expendanded item */
       .item:nth-child(5n + 1) {
         @apply --app-grid-expandible-item;
+      }
+
+      .item:nth-child(n) {
+        height: 250px;
       }
 
       .item:nth-child(5n + 1), .item:nth-child(5n + 2) {
@@ -99,25 +99,47 @@
 
       #topics {
         padding: 1rem;
+        margin-top: 70px;
       }
 
     </style>
 
+    <polynews-nav></polynews-nav>
+
+    <iron-ajax
+      auto
+      id="request"
+      url="http://127.0.0.1:8000/topics"
+      handle-as="json"
+      on-response="handleResponse"
+      debounce-duration="300">
+    </iron-ajax>
+
+    <iron-ajax
+      id="article"
+      handle-as="json"
+      on-response="collectTitle">
+    </iron-ajax>
+
     <div class="centered">
-      <template is="dom-if" if="{{!topics.length}}">
+      <template is="dom-if" if="[[!first_articles.length]]">
         <div class="missing">
           <iron-icon class="big-icon" icon="inbox"></iron-icon>
-          <h1>Bad News!</h1>
+          <h1>No more news!</h1>
           <p>It seems that we are out of news topics. Come back later for more!</p>
         </div>
       </template>
       <ul class="app-grid" id="topics">
-        <template is="dom-repeat" items="{{topics}}" as="topic">
+        <!-- For each topic make a tile -->
+        <template is="dom-repeat" items="[[first_articles]]" as="first_article">
           <li class="item">
-            <iron-image class="item-bg"
+            <a href="/topic-page/{{first_article.topic_id}}">
+            <iron-image preload
+                        class="item-bg"
                         sizing="cover"
-                        src="{{topic.image}}"></iron-image>
-            <div class="item-title">{{topic.title}}</div>
+                        src="{{first_article.url_image}}"></iron-image>
+            <div class="item-title">{{first_article.headline}}</div>
+            </a>
           </li>
         </template>
       </ul>
@@ -131,28 +153,29 @@
 
       static get properties() {
         return {
-          topics: {
-            type: Array,
-            value() {
-              return [
-                {title: 'Title 1', image:'../images/test_images/big_test.jpg'},
-                {title: 'Title 2', image:'../images/test_images/sml_test.jpg'},
-                {title: 'Title 3', image:'../images/test_images/big_test.jpg'},
-                {title: 'Title 1', image:'../images/test_images/big_test.jpg'},
-                {title: 'Title 1', image:'../images/test_images/big_test.jpg'},
-                {title: 'Title 1', image:'../images/test_images/big_test.jpg'},
-                {title: 'Title 2', image:'../images/test_images/sml_test.jpg'},
-                {title: 'Title 3', image:'../images/test_images/big_test.jpg'},
-                {title: 'Title 2', image:'../images/test_images/sml_test.jpg'},
-                {title: 'Title 3', image:'../images/test_images/big_test.jpg'},
-                {title: 'Title 2', image:'../images/test_images/sml_test.jpg'},
-                {title: 'Title 3', image:'../images/test_images/big_test.jpg'},
-                {title: 'Title 4', image:'../images/test_images/med_test.jpg'}
-              ];
-            }
-          }
         }
       }
+
+    constructor() {
+        super();
+
+        this.first_articles = [];
+    }
+
+      handleResponse(data) {
+        article = this.$.article;
+        var topics = data.detail.response;
+        topics.forEach(function (item, index) {
+          article.url = item.article_set[0];
+          article.generateRequest();
+        });
+      }
+
+      collectTitle(data) {
+        var topic = data.detail.response;
+        this.push('first_articles', topic);
+      }
+
     }
 
     window.customElements.define(TopicIndex.is, TopicIndex);

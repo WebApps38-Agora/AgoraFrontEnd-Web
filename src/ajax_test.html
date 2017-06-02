@@ -1,0 +1,74 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="article-view.html">
+
+<dom-module id="test_ajax-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <article-view url="https://www.bbc.co.uk/news/0"></article-view>
+    <template is="dom-repeat" items="[[repos]]">
+      <h1> [[index]] </h1>
+      <div> Headline: [[item.headline]] </div>
+      <div> description: [[item.description]] </div>
+      <div> source: [[item.source]] </div>
+      <div> url: [[item.url]] </div>
+    </template>
+
+    <iron-ajax
+      auto
+      id="request"
+      url="http://127.0.0.1:8000/articles"
+      handle-as="json"
+      on-response="handleResponse"
+      debounce-duration="300">
+    </iron-ajax>
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class Test_ajaxApp extends Polymer.Element {
+      static get is() { return 'test_ajax-app'; }
+      constructor() {
+        super();
+
+        this.headlines = [
+          {first: 'Guardian', id: 'view5'}
+        ]; 
+        this.repos = {items: [{snippet: {title:"loading......"}}]};
+      }
+
+      handleResponse(data) {
+        this.repos = data.detail.response;
+        //this.$.request.url = "http://127.0.0.1:8000/topics"
+        //this.$.request.on-response = "handleTopic"
+        //this.$.request.generateRequest();
+      }
+
+      //handleTopic(data) {
+      //  this.repos.topic-name = data.detail.response;
+      //  console.log(this.repos.topic-name);
+      //}
+    
+      //handleResponse2(data) {
+      //  this.repos2 = data.detail.response;
+      //  console.log(this.repos.nextPageToken);
+      //console.log(this.repos.nextPageToken);
+      //this.$.request.params = {"part":"snippet", "pageToken": this.repos.nextPageToken, "q":"melee", "key": "AIzaSyCOA_LympCG7Ehhuz1ro2Qkx4t4BxJ3W5M", "type": "video", "maxResults":"5"}
+      //this.$.request.generateRequest();
+      //}
+
+    }
+
+    window.customElements.define(Test_ajaxApp.is, Test_ajaxApp);
+  </script>
+</dom-module>

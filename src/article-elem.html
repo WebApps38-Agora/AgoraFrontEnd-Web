@@ -1,0 +1,110 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="my-icons.html">
+
+<link rel="lazy-import" href="reaction-bar.html">
+
+<dom-module id="article-elem">
+  <template>
+    <style inclue="shared-styles iron-flex">
+          :host {
+            /*display: inline-block;*/
+          }
+
+          .article {
+            height: 150px;
+            background: white;
+            width: 100%;
+            max-width: 100%;
+            border-left: 1px var(--app-dark-color) solid;
+            border-bottom: 1px var(--app-dark-color) solid;
+          }
+
+          a:hover, a:visited, a {
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+          }
+
+          .pad {
+            padding: 1rem;
+          }
+
+          p {
+            margin-top: 0.3rem;
+            margin-left: calc(40px + 1.5rem);
+            font-size: 0.8rem;
+          }
+
+          h4 {
+            margin: 0;
+            line-height: 1.5rem;
+          }
+
+          .article-text {
+            padding: 0.25em;
+          }
+
+    </style>
+
+    <iron-ajax
+      auto
+      id="source"
+      url="{{article.source}}"
+      handle-as="json"
+      on-response="collectSource"
+      debounce-duration="300">
+    </iron-ajax>
+
+    <div class="article">
+      <a class="hvr-underline-from-left" href="{{article.url}}" target="_blank">
+        <div class="pad">
+          <iron-image preload
+                      src="{{source.url_logo}}"
+                      sizing="contain"
+                      style="width:40px; height:40px; background-color:grey;
+                             margin: 1rem; margin-left: 0.5rem;float:left"></iron-image>
+          <div class="article-text">
+            <h4 class="headline">
+              {{article.headline}}
+            </h4>
+            <p class="from">
+              from {{source.name}}
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+  </template>
+
+  <script>
+    class ArticleElem extends Polymer.Element {
+      static get is() { return 'article-elem'; }
+
+      static get properties() {
+        return {
+          article: Object,
+          source: Object
+        }
+      }
+
+      collectSource(data) {
+        this.source = data.detail.response;
+        console.log(this.source);
+      }
+
+    }
+
+    window.customElements.define(ArticleElem.is, ArticleElem);
+  </script>
+</dom-module>

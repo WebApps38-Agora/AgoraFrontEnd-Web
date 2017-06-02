@@ -1,0 +1,31 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="topic-stats">
+  <template>
+    <style include="shared-styles">
+        :host {
+            display: block;
+        }
+    </style>
+
+    <div class="centered">
+      <template is="dom-if" if="True">
+        <div class="missing">
+          <iron-icon class="big-icon" icon="assessment"></iron-icon>
+          <h1>No stats!</h1>
+          <p>This section is still under development. Hold on to your socks!</p>
+        </div>
+      </template>
+    </div>
+
+  </template>
+
+  <script>
+    class TopicStats extends Polymer.Element {
+      static get is() { return 'topic-stats'; }
+    }
+
+    window.customElements.define(TopicStats.is, TopicStats);
+  </script>
+</dom-module>
