@@ -1,0 +1,42 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="article-view">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <iframe src={{url}}></iframe> 
+    <div> article-view </div>
+
+  </template>
+  
+  <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="../bower_components/text-highlighter/build/TextHighlighter.min.js"></script>
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class ArticleView extends Polymer.Element {
+      static get is() { return 'article-view'; }
+      static get properties() {
+        return {
+          url: {
+            type: String,
+            value: ''
+          }
+        };
+      }
+      constructor() {
+        super();
+      }
+    }
+
+    window.customElements.define(ArticleView.is, ArticleView);
+  </script>
+</dom-module>
