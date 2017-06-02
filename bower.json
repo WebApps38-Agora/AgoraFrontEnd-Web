@@ -26,7 +26,8 @@
     "text-highlighter": "^1.2.0",
     "jquery": "^3.2.1",
     "hover": "^2.1.1",
-    "paper-tabs": "^2.0.0"
+    "paper-tabs": "^2.0.0",
+    "moment": "^2.18.1"
   },
   "resolutions": {
     "polymer": "^2.0.0-rc.3",
@@ -38,7 +39,12 @@
     "iron-resizable-behavior": "1 - 2",
     "iron-scroll-target-behavior": "1 - 2",
     "iron-meta": "2.0-preview",
-    "paper-icon-button": "2.0-preview"
+    "paper-icon-button": "2.0-preview",
+    "paper-behaviors": "2.0-preview",
+    "iron-checked-element-behavior": "2.0-preview",
+    "iron-validatable-behavior": "2.0-preview",
+    "iron-form-element-behavior": "2.0-preview",
+    "paper-ripple": "2.0-preview"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0-prerelease.7"

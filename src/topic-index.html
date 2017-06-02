@@ -35,7 +35,6 @@
         width: 100%; height: 100%;
         position: relative;
         z-index: 4;
-        -webkit-filter: grayscale(50%);
       }
 
       .item, .item-bg {
@@ -53,7 +52,6 @@
       }
 
       .item:hover > .item-bg {
-        -webkit-filter: grayscale(0%);
       }
 
       .item-title {
@@ -62,7 +60,7 @@
         bottom: 0;
         left: 0;
         right: 0;
-        background-color: rgba(0, 0, 0, 0.2);
+        background-color: rgba(0, 0, 0, 0.5);
         color: white;
         font-weight: 400;
         padding: 16px;
@@ -135,7 +133,7 @@
         <!-- For each topic make a tile -->
         <template is="dom-repeat" items="[[first_articles]]" as="topic">
           <li class="item">
-            <a href="topic-page/[[index]]">
+            <a href="/topic-page/{{topic.id}}">
             <iron-image preload
                         class="item-bg"
                         sizing="cover"
@@ -155,9 +153,6 @@
 
       static get properties() {
         return {
-          topics: {
-            type: Array
-          }
         }
       }
 
@@ -165,6 +160,7 @@
         super();
 
         this.first_articles = [];
+        this.counter = 1;
     }
 
       topicRequest(item, index) {
@@ -175,18 +171,23 @@
 
       handleResponse(data) {
         article = this.$.article;
-        this.topics = data.detail.response;
-        this.topics.forEach(function (item, index) {
+        var topics = data.detail.response;
+        topics.forEach(function (item, index) {
           console.log(item.article_set[0]);
           article.url = item.article_set[0];
           article.generateRequest();
         });
       }
 
+      _getTopicId(index) {
+        return index + 1;
+      }
 
       collectTitle(data) {
-        this.push('first_articles', data.detail.response);
-        console.log(this.first_articles.length);
+        var topic = data.detail.response;
+        topic.id = this.counter;
+        this.counter += 1;
+        this.push('first_articles', topic);
       }
 
 

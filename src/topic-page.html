@@ -1,7 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
-<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
@@ -10,9 +9,11 @@
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
-<link rel="import" href="../bower_components/paper-tabs/paper-tabs-icons.html">
+<!-- <link rel="import" href="../bower_components/paper-tabs/paper-tabs-icons.html"> -->
 <link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 
 <link rel="import" href="ajax_test.html">
 <link rel="import" href="article-list.html">
@@ -74,10 +75,11 @@
         tail="{{subroute}}"></app-route>
 
     <polynews-nav with-sidebar></polynews-nav>
+
     <iron-ajax
       auto
       id="request"
-      url="http://127.0.0.1:8000/topic/{{routeData.topic_id}}"
+      url="http://127.0.0.1:8000/topics/{{routeData.topic_id}}"
       handle-as="json"
       on-response="handleResponse"
       debounce-duration="300">
@@ -106,7 +108,7 @@
           </div>
           <!-- <test_ajax-app></test_ajax-app> -->
           <paper-tabs selected="{{panel}}" attr-for-selected="name" align-bottom>
-            <paper-tab name="topic-summary">SUMMARY {{routeData.topic_id}}</paper-tab>
+            <paper-tab name="topic-summary">SUMMARY</paper-tab>
             <paper-tab name="topic-comments">COMMENTS</paper-tab>
             <paper-tab name="topic-stats">STATS</paper-tab>
           </paper-tabs>
@@ -138,20 +140,29 @@
         }
       }
 
+      constructor() {
+        super();
+
+        this.source_count = 0;
+      }
+
       handleResponse(data) {
-        article = this.$.article;
         this.topic = data.detail.response;
+        console.log(this.topic);
         this.topic.article_set.forEach(function (item, index) {
           article.url = item;
           article.generateRequest();
         });
+        console.log("NOW");
       }
 
       collectArticle(data) {
-        this.push('articles', data.detail.response);
-        console.log(this.articles.length);
+        var article = data.detail.response;
+        this.push('articles', article);
+        source.url = article.source;
+        source.generateRequest();
+        console.log(this.articles);
       }
-
     }
 
     window.customElements.define(TopicPage.is, TopicPage);

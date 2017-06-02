@@ -1,8 +1,11 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
-<link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="topic-summary">
@@ -21,15 +24,30 @@
           <p>It seems that our summary has not yet been written. Would you
           like to be the first?</p>
         </div>
-      </template>
-
-      <div class="container">
         <paper-fab icon="add"></paper-fab>
-      </div>
+      </template>
     </div>
 
+    <iron-ajax
+      id="article"
+      handle-as="json"
+      on-response="collectTitle">
+    </iron-ajax>
+
+    <h1>{{this.topic.headline}}</h1>
+    <h4>{{_computeDate()}}</h4>
+
+    <template is="dom-if" if="[[!topic.summary.length]]">
+      <div class="missing">
+        <iron-icon class="big-icon" icon="inbox"></iron-icon>
+        <h1>No summary yet!</h1>
+        <p>Be the first one to contribute to the summary of this topic.</p>
+        <p>Just press the add button below and type away!</p>
+      </div>
+    </template>
   </template>
 
+  <script type="text/javascript" src="../bower_components/moment/moment.js"></script>
   <script>
     class TopicSummary extends Polymer.Element {
       static get is() { return 'topic-summary'; }
@@ -40,10 +58,25 @@
         }
       }
 
-      _topicTitle() {
-        return "PEEEPEEE";
-        // return this.topic.articles[0].headline;
+      constructor() {
+        super();
+
+        // this.topic.summary = [];
+        // article = this.$.article;
+        // article.url = this.topic.article_set[0];
+        // article.generateRequest();
       }
+
+      _computeDate() {
+        return "Today";
+        // return moment(this.topic.date).format("dddd, MMMM Do YYYY");
+      }
+
+      collectTitle(data) {
+        article = data.detail.response;
+        this.topic.headline = article.headline;
+      }
+
     }
 
     window.customElements.define(TopicSummary.is, TopicSummary);
