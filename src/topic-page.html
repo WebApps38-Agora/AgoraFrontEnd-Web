@@ -3,6 +3,7 @@
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
@@ -63,18 +64,18 @@
       }
     </style>
 
+    <app-location route="{{route}}"></app-location>
     <app-route
         route="{{route}}"
-        pattern="/topic/:topic_id"
+        pattern="/topic-page/:topic_id"
         data="{{routeData}}"
         tail="{{subroute}}"></app-route>
 
     <polynews-nav with-sidebar></polynews-nav>
-
     <iron-ajax
       auto
       id="request"
-      url="http://127.0.0.1:8000/topic/{{topic_id}}"
+      url="http://127.0.0.1:8000/topic/{{routeData.topic_id}}"
       handle-as="json"
       on-response="handleResponse"
       debounce-duration="300">
@@ -96,7 +97,7 @@
           </template> -->
           <div class="topic-panel">
             <iron-pages selected="{{panel}}" attr-for-selected="name">
-              <topic-summary name="topic-summary" topic="{{topic}}"></topic-summary>
+              <topic-summary name="topic-summary" topic="{{routeData.topic_id}}"></topic-summary>
               <!-- <topic-comments name="topic-comments" topic="{{topic}}"></topic-comments>
               <topic-stats name="topic-stats" topic="{{topic}}"></topic-stats> -->
               <!-- <topic-article-view name="topic-article-view"></topic-article-view> -->
@@ -104,7 +105,7 @@
           </div>
           <!-- <test_ajax-app></test_ajax-app> -->
           <paper-tabs selected="{{panel}}" attr-for-selected="name" align-bottom>
-            <paper-tab name="topic-summary">SUMMARY</paper-tab>
+            <paper-tab name="topic-summary">SUMMARY {{routeData.topic_id}}</paper-tab>
             <paper-tab name="topic-comments">COMMENTS</paper-tab>
             <paper-tab name="topic-stats">STATS</paper-tab>
           </paper-tabs>
