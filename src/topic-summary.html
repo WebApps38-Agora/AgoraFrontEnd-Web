@@ -1,4 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="my-icons.html">
 
@@ -10,10 +14,26 @@
         }
     </style>
 
-    <h1>{{_topicTitle()}}</h1>
+    <iron-ajax
+      id="article"
+      handle-as="json"
+      on-response="collectTitle">
+    </iron-ajax>
 
+    <h1>{{this.topic.headline}}</h1>
+    <h4>{{_computeDate()}}</h4>
+
+    <template is="dom-if" if="[[!topic.summary.length]]">
+      <div class="missing">
+        <iron-icon class="big-icon" icon="inbox"></iron-icon>
+        <h1>No summary yet!</h1>
+        <p>Be the first one to contribute to the summary of this topic.</p>
+        <p>Just press the add button below and type away!</p>
+      </div>
+    </template>
   </template>
 
+  <script rel="import" href="../bower_components/moment/moment.min.js"></script>
   <script>
     class TopicSummary extends Polymer.Element {
       static get is() { return 'topic-summary'; }
@@ -24,10 +44,24 @@
         }
       }
 
-      _topicTitle() {
-        return "PEEEPEEE";
-        // return this.topic.articles[0].headline;
+      constructor() {
+        super();
+
+        this.topic.summary = [];
+        article = this.$.article;
+        article.url = this.topic.article_set[0];
+        article.generateRequest();
       }
+
+      _computeDate() {
+        return moment(this.topic.date).format("dddd, MMMM Do YYYY");
+      }
+
+      collectTitle(data) {
+        article = data.detail.response;
+        this.topic.headline = article.headline;
+      }
+
     }
 
     window.customElements.define(TopicSummary.is, TopicSummary);

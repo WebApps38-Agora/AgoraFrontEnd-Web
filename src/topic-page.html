@@ -1,17 +1,16 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
-<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
-<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
-<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
-<link rel="import" href="../bower_components/paper-tabs/paper-tabs-icons.html">
+<!-- <link rel="import" href="../bower_components/paper-tabs/paper-tabs-icons.html"> -->
 <link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 
 <link rel="import" href="ajax_test.html">
 <link rel="import" href="article-list.html">
@@ -97,8 +96,8 @@
           <div class="topic-panel">
             <iron-pages selected="{{panel}}" attr-for-selected="name">
               <topic-summary name="topic-summary" topic="{{topic}}"></topic-summary>
-              <!-- <topic-comments name="topic-comments" topic="{{topic}}"></topic-comments>
-              <topic-stats name="topic-stats" topic="{{topic}}"></topic-stats> -->
+              <topic-comments name="topic-comments" topic="{{topic}}"></topic-comments>
+              <topic-stats name="topic-stats" topic="{{topic}}"></topic-stats>
               <!-- <topic-article-view name="topic-article-view"></topic-article-view> -->
             </iron-pages>
           </div>
