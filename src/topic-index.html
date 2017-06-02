@@ -76,7 +76,7 @@
       .item:nth-child(n) {
         height: 250px;
       }
-      
+
       .item:nth-child(5n + 1), .item:nth-child(5n + 2) {
         height: 40vmax;
       }
@@ -101,9 +101,12 @@
 
       #topics {
         padding: 1rem;
+        margin-top: 70px;
       }
 
     </style>
+
+    <polynews-nav></polynews-nav>
 
     <iron-ajax
       auto
@@ -124,7 +127,7 @@
       <template is="dom-if" if="[[!first_articles.length]]">
         <div class="missing">
           <iron-icon class="big-icon" icon="inbox"></iron-icon>
-          <h1>Bad News!</h1>
+          <h1>No more news!</h1>
           <p>It seems that we are out of news topics. Come back later for more!</p>
         </div>
       </template>
@@ -161,9 +164,9 @@
     constructor() {
         super();
 
-        this.first_articles = []; 
+        this.first_articles = [];
     }
-   
+
       topicRequest(item, index) {
         console.log("generating request");
         article.url = item.article_set[0];

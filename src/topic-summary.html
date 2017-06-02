@@ -10,11 +10,24 @@
         }
     </style>
 
+    <h1>{{_topicTitle()}}</h1>
+
   </template>
 
   <script>
     class TopicSummary extends Polymer.Element {
       static get is() { return 'topic-summary'; }
+
+      static get properties() {
+        return {
+          topic: Object
+        }
+      }
+
+      _topicTitle() {
+        return "PEEEPEEE";
+        // return this.topic.articles[0].headline;
+      }
     }
 
     window.customElements.define(TopicSummary.is, TopicSummary);
