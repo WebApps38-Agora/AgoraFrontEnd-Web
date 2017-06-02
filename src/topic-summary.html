@@ -1,18 +1,32 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="shared-styles.html">
-<link rel="import" href="my-icons.html">
 
 <dom-module id="topic-summary">
   <template>
-    <style include="shared-styles">
+    <style include="shared-styles iron-flex">
         :host {
             display: block;
         }
     </style>
+
+    <div class="centered">
+      <template is="dom-if" if="True">
+        <div class="missing">
+          <iron-icon class="big-icon" icon="inbox"></iron-icon>
+          <h1>No summary!</h1>
+          <p>It seems that our summary has not yet been written. Would you
+          like to be the first?</p>
+        </div>
+        <paper-fab icon="add"></paper-fab>
+      </template>
+    </div>
 
     <iron-ajax
       id="article"
