@@ -44,7 +44,8 @@
     "iron-checked-element-behavior": "2.0-preview",
     "iron-validatable-behavior": "2.0-preview",
     "iron-form-element-behavior": "2.0-preview",
-    "paper-ripple": "2.0-preview"
+    "paper-ripple": "2.0-preview",
+    "iron-selector": "2.0-preview"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0-prerelease.7"
