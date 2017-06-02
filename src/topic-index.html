@@ -129,13 +129,16 @@
         </div>
       </template>
       <ul class="app-grid" id="topics">
+        <!-- For each topic make a tile -->
         <template is="dom-repeat" items="[[first_articles]]" as="topic">
           <li class="item">
+            <a href="topic/[[index]]">
             <iron-image preload
                         class="item-bg"
                         sizing="cover"
                         src="{{topic.url_image}}"></iron-image>
             <div class="item-title">{{topic.headline}}</div>
+            </a>
           </li>
         </template>
       </ul>
