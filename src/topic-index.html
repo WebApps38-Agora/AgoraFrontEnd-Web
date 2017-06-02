@@ -76,7 +76,7 @@
       .item:nth-child(n) {
         height: 250px;
       }
-      
+
       .item:nth-child(5n + 1), .item:nth-child(5n + 2) {
         height: 40vmax;
       }
@@ -101,9 +101,12 @@
 
       #topics {
         padding: 1rem;
+        margin-top: 70px;
       }
 
     </style>
+
+    <polynews-nav></polynews-nav>
 
     <iron-ajax
       auto
@@ -158,9 +161,9 @@
     constructor() {
         super();
 
-        this.first_articles = []; 
+        this.first_articles = [];
     }
-   
+
       topicRequest(item, index) {
         console.log("generating request");
         article.url = item.article_set[0];
