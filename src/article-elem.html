@@ -1,0 +1,104 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="shared-styles.html">
+<link rel="lazy-import" href="my-icons.html">
+
+<link rel="lazy-import" href="reaction-bar.html">
+
+<dom-module id="article-elem">
+  <template>
+    <style inclue="shared-styles iron-flex">
+        :host {
+            display: block;
+        }
+
+        .pad {
+          padding: 1rem;
+        }
+
+        .article {
+          height: calc((100vh - var(--app-nav-size))/5);
+          background: white;
+          width: 100%;
+          border-left: 1px var(--app-dark-color) solid;
+          border-top: 1px var(--app-dark-color) solid;
+        }
+
+        a:hover, a:visited, a {
+          text-decoration: none;
+          color: inherit;
+        }
+
+        p {
+          margin-top: 0.3rem;
+          font-size: 0.8rem;
+        }
+
+        h3 {
+          line-height: 1.5rem;
+        }
+
+        .article-text {
+          padding: 0.25em;
+        }
+
+    </style>
+
+    <iron-ajax
+      id="source"
+      url="{{article.source}}"
+      handle-as="json"
+      on-response="handleResponse"
+      debounce-duration="300">
+    </iron-ajax>
+
+    <div class="article layout vertical">
+      <a class="hvr-underline-from-left flex" href="{{item.url}}" target="_blank">
+        <div class="pad">
+          <div class="layout horizontal">
+            <iron-image preload
+                        src="{{source.url_logo}}"
+                        sizing="contain"
+                        style="width:40px; height:40px; background-color:grey;
+                               margin: 0.5rem; margin-left: 0"></iron-image>
+            <div class="article-text flex">
+              <h3 class="headline">
+                {{item.headline}}
+              </h3>
+              <p class="from">
+                from {{source.name}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+  </template>
+
+  <script>
+    class ArticleElem extends Polymer.Element {
+      static get is() { return 'article-elem'; }
+
+      static get properties() {
+        return {
+          article: Object,
+          source: Object
+        }
+      }
+
+      handleResponse(data) {
+        this.source = data.detail.response;
+      }
+    }
+
+    window.customElements.define(ArticleElem.is, ArticleElem);
+  </script>
+</dom-module>

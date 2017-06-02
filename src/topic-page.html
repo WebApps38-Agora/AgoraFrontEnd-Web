@@ -3,6 +3,7 @@
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
@@ -60,10 +61,30 @@
         width: 100%;
         color: white;
       }
-
     </style>
 
+    <app-route
+        route="{{route}}"
+        pattern="/topic/:topic_id"
+        data="{{routeData}}"
+        tail="{{subroute}}"></app-route>
+
     <polynews-nav with-sidebar></polynews-nav>
+
+    <iron-ajax
+      auto
+      id="request"
+      url="http://127.0.0.1:8000/topic/{{topic_id}}"
+      handle-as="json"
+      on-response="handleResponse"
+      debounce-duration="300">
+    </iron-ajax>
+
+    <iron-ajax
+      id="article"
+      handle-as="json"
+      on-response="collectArticle">
+    </iron-ajax>
 
     <div class="main layout horizontal">
       <div class="topic-main-space flex">
@@ -114,6 +135,21 @@
           }
         }
       }
+
+      handleResponse(data) {
+        article = this.$.article;
+        this.topic = data.detail.response;
+        this.topic.article_set.forEach(function (item, index) {
+          article.url = item;
+          article.generateRequest();
+        });
+      }
+
+      collectArticle(data) {
+        this.push('articles', data.detail.response);
+        console.log(this.articles.length);
+      }
+
     }
 
     window.customElements.define(TopicPage.is, TopicPage);
