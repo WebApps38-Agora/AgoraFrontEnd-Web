@@ -12,21 +12,15 @@
 <link rel="import" href="article-list.html">
 <link rel="import" href="shared-styles.html">
 
-<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-
 <dom-module id="topic-page">
   <template>
-    <style include="iron-flex iron-flex-alignment">
+    <style include="shared-styles">
       :host {
-        display: inline-flex;
         width: 100%;
         height: 100%;
       }
 
-      .centered {
-      }
-
-      section {
+      .main {
         display: inline-flex;
       }
 
@@ -34,30 +28,40 @@
         display: block;
       }
 
+      .centered {
+        height: calc(100% - 2rem);
+        padding: 1rem;
+        background: white;
+      }
+
       .topic-main-space {
         width: calc(100% - 300px);
+        padding: 0;
       }
 
       .topic-side-space {
         width: 300px;
-        height: 100vh;
       }
 
     </style>
+
+    <polynews-nav with-sidebar></polynews-nav>
+
+    <div class="main">
       <div class="topic-main-space">
-        <div class="centered">
+        <div class="centered sm-shadow">
           <!-- If no summary so far display message -->
           <!-- <template is="dom-if" if="True">
             <h1>Be the first!</h1>
             <p>Do you have a point to make on this topic?</p>
           </template> -->
-          <!-- <iron-pages
+          <iron-pages
               selected="[[page]]"
               attr-for-selected="name"
               role="main">
             <topic-summary name="topic-summary"></topic-summary>
-            <topic-article-view name="topic-article-view"></topic-article-view>
-          </iron-pages> -->
+            <!-- <topic-article-view name="topic-article-view"></topic-article-view> -->
+          </iron-pages>
           <test_ajax-app></test_ajax-app>
         </div>
       </div>
@@ -65,6 +69,7 @@
       <div class="topic-side-space">
         <article-list articles="{{articles}}"></article-list>
       </div>
+    </div>
 
   </template>
 
@@ -78,9 +83,42 @@
 
           articles: {
             type: Array,
-
             value() {
               return [{
+                        headline: "Trump urged to retain Paris climate deal by UN chief",
+                        description: "The UN chief joins leaders of the EU and China in stressing the importance of the Paris agreement.",
+                        url: "http://www.bbc.co.uk/news/world-asia-40118690",
+                        source: "http://127.0.0.1:8000/sources/bbc-news/",
+                        topics: [
+                            "http://127.0.0.1:8000/topics/1/"
+                        ]
+                    },
+                    {
+                        headline: "Jeremy Corbyn and Theresa May clash over post-Brexit Britain",
+                        description: "Labour and Tory leaders say what they want for post-Brexit Britain - with a week to go to polling day.",
+                        url: "http://www.bbc.co.uk/news/election-2017-40112003",
+                        source: "http://127.0.0.1:8000/sources/bbc-news/",
+                        topics: [
+                            "http://127.0.0.1:8000/topics/2/"
+                        ]
+                    },{
+                        headline: "Trump urged to retain Paris climate deal by UN chief",
+                        description: "The UN chief joins leaders of the EU and China in stressing the importance of the Paris agreement.",
+                        url: "http://www.bbc.co.uk/news/world-asia-40118690",
+                        source: "http://127.0.0.1:8000/sources/bbc-news/",
+                        topics: [
+                            "http://127.0.0.1:8000/topics/1/"
+                        ]
+                    },
+                    {
+                        headline: "Jeremy Corbyn and Theresa May clash over post-Brexit Britain",
+                        description: "Labour and Tory leaders say what they want for post-Brexit Britain - with a week to go to polling day.",
+                        url: "http://www.bbc.co.uk/news/election-2017-40112003",
+                        source: "http://127.0.0.1:8000/sources/bbc-news/",
+                        topics: [
+                            "http://127.0.0.1:8000/topics/2/"
+                        ]
+                    },{
                         headline: "Trump urged to retain Paris climate deal by UN chief",
                         description: "The UN chief joins leaders of the EU and China in stressing the importance of the Paris agreement.",
                         url: "http://www.bbc.co.uk/news/world-asia-40118690",

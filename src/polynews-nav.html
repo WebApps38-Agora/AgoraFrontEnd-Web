@@ -3,13 +3,15 @@
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="my-icons.html">
 
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="polynews-nav">
   <template>
-    <style>
+    <style include="shared-styles iron-flex">
 
       #nav-home {
         margin-right: 0.5rem;
@@ -20,8 +22,14 @@
       }
 
       app-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 999;
         color: var(--app-white-color);
         background-color: var(--app-dark-color);
+        box-shadow: 1px 0px 5px black;
       }
 
       app-header paper-icon-button {
@@ -33,14 +41,36 @@
         color: white;
       }
 
+      .snd-title {
+        width: 284px;
+        text-align: center;
+        /*border-left: 1px solid var(--app-black-color);*/
+      }
+
+      .snd-title:before {
+        content: "";
+        height: 44px;
+        position: absolute;
+        top: 10px;
+        right: 299px;
+        width: 1px;
+        background-color: var(--app-white-color);
+        -webkit-box-shadow: 0px 0px 5px var(--app-black-color);
+           -moz-box-shadow: 0px 0px 5px var(--app-black-color);
+                box-shadow: 0px 0px 5px var(--app-black-color);
+      }
+
     </style>
 
-    <app-header slot="header" condenses fixed >
-      <app-toolbar>
-         <a href="[[rootPath]]" tabindex="-1">
-           <paper-icon-button id="nav-home" icon="home"></paper-icon-button>
-         </a>
+    <app-header slot="header" fixed>
+      <app-toolbar class="horizontal layout">
+        <a href="[[rootPath]]" tabindex="-1">
+          <paper-icon-button id="nav-home" icon="home"></paper-icon-button>
+        </a>
         <div main-title>Polynews</div>
+        <template is="dom-if" if="{{withSidebar}}">
+          <div class="snd-title">Headlines</div>
+        </template>
       </app-toolbar>
     </app-header>
 
@@ -52,8 +82,9 @@
 
       static get properties() {
         return {
-          rootPath: String
-        };
+          rootPath: String,
+          withSidebar: Boolean
+        }
       }
     }
 

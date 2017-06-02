@@ -34,11 +34,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
     <style>
       :host {
-        --app-primary-color: #ADBFCE7;
+        --app-main-color: #ADBFCE7;
         --app-white-color: #F4FAFF;
         --app-black-color: #525456;
         --app-light-color: #DEE3E8;
         --app-dark-color: #4F6170;
+
+        --app-nav-size: 64px;
 
         display: block;
       }
@@ -46,27 +48,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       #nav-home {
         margin-right: 0.5rem;
       }
-
-      app-drawer-layout:not([narrow]) [drawer-toggle] {
-        display: none;
-      }
-
-      /*.drawer-list {
-        margin: 0 20px;
-      }
-
-      .drawer-list a {
-        display: block;
-        padding: 0 16px;
-        text-decoration: none;
-        color: var(--app-secondary-color);
-        line-height: 40px;
-      }
-
-      .drawer-list a.iron-selected {
-        color: black;
-        font-weight: bold;
-      }*/
 
     </style>
 
@@ -77,22 +58,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         data="{{routeData}}"
         tail="{{subroute}}"></app-route>
 
-    <app-drawer-layout fullbleed>
       <!-- Main content -->
-      <app-header-layout >
-        <polynews-nav></polynews-nav>
 
-        <iron-pages
-            selected="[[page]]"
-            attr-for-selected="name"
-            fallback-selection="page-404"
-            role="main">
-          <topic-index name="topic-index"></topic-index>
-          <topic-page name="topic-page"></topic-page>
-          <page-404 name="page-404"></page-404>
-        </iron-pages>
-      </app-header-layout>
-    </app-drawer-layout>
+      <iron-pages
+          id="main-pages"
+          selected="[[page]]"
+          attr-for-selected="name"
+          fallback-selection="page-404"
+          role="main">
+        <topic-index name="topic-index"></topic-index>
+        <topic-page name="topic-page"></topic-page>
+        <page-404 name="page-404"></page-404>
+      </iron-pages>
   </template>
 
   <script>

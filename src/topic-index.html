@@ -17,6 +17,7 @@
         --app-grid-gutter: 1rem;
         --app-grid-expandible-item-columns: 2;
         --paper-icon-button-ink-color: white;
+        background: var(--app-white-color);
       }
 
       ul {
@@ -27,9 +28,6 @@
       .item {
         position: relative;
         box-shadow: none;
-        /*background-color: white;
-        background-size: cover;
-        background-position: center center;*/
       }
 
       .item-bg {
@@ -133,7 +131,8 @@
       <ul class="app-grid" id="topics">
         <template is="dom-repeat" items="[[first_articles]]" as="topic">
           <li class="item">
-            <iron-image class="item-bg"
+            <iron-image preload
+                        class="item-bg"
                         sizing="cover"
                         src="{{topic.url_image}}"></iron-image>
             <div class="item-title">{{topic.headline}}</div>
