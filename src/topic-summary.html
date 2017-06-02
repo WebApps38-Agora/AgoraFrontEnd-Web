@@ -33,7 +33,7 @@
     </template>
   </template>
 
-  <script rel="import" href="../bower_components/moment/moment.min.js"></script>
+  <script type="text/javascript" src="../bower_components/moment/moment.js"></script>
   <script>
     class TopicSummary extends Polymer.Element {
       static get is() { return 'topic-summary'; }
@@ -47,14 +47,15 @@
       constructor() {
         super();
 
-        this.topic.summary = [];
-        article = this.$.article;
-        article.url = this.topic.article_set[0];
-        article.generateRequest();
+        // this.topic.summary = [];
+        // article = this.$.article;
+        // article.url = this.topic.article_set[0];
+        // article.generateRequest();
       }
 
       _computeDate() {
-        return moment(this.topic.date).format("dddd, MMMM Do YYYY");
+        return "Today";
+        // return moment(this.topic.date).format("dddd, MMMM Do YYYY");
       }
 
       collectTitle(data) {

@@ -7,10 +7,11 @@
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="shared-styles.html">
-<link rel="lazy-import" href="my-icons.html">
+<link rel="import" href="my-icons.html">
 
-<link rel="lazy-import" href="article-elem.html">
+<link rel="import" href="article-elem.html">
 
 <dom-module id="article-list">
   <template>
@@ -19,27 +20,24 @@
         width: 100%;
         height: 100%;
         display: block;
+        background: white;
       }
 
       iron-list {
         height: calc(100vh - var(--app-nav-size));
       }
 
-      .article:first-of-type {
-        border-top: none;
-      }
-
     </style>
 
   <template is="dom-if" if="{{!articles.length}}">
-    <div class="missing">
+    <div class="missing" style="margin:2rem;margin-top:0;margin-bottom:0;">
       <h3>We don't have any headlines on this topic</h3>
     </div>
   </template>
 
-  <iron-list id="headline-list" items="[[articles]]" as="item">
+  <iron-list id="headline-list" items="[[articles]]" as="article">
     <template>
-      <article-elem article="{{item}}"></article-elem>
+      <article-elem article="{{article}}"></article-elem>
     </template>
   </iron-list>
 
@@ -52,9 +50,18 @@
       static get properties() {
         return {
           articles: Array,
-          selectedArticle: Object
+          sources: Array
         };
       }
+
+      handleSource(data) {
+        console.log(data.detail.response);
+      }
+
+      _getSourceLogo(index) {
+        console.log(index);
+      }
+
     }
 
     window.customElements.define(ArticleList.is, ArticleList);
