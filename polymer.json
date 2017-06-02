@@ -1,8 +1,8 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/my-app.html",
+  "shell": "src/polynews-app.html",
   "fragments": [
-    "src/page404.html",
+    "src/page-404.html",
     "src/topic-index.html"
   ],
   "sources": [
