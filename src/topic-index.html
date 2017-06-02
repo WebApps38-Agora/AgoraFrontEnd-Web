@@ -131,14 +131,14 @@
       </template>
       <ul class="app-grid" id="topics">
         <!-- For each topic make a tile -->
-        <template is="dom-repeat" items="[[first_articles]]" as="topic">
+        <template is="dom-repeat" items="[[first_articles]]" as="first_article">
           <li class="item">
-            <a href="/topic-page/{{topic.id}}">
+            <a href="/topic-page/{{first_article.topic_id}}">
             <iron-image preload
                         class="item-bg"
                         sizing="cover"
-                        src="{{topic.url_image}}"></iron-image>
-            <div class="item-title">{{topic.headline}}</div>
+                        src="{{first_article.url_image}}"></iron-image>
+            <div class="item-title">{{first_article.headline}}</div>
             </a>
           </li>
         </template>
@@ -160,33 +160,19 @@
         super();
 
         this.first_articles = [];
-        this.counter = 1;
     }
-
-      topicRequest(item, index) {
-        console.log("generating request");
-        article.url = item.article_set[0];
-        this.$.article.generateRequest();
-      }
 
       handleResponse(data) {
         article = this.$.article;
         var topics = data.detail.response;
         topics.forEach(function (item, index) {
-          console.log(item.article_set[0]);
           article.url = item.article_set[0];
           article.generateRequest();
         });
       }
 
-      _getTopicId(index) {
-        return index + 1;
-      }
-
       collectTitle(data) {
         var topic = data.detail.response;
-        topic.id = this.counter;
-        this.counter += 1;
         this.push('first_articles', topic);
       }
 

@@ -94,11 +94,6 @@
     <div class="main layout horizontal">
       <div class="topic-main-space flex">
         <div class="centered sm-shadow">
-          <!-- If no summary so far display message -->
-          <!-- <template is="dom-if" if="True">
-            <h1>Be the first!</h1>
-            <p>Do you have a point to make on this topic?</p>
-          </template> -->
           <div class="topic-panel">
             <iron-pages selected="{{panel}}" attr-for-selected="name">
               <topic-summary name="topic-summary" topic="{{routeData.topic_id}}"></topic-summary>
@@ -106,7 +101,6 @@
               <topic-stats name="topic-stats" topic="{{routeData.topic_id}}"></topic-stats>
             </iron-pages>
           </div>
-          <!-- <test_ajax-app></test_ajax-app> -->
           <paper-tabs selected="{{panel}}" attr-for-selected="name" align-bottom>
             <paper-tab name="topic-summary">SUMMARY</paper-tab>
             <paper-tab name="topic-comments">COMMENTS</paper-tab>
