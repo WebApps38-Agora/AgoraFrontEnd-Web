@@ -60,16 +60,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <!-- Main content -->
 
-      <!-- <iron-pages
+      <iron-pages
           id="main-pages"
           selected="[[page]]"
           attr-for-selected="name"
           fallback-selection="page-404"
-          role="main"> -->
+          role="main">
         <topic-index name="topic-index"></topic-index>
-        <!-- <topic-page name="topic-page"></topic-page> -->
-        <!-- <page-404 name="page-404"></page-404> -->
-      <!-- </iron-pages> -->
+        <topic-page name="topic-page"></topic-page>
+        <page-404 name="page-404"></page-404>
+      </iron-pages>
   </template>
 
   <script>
@@ -115,15 +115,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // Deault to 'view1' in that case.
         this.page = page || 'topic-index';
 
-        // Close a non-persistent drawer when the page & route are changed.
-        // if (!this.$.drawer.persistent) {
-        //   this.$.drawer.close();
-        // }
       }
 
       _pageChanged(page) {
         // Load page import on demand. Show 404 page if fails
         var resolvedPageUrl = this.resolveUrl(page + '.html');
+
         Polymer.importHref(
             resolvedPageUrl,
             null,

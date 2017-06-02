@@ -25,12 +25,13 @@
     <style include="shared-styles iron-flex">
       :host {
         width: 100%;
-        height: 100%;
+        height: 100vh;
       }
 
       .main {
-        display: inline-flex;
-        max-height: calc(100% - var(--app-nav-size));
+        height: 100%;
+        width: 100%;
+        max-height: calc(100vh - var(--app-nav-size));
       }
 
       paper-icon-item {
@@ -75,9 +76,8 @@
     <polynews-nav with-sidebar></polynews-nav>
 
     <iron-ajax
-      auto
       id="request"
-      url="http://127.0.0.1:8000/topics/{{routeData.topic_id}}"
+      url="http://127.0.0.1:8000/topics/{{topic_id}}"
       handle-as="json"
       on-response="handleResponse"
       debounce-duration="300">
@@ -126,6 +126,7 @@
 
       static get properties() {
         return {
+          topic_id: Number,
           topic: Object,
           panel: {
             type: String,
@@ -134,33 +135,50 @@
           articles: {
             type: Array,
             value: []
+          },
+          active: {
+            type: Boolean,
+            value: false,
+            observer: '_refresh'
           }
         }
       }
 
+      static get observers() {
+        return [
+          '_routeTopicChanged(routeData.topic_id)',
+        ];
+      }
+
       constructor() {
         super();
-
         this.source_count = 0;
       }
 
+      _routeTopicChanged(topic_id) {
+        this.topic_id = topic_id;
+        this.articles = [];
+        this.$.request.generateRequest();
+      }
+
       handleResponse(data) {
+        var article = this.$.article;
         this.topic = data.detail.response;
+        console.log("HANDLING");
         console.log(this.topic);
         this.topic.article_set.forEach(function (item, index) {
           article.url = item;
           article.generateRequest();
         });
-        console.log("NOW");
       }
 
       collectArticle(data) {
         var article = data.detail.response;
+        console.log("ARTICLE");
+        console.log(article);
         this.push('articles', article);
-        source.url = article.source;
-        source.generateRequest();
-        console.log(this.articles);
       }
+
     }
 
     window.customElements.define(TopicPage.is, TopicPage);
