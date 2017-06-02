@@ -22,7 +22,9 @@
     "iron-ajax": "PolymerElements/iron-ajax#^2.0.2",
     "app-grid": "^0.1.0",
     "css-buttons": "components#*",
-    "iron-list": "^2.0.0"
+    "iron-list": "^2.0.0",
+    "text-highlighter": "^1.2.0",
+    "jquery": "^3.2.1"
   },
   "resolutions": {
     "polymer": "^2.0.0-rc.3",

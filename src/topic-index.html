@@ -4,6 +4,7 @@
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 
 <link rel="import" href="shared-styles.html">
 
@@ -24,7 +25,6 @@
       }
 
       .item {
-        height: 250px;
         position: relative;
         box-shadow: none;
         /*background-color: white;
@@ -75,6 +75,10 @@
         @apply --app-grid-expandible-item;
       }
 
+      .item:nth-child(n) {
+        height: 250px;
+      }
+      
       .item:nth-child(5n + 1), .item:nth-child(5n + 2) {
         height: 40vmax;
       }
@@ -103,8 +107,23 @@
 
     </style>
 
+    <iron-ajax
+      auto
+      id="request"
+      url="http://127.0.0.1:8000/topics"
+      handle-as="json"
+      on-response="handleResponse"
+      debounce-duration="300">
+    </iron-ajax>
+
+    <iron-ajax
+      id="article"
+      handle-as="json"
+      on-response="collectTitle">
+    </iron-ajax>
+
     <div class="centered">
-      <template is="dom-if" if="{{!topics.length}}">
+      <template is="dom-if" if="[[!first_articles.length]]">
         <div class="missing">
           <iron-icon class="big-icon" icon="inbox"></iron-icon>
           <h1>Bad News!</h1>
@@ -112,12 +131,12 @@
         </div>
       </template>
       <ul class="app-grid" id="topics">
-        <template is="dom-repeat" items="{{topics}}" as="topic">
+        <template is="dom-repeat" items="[[first_articles]]" as="topic">
           <li class="item">
             <iron-image class="item-bg"
                         sizing="cover"
-                        src="{{topic.image}}"></iron-image>
-            <div class="item-title">{{topic.title}}</div>
+                        src="{{topic.url_image}}"></iron-image>
+            <div class="item-title">{{topic.headline}}</div>
           </li>
         </template>
       </ul>
@@ -132,27 +151,40 @@
       static get properties() {
         return {
           topics: {
-            type: Array,
-            value() {
-              return [
-                {title: 'Title 1', image:'../images/test_images/big_test.jpg'},
-                {title: 'Title 2', image:'../images/test_images/sml_test.jpg'},
-                {title: 'Title 3', image:'../images/test_images/big_test.jpg'},
-                {title: 'Title 1', image:'../images/test_images/big_test.jpg'},
-                {title: 'Title 1', image:'../images/test_images/big_test.jpg'},
-                {title: 'Title 1', image:'../images/test_images/big_test.jpg'},
-                {title: 'Title 2', image:'../images/test_images/sml_test.jpg'},
-                {title: 'Title 3', image:'../images/test_images/big_test.jpg'},
-                {title: 'Title 2', image:'../images/test_images/sml_test.jpg'},
-                {title: 'Title 3', image:'../images/test_images/big_test.jpg'},
-                {title: 'Title 2', image:'../images/test_images/sml_test.jpg'},
-                {title: 'Title 3', image:'../images/test_images/big_test.jpg'},
-                {title: 'Title 4', image:'../images/test_images/med_test.jpg'}
-              ];
-            }
+            type: Array
           }
         }
       }
+
+    constructor() {
+        super();
+
+        this.first_articles = []; 
+    }
+   
+      topicRequest(item, index) {
+        console.log("generating request");
+        article.url = item.article_set[0];
+        this.$.article.generateRequest();
+      }
+
+      handleResponse(data) {
+        article = this.$.article;
+        this.topics = data.detail.response;
+        this.topics.forEach(function (item, index) {
+          console.log(item.article_set[0]);
+          article.url = item.article_set[0];
+          article.generateRequest();
+        });
+      }
+
+
+      collectTitle(data) {
+        this.push('first_articles', data.detail.response);
+        console.log(this.first_articles.length);
+      }
+
+
     }
 
     window.customElements.define(TopicIndex.is, TopicIndex);

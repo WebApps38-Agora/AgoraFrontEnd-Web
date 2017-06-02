@@ -1,6 +1,7 @@
-<link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
-<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="article-view.html">
 
 <dom-module id="test_ajax-app">
   <template>
@@ -9,6 +10,8 @@
         display: block;
       }
     </style>
+
+    <article-view url="https://www.bbc.co.uk/news/0"></article-view>
     <template is="dom-repeat" items="[[repos]]">
       <h1> [[index]] </h1>
       <div> Headline: [[item.headline]] </div>
@@ -16,16 +19,6 @@
       <div> source: [[item.source]] </div>
       <div> url: [[item.url]] </div>
     </template>
-
-    <!-- <iron-ajax -->
-    <!--   auto -->
-    <!--   url="https://www.googleapis.com/youtube/v3/search" -->
-    <!--   params='{"part":"snippet", "q":"melee", "key": -->
-    <!--   "AIzaSyCOA_LympCG7Ehhuz1ro2Qkx4t4BxJ3W5M", "type": "video", "maxResults":"5"}' -->
-    <!--   handle-as="json" -->
-    <!--   on-response="handleResponse" -->
-    <!--   debounce-duration="300"> -->
-    <!-- </iron-ajax> -->
 
     <iron-ajax
       auto
@@ -45,14 +38,6 @@
      */
     class Test_ajaxApp extends Polymer.Element {
       static get is() { return 'test_ajax-app'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'da shiz-whiz'
-          }
-        };
-      }
       constructor() {
         super();
 
@@ -64,7 +49,6 @@
 
       handleResponse(data) {
         this.repos = data.detail.response;
-        console.log(this.repos);
         //this.$.request.url = "http://127.0.0.1:8000/topics"
         //this.$.request.on-response = "handleTopic"
         //this.$.request.generateRequest();

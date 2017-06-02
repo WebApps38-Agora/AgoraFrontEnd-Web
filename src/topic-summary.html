@@ -1,62 +1,22 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
-<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
-<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="shared-styles.html">
 <link rel="import" href="my-icons.html">
 
-<link rel="import" href="shared-styles.html">
-
-<dom-module id="polynews-nav">
+<dom-module id="topic-summary">
   <template>
-    <style>
-
-      #nav-home {
-        margin-right: 0.5rem;
-      }
-
-      app-drawer-layout:not([narrow]) [drawer-toggle] {
-        display: none;
-      }
-
-      app-header {
-        color: var(--app-white-color);
-        background-color: var(--app-dark-color);
-      }
-
-      app-header paper-icon-button {
-        --paper-icon-button-ink-color: white;
-      }
-
-      a:visited, a:hover, a {
-        text-decoration: none;
-        color: white;
-      }
-
+    <style inclue="shared-styles">
+        :host {
+            display: block;
+        }
     </style>
-
-    <app-header slot="header" condenses reveals effects="waterfall">
-      <app-toolbar>
-         <a href="[[rootPath]]" tabindex="-1">
-           <paper-icon-button id="nav-home" icon="home"></paper-icon-button>
-         </a>
-        <div main-title>Polynews</div>
-      </app-toolbar>
-    </app-header>
 
   </template>
 
   <script>
-    class PolynewsNav extends Polymer.Element {
-      static get is() { return 'polynews-nav'; }
-
-      static get properties() {
-        return {
-          rootPath: String
-        };
-      }
+    class TopicSummary extends Polymer.Element {
+      static get is() { return 'topic-summary'; }
     }
 
-    window.customElements.define(PolynewsNav.is, PolynewsNav);
+    window.customElements.define(TopicSummary.is, TopicSummary);
   </script>
 </dom-module>
