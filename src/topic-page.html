@@ -18,6 +18,8 @@
 <link rel="import" href="article-list.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="topic-summary.html">
+<link rel="import" href="topic-comments.html">
+<link rel="import" href="topic-stats.html">
 
 <dom-module id="topic-page">
   <template>
@@ -98,9 +100,8 @@
           <div class="topic-panel">
             <iron-pages selected="{{panel}}" attr-for-selected="name">
               <topic-summary name="topic-summary" topic="{{routeData.topic_id}}"></topic-summary>
-              <!-- <topic-comments name="topic-comments" topic="{{topic}}"></topic-comments>
-              <topic-stats name="topic-stats" topic="{{topic}}"></topic-stats> -->
-              <!-- <topic-article-view name="topic-article-view"></topic-article-view> -->
+              <topic-comments name="topic-comments" topic="{{routeData.topic_id}}"></topic-comments>
+              <topic-stats name="topic-stats" topic="{{routeData.topic_id}}"></topic-stats>
             </iron-pages>
           </div>
           <!-- <test_ajax-app></test_ajax-app> -->
