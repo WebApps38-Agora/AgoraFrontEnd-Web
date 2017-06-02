@@ -54,7 +54,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <app-location route="{{route}}"></app-location>
     <app-route
         route="{{route}}"
-        pattern="[[rootPattern]]:page"
+        pattern="/:page"
         data="{{routeData}}"
         tail="{{subroute}}"></app-route>
 
@@ -67,6 +67,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           fallback-selection="page-404"
           role="main">
         <topic-index name="topic-index"></topic-index>
+        <topic-page name="topic-page"></topic-page>
         <page-404 name="page-404"></page-404>
       </iron-pages>
   </template>
