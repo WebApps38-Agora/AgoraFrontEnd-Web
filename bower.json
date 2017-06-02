@@ -24,7 +24,7 @@
     "css-buttons": "components#*",
     "iron-list": "^2.0.0",
     "text-highlighter": "^1.2.0",
-    "jquery": "^3.2.1"
+    "jquery": "^3.2.1",
     "hover": "^2.1.1"
   },
   "resolutions": {
