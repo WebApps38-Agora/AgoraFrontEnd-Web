@@ -132,11 +132,6 @@
             type: Array,
             value: []
           },
-          active: {
-            type: Boolean,
-            value: false,
-            observer: '_refresh'
-          }
         }
       }
 
@@ -160,8 +155,6 @@
       handleResponse(data) {
         var article = this.$.article;
         this.topic = data.detail.response;
-        console.log("HANDLING");
-        console.log(this.topic);
         this.topic.article_set.forEach(function (item, index) {
           article.url = item;
           article.generateRequest();
@@ -170,8 +163,6 @@
 
       collectArticle(data) {
         var article = data.detail.response;
-        console.log("ARTICLE");
-        console.log(article);
         this.push('articles', article);
       }
 
