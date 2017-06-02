@@ -37,14 +37,14 @@
     <!-- <h1>{{this.topic.headline}}</h1> -->
     <!-- <h4>{{_computeDate()}}</h4> -->
 
-    <template is="dom-if" if="[[!topic.summary.length]]">
+    <!-- <template is="dom-if" if="[[!topic.summary.length]]">
       <div class="missing">
         <iron-icon class="big-icon" icon="inbox"></iron-icon>
         <h1>No summary yet!</h1>
         <p>Be the first one to contribute to the summary of this topic.</p>
         <p>Just press the add button below and type away!</p>
       </div>
-    </template>
+    </template> -->
   </template>
 
   <script type="text/javascript" src="../bower_components/moment/moment.js"></script>
@@ -58,19 +58,19 @@
         }
       }
 
-      constructor() {
-        super();
-      }
-
-      _computeDate() {
-        return "Today";
-        // return moment(this.topic.date).format("dddd, MMMM Do YYYY");
-      }
-
-      collectTitle(data) {
-        article = data.detail.response;
-        this.topic.headline = article.headline;
-      }
+      // constructor() {
+      //   super();
+      // }
+      //
+      // _computeDate() {
+      //   return "Today";
+      //   // return moment(this.topic.date).format("dddd, MMMM Do YYYY");
+      // }
+      //
+      // collectTitle(data) {
+      //   article = data.detail.response;
+      //   this.topic.headline = article.headline;
+      // }
 
     }
 
