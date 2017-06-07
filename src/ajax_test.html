@@ -23,7 +23,7 @@
     <iron-ajax
       auto
       id="request"
-      url="http://127.0.0.1:8000/articles"
+      url="https://agora-be.herokuapp.com/articles"
       handle-as="json"
       on-response="handleResponse"
       debounce-duration="300">
@@ -43,13 +43,13 @@
 
         this.headlines = [
           {first: 'Guardian', id: 'view5'}
-        ]; 
+        ];
         this.repos = {items: [{snippet: {title:"loading......"}}]};
       }
 
       handleResponse(data) {
         this.repos = data.detail.response;
-        //this.$.request.url = "http://127.0.0.1:8000/topics"
+        //this.$.request.url = "http://agora-be.herokuapp.com/topics"
         //this.$.request.on-response = "handleTopic"
         //this.$.request.generateRequest();
       }
@@ -58,7 +58,7 @@
       //  this.repos.topic-name = data.detail.response;
       //  console.log(this.repos.topic-name);
       //}
-    
+
       //handleResponse2(data) {
       //  this.repos2 = data.detail.response;
       //  console.log(this.repos.nextPageToken);
