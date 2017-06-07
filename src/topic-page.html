@@ -83,12 +83,6 @@
       on-response="handleResponse">
     </iron-ajax>
 
-    <iron-ajax
-      id="article"
-      handle-as="json"
-      on-response="collectArticle">
-    </iron-ajax>
-
     <div class="main layout horizontal">
       <div class="topic-main-space flex">
         <div class="centered sm-shadow">
@@ -145,7 +139,6 @@
       }
 
       _routeTopicChanged(topic_id) {
-
         this.topic_id = topic_id;
         this.articles = [];
         this.$.request.generateRequest();
@@ -154,16 +147,17 @@
       handleResponse(data) {
         var article = this.$.article;
         this.topic = data.detail.response;
+        this.articles = this.topic.article_set;
         this.topic.article_set.forEach(function (item, index) {
-          article.url = item;
-          article.generateRequest();
+          // article.url = item;
+          // article.generateRequest();
         });
       }
-
-      collectArticle(data) {
-        var article = data.detail.response;
-        this.push('articles', article);
-      }
+      //
+      // collectArticle(data) {
+      //   var article = data.detail.response;
+      //   this.push('articles', article);
+      // }
 
     }
 

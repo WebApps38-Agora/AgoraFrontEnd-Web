@@ -57,16 +57,19 @@
     </style>
 
     <iron-ajax
-      auto
-      id="source"
-      url="{{article.source}}"
+      id="article"
       handle-as="json"
-      on-response="collectSource"
-      debounce-duration="300">
+      on-response="collectArticle">
+    </iron-ajax>
+
+    <iron-ajax
+      id="source"
+      handle-as="json"
+      on-response="collectSource">
     </iron-ajax>
 
     <div class="article">
-      <a class="hvr-underline-from-left" href="{{article.url}}" target="_blank">
+      <a class="hvr-underline-from-left" href="{{article_resp.url}}" target="_blank">
         <div class="pad">
           <iron-image preload
                       src="{{source.url_logo}}"
@@ -75,7 +78,7 @@
                              margin: 1rem; margin-left: 0.5rem;float:left"></iron-image>
           <div class="article-text">
             <h4 class="headline">
-              {{article.headline}}
+              {{article_resp.headline}}
             </h4>
             <p class="from">
               from {{source.name}}
@@ -93,14 +96,28 @@
 
       static get properties() {
         return {
-          article: Object,
+          article: {
+            type: Object,
+            observer: '_pullArticle'
+          },
           source: Object
         }
       }
 
+      _pullArticle() {
+        this.$.article.url = this.article;
+        this.$.article.generateRequest();
+      }
+
+      collectArticle(data) {
+        this.article_resp = data.detail.response;
+        this.$.source.url = this.article_resp.source;
+        this.$.source.generateRequest();
+      }
+
       collectSource(data) {
         this.source = data.detail.response;
-        console.log(this.source);
+        // console.log(this.source);
       }
 
     }
