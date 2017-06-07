@@ -9,15 +9,14 @@
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
-<!-- <link rel="import" href="../bower_components/paper-tabs/paper-tabs-icons.html"> -->
 <link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs-icons.html">
 
-<link rel="import" href="ajax_test.html">
-<link rel="import" href="article-list.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="article-list.html">
 <link rel="import" href="topic-summary.html">
 <link rel="import" href="topic-comments.html">
 <link rel="import" href="topic-stats.html">
@@ -81,8 +80,7 @@
       id="request"
       url="http://127.0.0.1:8000/topics/{{topic_id}}"
       handle-as="json"
-      on-response="handleResponse"
-      debounce-duration="300">
+      on-response="handleResponse">
     </iron-ajax>
 
     <iron-ajax
@@ -147,6 +145,7 @@
       }
 
       _routeTopicChanged(topic_id) {
+
         this.topic_id = topic_id;
         this.articles = [];
         this.$.request.generateRequest();

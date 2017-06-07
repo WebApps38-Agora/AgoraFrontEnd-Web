@@ -7,6 +7,7 @@
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="topic-index-tile.html">
 
 <dom-module id="topic-index">
   <template>
@@ -115,12 +116,6 @@
       debounce-duration="300">
     </iron-ajax>
 
-    <iron-ajax
-      id="article"
-      handle-as="json"
-      on-response="collectTitle">
-    </iron-ajax>
-
     <div class="centered">
       <template is="dom-if" if="[[!first_articles.length]]">
         <div class="missing">
@@ -131,15 +126,9 @@
       </template>
       <ul class="app-grid" id="topics">
         <!-- For each topic make a tile -->
-        <template is="dom-repeat" items="[[first_articles]]" as="first_article">
+        <template is="dom-repeat" items="[[topics]]" as="topic">
           <li class="item">
-            <a href="/topic-page/{{first_article.topic_id}}">
-            <iron-image preload
-                        class="item-bg"
-                        sizing="cover"
-                        src="{{first_article.url_image}}"></iron-image>
-            <div class="item-title">{{first_article.headline}}</div>
-            </a>
+            <topic-index-tile topic="[[topic]]"></topic-index-tile>
           </li>
         </template>
       </ul>
@@ -159,22 +148,22 @@
     constructor() {
         super();
 
-        this.first_articles = [];
+        this.topics = [];
     }
 
       handleResponse(data) {
-        article = this.$.article;
-        var topics = data.detail.response;
-        topics.forEach(function (item, index) {
-          article.url = item.article_set[0];
-          article.generateRequest();
-        });
+        // var article = this.$.article;
+        this.topics = data.detail.response;
+        // topics.forEach(function (item, index) {
+        //   article.url = item.article_set[0];
+        //   article.generateRequest();
+        // });
       }
 
-      collectTitle(data) {
-        var topic = data.detail.response;
-        this.push('first_articles', topic);
-      }
+      // collectTitle(data) {
+      //   var topic = data.detail.response;
+      //   this.push('topics', topic);
+      // }
 
     }
 
