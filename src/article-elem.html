@@ -37,6 +37,7 @@
 
           .pad {
             padding: 1rem;
+            display: inline-flex;
           }
 
           p {
@@ -45,9 +46,10 @@
             font-size: 0.8rem;
           }
 
-          h4 {
+          h5 {
             margin: 0;
-            line-height: 1.5rem;
+            line-height: 1.2rem;
+            font-size: 110%;
           }
 
           .article-text {
@@ -74,16 +76,17 @@
           <iron-image preload
                       src="{{source.url_logo}}"
                       sizing="contain"
-                      style="width:40px; height:40px; background-color:grey;
-                             margin: 1rem; margin-left: 0.5rem;float:left"></iron-image>
+                      style="width:40px; min-width: 40px; height:40px; background-color:grey;
+                             margin: 1rem; margin-left: 0.5rem;"></iron-image>
           <div class="article-text">
-            <h4 class="headline">
-              {{article_resp.headline}}
-            </h4>
-            <p class="from">
+            <h5 id="headline">
+              {{headline}}
+            </h5>
+            <!-- <p class="from">
               from {{source.name}}
-            </p>
+            </p> -->
           </div>
+          <reaction-bar></reaction-bar>
         </div>
       </a>
     </div>
@@ -100,7 +103,18 @@
             type: Object,
             observer: '_pullArticle'
           },
-          source: Object
+          source: Object,
+          headline: {
+            type: String,
+            observer: '_editTitle'
+          }
+        }
+      }
+
+      _editTitle() {
+        console.log("CHANGING HEADLINE OF LENGTH " + this.headline.length);
+        if (this.headline.length > 90) {
+          this.headline = this.headline.slice(0, 90) + " [...] ";
         }
       }
 
@@ -111,15 +125,15 @@
 
       collectArticle(data) {
         this.article_resp = data.detail.response;
+        this.headline = this.article_resp.headline;
         this.$.source.url = this.article_resp.source;
         this.$.source.generateRequest();
       }
 
       collectSource(data) {
         this.source = data.detail.response;
-        // console.log(this.source);
+        console.log(this.source.url_logo);
       }
-
     }
 
     window.customElements.define(ArticleElem.is, ArticleElem);
