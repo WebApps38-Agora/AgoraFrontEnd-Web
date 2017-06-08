@@ -1,14 +1,45 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/paper-slider/paper-slider.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="my-icons.html">
 
 <dom-module id="reaction-bar">
   <template>
-    <style inclue="shared-styles">
+    <style inclue="shared-styles iron-flex">
         :host {
-            display: block;
+            display: inline-flex;
         }
+
+        .submit-button {
+          border: 1px var(--app-dark-color) solid;
+          color: var(--app-black-color);
+          float: right;
+          background-color: white;
+          padding: 0.25rem;
+          width: auto; height: auto;
+          text-align: center;
+        }
+
+        a paper-button,
+        a:active paper-button,
+        a:visited paper-button {
+          color: #000;
+        }
+
     </style>
+
+    <iron-ajax id="ajax"
+               handle-as="json"
+               content-type="application/json"
+               method="PUT"
+               on-response="handleResponse"
+               on-error="handleError"
+               debounce-duration="300"></iron-ajax>
+
+    <paper-slider id="reaction" pin snaps max="100" max-markers="5" step="20" value="10"></paper-slider>
+    <paper-button id="reactionSubmit" raised class="green">SUBMIT</paper-button>
 
   </template>
 
@@ -18,8 +49,46 @@
 
       static get properties() {
         return {
-          article: Object
+          article: {
+            type: Number,
+            observer: "_checkArticle"
+          },
+          ajax: Object,
+          reaction: Object
         }
+      }
+
+      handleResponse(data) {
+        console.log("HHHHHHHHHHHIIIIII");
+        console.log(data.detail.response);
+      }
+
+      handleError(data) {
+        console.log("ERROR");
+        console.log(data.detail.request.xhr.response);
+      }
+
+      _checkArticle() {
+        var ajax = this.$.ajax;
+        var article = this.article;
+        var reaction = this.$.reaction;
+
+        var test = function() {
+          ajax.url = "https://agora-be.herokuapp.com/metrics/";
+          console.log(reaction.value);
+          ajax.body = JSON.stringify({
+            owner: 1,
+            "article": article,
+            fake_percent: 0,
+            fact_percent: 100 - (reaction.value),
+            bias_percent: (reaction.value)
+          });
+          console.log(ajax);
+          console.log(ajax.body);
+          ajax.generateRequest();
+        }
+
+        this.$.reactionSubmit.addEventListener('click', test);
       }
     }
 

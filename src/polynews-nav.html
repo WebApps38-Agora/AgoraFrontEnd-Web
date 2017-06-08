@@ -4,21 +4,14 @@
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
-<link rel="import" href="my-icons.html">
-
-<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="polynews-nav">
   <template>
-    <style include="shared-styles iron-flex">
+    <style include="shared-styles">
 
       #nav-home {
         margin-right: 0.5rem;
-      }
-
-      app-drawer-layout:not([narrow]) [drawer-toggle] {
-        display: none;
       }
 
       app-header {
@@ -30,6 +23,7 @@
         color: var(--app-white-color);
         background-color: var(--app-dark-color);
         box-shadow: 1px 0px 5px black;
+        display: inline-flex;
       }
 
       app-header paper-icon-button {
@@ -44,6 +38,7 @@
       .snd-title {
         width: 284px;
         text-align: center;
+        float: right;
         /*border-left: 1px solid var(--app-black-color);*/
       }
 
@@ -62,12 +57,12 @@
 
     </style>
 
-    <app-header slot="header" fixed>
-      <app-toolbar class="horizontal layout">
+    <app-header fixed>
+      <app-toolbar>
         <a href="[[rootPath]]" tabindex="-1">
           <paper-icon-button id="nav-home" icon="home"></paper-icon-button>
         </a>
-        <div main-title>Polynews</div>
+        <div main-title>{{title}}</div>
         <template is="dom-if" if="{{withSidebar}}">
           <div class="snd-title">Headlines</div>
         </template>
@@ -83,7 +78,11 @@
       static get properties() {
         return {
           rootPath: String,
-          withSidebar: Boolean
+          withSidebar: Boolean,
+          title: {
+            type: String,
+            value: "Polynews"
+          }
         }
       }
     }

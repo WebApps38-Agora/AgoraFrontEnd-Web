@@ -33,6 +33,7 @@
         height: 100%;
         width: 100%;
         max-height: calc(100vh - var(--app-nav-size));
+        height: calc(100vh - var(--app-nav-size));
       }
 
       paper-icon-item {
@@ -65,6 +66,11 @@
         width: 100%;
         color: white;
       }
+
+      .topic-title {
+        padding: 2rem;
+        border-bottom: 1px var(--app-black-color) solid;
+      }
     </style>
 
     <app-location route="{{route}}"></app-location>
@@ -87,8 +93,9 @@
       <div class="topic-main-space flex">
         <div class="centered sm-shadow">
           <div class="topic-panel">
+            <h1 class="topic-title">{{topic.title}}</h1>
             <iron-pages selected="{{panel}}" attr-for-selected="name">
-              <topic-summary name="topic-summary" topic="{{routeData.topic_id}}"></topic-summary>
+              <topic-summary name="topic-summary" topic="{{topic}}"></topic-summary>
               <topic-comments name="topic-comments" topic="{{routeData.topic_id}}"></topic-comments>
               <topic-stats name="topic-stats" topic="{{routeData.topic_id}}"></topic-stats>
             </iron-pages>
@@ -148,8 +155,6 @@
         var article = this.$.article;
         this.topic = data.detail.response;
         this.articles = this.topic.article_set;
-        this.topic.article_set.forEach(function (item, index) {
-        });
       }
 
     }

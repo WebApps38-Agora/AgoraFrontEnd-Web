@@ -2,7 +2,6 @@
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
@@ -25,22 +24,54 @@
       }
 
       iron-list {
-        height: calc(100vh - var(--app-nav-size));
+        max-height: calc(100vh - var(--app-nav-size));
+      }
+
+      .missing {
+        padding: 2rem;
+      }
+
+      #filler > .pad {
+        width:  calc(100% - 4rem);
+        height: calc(100% - 4rem);
+        padding: 2rem;
+        display: table;
+      }
+
+      .pad-cell {
+        display: table-cell;
+        vertical-align: middle;
+      }
+
+      #filler {
+        /*height: calc( 100% - ;*/
+        max-width: 100%;
+        padding-top: 1rem;
+        text-align: center;
+        color: var(--app-dark-color);
       }
 
     </style>
 
-  <template is="dom-if" if="{{!articles.length}}">
-    <div class="missing" style="margin:2rem;margin-top:0;margin-bottom:0;">
-      <h3>We don't have any headlines on this topic</h3>
-    </div>
-  </template>
-
-  <iron-list id="headline-list" items="[[articles]]" as="article">
-    <template>
-      <article-elem article="{{article}}"></article-elem>
+    <template is="dom-if" if="{{!articles.length}}">
+      <div class="article" style="margin:2rem;margin-top:0;margin-bottom:0;">
+        <p>We don't have any headlines on this topic</p>
+      </div>
     </template>
-  </iron-list>
+
+    <iron-list id="headline-list" items="[[articles]]" as="article">
+      <template>
+        <article-elem article="{{article}}"></article-elem>
+      </template>
+    </iron-list>
+    <div class="article" id="filler">
+      <div class="pad">
+        <div class="pad-cell">
+          <h3>That's it folks!</h3>
+          <p>We don't seem to have any more articles on the topic</p>
+        </div>
+      </div>
+    </div>
 
   </template>
 
@@ -50,11 +81,21 @@
 
       static get properties() {
         return {
-          articles: Array,
+          articles: {
+            type: Array,
+            observer: '_formatList'
+          },
           sources: Array
         };
       }
 
+      _formatList() {
+        if (this.articles.length < 5) {
+          this.$.filler.style.height = 100 - (this.articles.length * 20) + "%" ;
+        } else {
+          this.$.filler.style.display = 'none';
+        }
+      }
     }
 
     window.customElements.define(ArticleList.is, ArticleList);

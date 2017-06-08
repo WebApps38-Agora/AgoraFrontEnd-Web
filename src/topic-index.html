@@ -5,7 +5,6 @@
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="topic-index-tile.html">
 
@@ -149,14 +148,15 @@
       }
 
       handleResponse(data) {
-        console.log("TOO LONG");
-        data.detail.response.forEach( function (item, index) {
-          console.log(item);
-          // TODO: REMOVE BELOW
-          if (index < 50) {
-            this.push('topics', item);
-          }
-        }, this);
+        this.topics = data.detail.response;
+        // console.log("TOO LONG");
+        // data.detail.response.forEach( function (item, index) {
+        //   console.log(item);
+        //   // TODO: REMOVE BELOW
+        //   if (index < 50) {
+        //     this.push('topics', item);
+        //   }
+        // }, this);
       }
     }
 

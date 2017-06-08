@@ -10,51 +10,86 @@
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="my-icons.html">
-
-<link rel="lazy-import" href="reaction-bar.html">
+<link rel="import" href="reaction-bar.html">
 
 <dom-module id="article-elem">
   <template>
     <style inclue="shared-styles iron-flex">
-          :host {
-            /*display: inline-block;*/
-          }
+        :host {
+          /*display: inline-block;*/
+        }
 
-          .article {
-            height: 150px;
-            background: white;
-            width: 100%;
-            max-width: 100%;
-            border-left: 1px var(--app-dark-color) solid;
-            border-bottom: 1px var(--app-dark-color) solid;
-          }
+        .article {
+          height: 150px;
+          background: white;
+          width: 100%;
+          max-width: 100%;
+          border-left: 1px var(--app-dark-color) solid;
+          border-bottom: 1px var(--app-dark-color) solid;
+        }
 
-          a:hover, a:visited, a {
-            text-decoration: none;
-            color: inherit;
-            cursor: pointer;
-          }
+        a:hover, a:visited, a {
+          text-decoration: none;
+          color: inherit;
+          cursor: pointer;
+        }
 
-          .pad {
-            padding: 1rem;
-            display: inline-flex;
-          }
+        .pad {
+          padding: 1rem;
+          display: inline-flex;
+        }
 
-          p {
-            margin-top: 0.3rem;
-            margin-left: calc(40px + 1.5rem);
-            font-size: 0.8rem;
-          }
+        p {
+          margin-top: 0.3rem;
+          margin-left: calc(40px + 1.5rem);
+          font-size: 0.8rem;
+        }
 
-          h5 {
-            margin: 0;
-            line-height: 1.2rem;
-            font-size: 110%;
-          }
+        h5 {
+          margin: 0;
+          line-height: 1.2rem;
+          font-size: 110%;
+        }
 
-          .article-text {
-            padding: 0.25em;
-          }
+        .article-text {
+          padding: 0.25em;
+        }
+
+        /* Underline From Left */
+        .hvr-underline-from-left {
+          display: inline-block;
+          vertical-align: middle;
+          -webkit-transform: perspective(1px) translateZ(0);
+          -moz-transform: perspective(1px) translateZ(0);
+          transform: perspective(1px) translateZ(0);
+          box-shadow: 0 0 1px transparent;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .hvr-underline-from-left:before {
+          content: "";
+          position: absolute;
+          z-index: -1;
+          left: 0;
+          right: 100%;
+          bottom: 0;
+          background: var(--app-main-color);
+          height: 4px;
+          -webkit-transition-property: right;
+          -moz-transition-property: right;
+          transition-property: right;
+          -webkit-transition-duration: 0.3s;
+          -moz-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+          -webkit-transition-timing-function: ease-out;
+          -moz-transition-timing-function: ease-out;
+          transition-timing-function: ease-out;
+        }
+
+        .hvr-underline-from-left:hover:before, .hvr-underline-from-left:active:before {
+          right: 0;
+        }
 
     </style>
 
@@ -70,8 +105,8 @@
       on-response="collectSource">
     </iron-ajax>
 
-    <div class="article">
-      <a class="hvr-underline-from-left" href="{{article_resp.url}}" target="_blank">
+    <div class="hvr-underline-from-left article">
+      <a class="" href="{{article_resp.url}}" target="_blank">
         <div class="pad">
           <iron-image preload
                       src="{{source.url_logo}}"
@@ -82,13 +117,10 @@
             <h5 id="headline">
               {{headline}}
             </h5>
-            <!-- <p class="from">
-              from {{source.name}}
-            </p> -->
           </div>
-          <reaction-bar></reaction-bar>
         </div>
       </a>
+      <reaction-bar article="{{article}}"></reaction-bar>
     </div>
 
   </template>
@@ -112,7 +144,6 @@
       }
 
       _editTitle() {
-        console.log("CHANGING HEADLINE OF LENGTH " + this.headline.length);
         if (this.headline.length > 90) {
           this.headline = this.headline.slice(0, 90) + " [...] ";
         }
@@ -132,7 +163,6 @@
 
       collectSource(data) {
         this.source = data.detail.response;
-        console.log(this.source.url_logo);
       }
     }
 

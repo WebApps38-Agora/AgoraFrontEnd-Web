@@ -18,7 +18,9 @@
         paper-fab {
           margin: 1rem auto;
         }
+
     </style>
+
 
     <div class="centered">
       <template is="dom-if" if="True">
@@ -32,23 +34,8 @@
       </template>
     </div>
 
-    <iron-ajax
-      id="article"
-      handle-as="json"
-      on-response="collectTitle">
-    </iron-ajax>
+    <h4>{{_computeDate()}}</h4>
 
-    <!-- <h1>{{this.topic.headline}}</h1> -->
-    <!-- <h4>{{_computeDate()}}</h4> -->
-
-    <!-- <template is="dom-if" if="[[!topic.summary.length]]">
-      <div class="missing">
-        <iron-icon class="big-icon" icon="inbox"></iron-icon>
-        <h1>No summary yet!</h1>
-        <p>Be the first one to contribute to the summary of this topic.</p>
-        <p>Just press the add button below and type away!</p>
-      </div>
-    </template> -->
   </template>
 
   <script type="text/javascript" src="../bower_components/moment/moment.js"></script>
@@ -58,23 +45,23 @@
 
       static get properties() {
         return {
-          topic: Object
+          topic: {
+            type: Object,
+            observer: "_getTopicSummary"
+          }
         }
       }
 
-      // constructor() {
-      //   super();
-      // }
-      //
-      // _computeDate() {
-      //   return "Today";
-      //   // return moment(this.topic.date).format("dddd, MMMM Do YYYY");
-      // }
-      //
-      // collectTitle(data) {
-      //   article = data.detail.response;
-      //   this.topic.headline = article.headline;
-      // }
+      _getTopicSummary() {
+        console.log(this.topic);
+      }
+
+      _computeDate() {
+        if (this.topic === undefined) {
+          return ;
+        }
+        return moment(this.topic.published_at).format("dddd, MMMM Do YYYY");
+      }
 
     }
 
