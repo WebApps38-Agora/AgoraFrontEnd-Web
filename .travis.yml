@@ -15,10 +15,11 @@ install:
   - bower install
 script:
   - xvfb-run wct
-after_success:
+before_deploy:
   - polymer build --preset es5-bundled
 deploy:
   provider: firebase
+  skip_cleanup: true
   token:
     secure: "QuGkOk6o+Htd21jWzGzvKKSIi903Lz2lr4bgv7NDsasSJWavio37dhDRA8G3G6o/ouauxCasSU2b9W5KN8ybgTpOg8wT6y+XEz+A6rtTDhwUCig+pQ+h4BVU7ojKNoLOEQHwUU1/dnUpphVZnggtnZjfGMZ8wZqkryh0FJMOERk3yYnWFCaJUd+Lg9I19AaFRpXtu2/cbxQOgoQWQdvcp/TGtpdCrJ1k9dJQYKrA0eU4WLrX9zIFzk/fEDkfnLG8X/xvtv1SLtu2iIYTKfNQ/hS4JsOibPs7JCnh7BEatWA3vMUe3UfDLzci7quqezuWdWbiXeGGRXd+PbQO679EfJZYvPoqSvFZ/L6RHaAloyu7HcP61PslixJzYtitLe+3JgjCMZmGCHXGJ+Ltw+WNH5LW/e6ifqaKj7tDX/qPXf5bvXeRcaAi/DBW5vA1NeP5mg6LOj6bIWAjHZjjOMi/oejZNsWEx9/Kc66Te8Yi/wrYBzqms3c/f+GxUWhGtTg0wTlb5BVKWPvwegaPIugp3SC3cscPnuLPAW56uUmNXh4jvL7JYpwLC5i+rQOl5Rnb6eO3OgfxoMftmM6fXUadYGy/EopXEERwL3ZRlxCerrB46FXD8J2yJoPtw7ApLOeVGWW1RB/fNim/9h4TbOIyXssrvmcUnlCYn2y8yxhpF/c"
 env:
