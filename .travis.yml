@@ -10,13 +10,14 @@ addons:
       - google-chrome
     packages:
       - google-chrome-stable
-before_script:
+install:
   - npm install -g bower web-component-tester polymer-cli
   - bower install
 script:
   - xvfb-run wct
-  - polymer build --preset es5-bundled
 after_success:
+  - polymer build --preset es5-bundled
+deploy:
   - firebase deploy
 env:
   global:
