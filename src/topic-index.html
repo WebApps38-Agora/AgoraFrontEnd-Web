@@ -110,7 +110,7 @@
     <iron-ajax
       auto
       id="request"
-      url="http://127.0.0.1:8000/topics"
+      url="https://agora-be.herokuapp.com/topics"
       handle-as="json"
       on-response="handleResponse"
       debounce-duration="300">
@@ -126,9 +126,9 @@
       </template>
       <ul class="app-grid" id="topics">
         <!-- For each topic make a tile -->
-        <template is="dom-repeat" items="[[topics]]" as="topic">
+        <template is="dom-repeat" items="{{topics}}" as="topic">
           <li class="item">
-            <topic-index-tile topic="[[topic]]"></topic-index-tile>
+            <topic-index-tile topic="{{topic}}"></topic-index-tile>
           </li>
         </template>
       </ul>
@@ -141,30 +141,23 @@
       static get is() { return 'topic-index'; }
 
       static get properties() {
-        return {
-        }
       }
 
-    constructor() {
+      constructor() {
         super();
-
         this.topics = [];
-    }
+      }
 
       handleResponse(data) {
-        // var article = this.$.article;
-        this.topics = data.detail.response;
-        // topics.forEach(function (item, index) {
-        //   article.url = item.article_set[0];
-        //   article.generateRequest();
-        // });
+        console.log("TOO LONG");
+        data.detail.response.forEach( function (item, index) {
+          console.log(item);
+          // TODO: REMOVE BELOW
+          if (index < 50) {
+            this.push('topics', item);
+          }
+        }, this);
       }
-
-      // collectTitle(data) {
-      //   var topic = data.detail.response;
-      //   this.push('topics', topic);
-      // }
-
     }
 
     window.customElements.define(TopicIndex.is, TopicIndex);

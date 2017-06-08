@@ -78,7 +78,7 @@
 
     <iron-ajax
       id="request"
-      url="http://127.0.0.1:8000/topics/{{topic_id}}"
+      url="https://agora-be.herokuapp.com/topics/{{topic_id}}"
       handle-as="json"
       on-response="handleResponse">
     </iron-ajax>
@@ -149,15 +149,8 @@
         this.topic = data.detail.response;
         this.articles = this.topic.article_set;
         this.topic.article_set.forEach(function (item, index) {
-          // article.url = item;
-          // article.generateRequest();
         });
       }
-      //
-      // collectArticle(data) {
-      //   var article = data.detail.response;
-      //   this.push('articles', article);
-      // }
 
     }
 
