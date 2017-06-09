@@ -4,9 +4,11 @@
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="topic-summary">
@@ -30,6 +32,18 @@
           max-width: 100%;
         }
 
+        .arrow-container {
+          margin: 10px;
+        }
+
+        .up {
+          color: green;
+        }
+
+        .down {
+          color: red;
+        }
+
     </style>
 
 
@@ -42,6 +56,23 @@
           like to be the first?</p>
         </div>
         <paper-fab icon="add" on-click="open_comment_dialog"></paper-fab>
+      </template>
+      <template is="dom-repeat" items="{{facts}}" class="layout horizontal">
+        <paper-card class="layout horizontal center">
+          <div class="layout vertical arrow-container">
+            <div class="up layout horizontal center">
+              1
+              <iron-icon class="star" icon="arrow-drop-up"></iron-icon>
+            </div>
+            <div class="down layout horizontal center">
+              2
+              <iron-icon class="star" icon="arrow-drop-down"></iron-icon>
+          </div>
+          </div>
+          <div class="card-content">
+            {{item}}
+          </div>
+        </paper-card>
       </template>
     </div>
 
