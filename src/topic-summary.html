@@ -6,6 +6,7 @@
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="topic-summary">
@@ -19,23 +20,41 @@
           margin: 1rem auto;
         }
 
+        paper-dialog {
+          margin: 1rem auto;
+          width: 50%;
+          max-width: 50%;
+        }
+
+        paper-textarea {
+          max-width: 100%;
+        }
+
     </style>
 
 
     <div class="centered">
-      <template is="dom-if" if="True">
+      <template is="dom-if" if="{{!facts.length}}">
         <div class="missing">
           <iron-icon class="big-icon" icon="inbox"></iron-icon>
           <h1>No summary!</h1>
           <p>It seems that our summary has not yet been written. Would you
           like to be the first?</p>
         </div>
-        <paper-fab icon="add"></paper-fab>
+        <paper-fab icon="add" on-click="open_comment_dialog"></paper-fab>
       </template>
     </div>
 
     <h4>{{_computeDate()}}</h4>
 
+    <paper-dialog id="add_fact_dialog" with-backdrop="true" max-height="100%">
+      <h2>Add fact about this topic</h2>
+
+      <paper-textarea id="content" label="Content" rows="1" max-rows="5">
+      </paper-textarea>
+
+      <paper-button id="nav-home" class="submit" on-click="add_fact"> Submit </paper-button>
+    </paper-dialog>
   </template>
 
   <script type="text/javascript" src="../bower_components/moment/moment.js"></script>
@@ -48,8 +67,28 @@
           topic: {
             type: Object,
             observer: "_getTopicSummary"
+          },
+          id: {
+          },
+          facts: {
+            type: Array,
+            value: ["fact1", "fact2"],
           }
         }
+      }
+
+      constructor () {
+        super();
+      }
+
+      open_comment_dialog() {
+        this.$.add_fact_dialog.open();
+      }
+
+      add_fact() {
+        // this.$.post("https://agora-be.herokuapp.com/rest_auth/login/",
+                    // {topic: });
+        alert("this id " + this.id);
       }
 
       _getTopicSummary() {

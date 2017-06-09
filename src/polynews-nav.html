@@ -81,16 +81,19 @@
         </a>
         <div main-title>{{title}}</div>
           <paper-icon-button id="login" icon="account-circle"
-                             onclick="dialog.open();"></paper-icon-button>
-          <paper-dialog id="dialog">
+                             on-click="open"></paper-icon-button>
+
+          <paper-dialog id="login_dialog" with-backdrop="true">
             <h2>Login</h2>
-            <paper-input id="username" label="username">
+            <paper-input id="username" label="Username">
             </paper-input>
-            <paper-input id="password" label="password" type="password">
+
+            <paper-input id="password" label="Password" type="password">
             </paper-input>
 
             <paper-button id="nav-home" class="submit" on-click="send_request"> Submit </paper-button>
           </paper-dialog>
+
         <template is="dom-if" if="{{withSidebar}}">
           <div class="snd-title">Headlines</div>
         </template>
@@ -127,11 +130,15 @@
         }
       }
 
+      open () {
+        this.$.login_dialog.open();
+      }
+
       send_request () {
         ajax.url = "https://agora-be.herokuapp.com/rest_auth/login/";
         ajax.body = {username:this.$.username.value, password: this.$.password.value};
         ajax.generateRequest();
-        this.close();
+        this.$.dialog.close();
       }
 
       handleResponse(data) {

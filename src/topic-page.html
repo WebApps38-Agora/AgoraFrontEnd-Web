@@ -101,8 +101,8 @@
             </iron-pages>
           </div>
           <paper-tabs selected="{{panel}}" attr-for-selected="name" align-bottom>
-            <paper-tab name="topic-summary">SUMMARY</paper-tab>
-            <paper-tab name="topic-comments">COMMENTS</paper-tab>
+            <paper-tab name="topic-summary" id="{{topic_id}}">SUMMARY</paper-tab>
+            <paper-tab name="topic-comments" id="{{topic_id}}">COMMENTS</paper-tab>
             <paper-tab name="topic-stats">STATS</paper-tab>
           </paper-tabs>
         </div>
@@ -146,6 +146,7 @@
       }
 
       _routeTopicChanged(topic_id) {
+        alert("id changed");
         this.topic_id = topic_id;
         this.articles = [];
         this.$.request.generateRequest();
