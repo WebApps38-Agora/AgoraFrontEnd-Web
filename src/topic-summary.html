@@ -5,6 +5,7 @@
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="shared-styles.html">
 
@@ -17,24 +18,47 @@
 
         paper-fab {
           margin: 1rem auto;
+          background-color: orange;
+        }
+
+        #postAdd, #newPost {
+          -o-transition: opacity .5s;
+          -ms-transition: opacity .5s;
+          -moz-transition: opacity .5s;
+          -webkit-transition: opacity .5s;
+          /* ...and now for the proper property */
+          transition: opacity .5s;
+        }
+
+        #newPost {
+          opacity:  0;  /* make things invisible upon start */
         }
 
     </style>
 
+    <iron-ajax id="facts"
+               handle-as="json"
+               on-response="collectFacts"></iron-ajax>
+
+    <iron-ajax id="post"
+              handle-as="json"
+              content-type="application/json"
+              method="POST"
+              on-response="handlePostResponse"
+              on-error="handlePostError"></iron-ajax>
 
     <div class="centered">
-      <template is="dom-if" if="True">
+      <template is="dom-if" if="{{!facts.length}}">
         <div class="missing">
           <iron-icon class="big-icon" icon="inbox"></iron-icon>
           <h1>No summary!</h1>
           <p>It seems that our summary has not yet been written. Would you
           like to be the first?</p>
         </div>
-        <paper-fab icon="add"></paper-fab>
       </template>
+      <paper-fab id="postAdd" icon="add"></paper-fab>
+      <paper-textarea id="newPost" max=300 label="What do you want to add to the summary? (no more than 300 chars)"></paper-textarea>
     </div>
-
-    <h4>{{_computeDate()}}</h4>
 
   </template>
 
@@ -48,19 +72,53 @@
           topic: {
             type: Object,
             observer: "_getTopicSummary"
-          }
+          },
+          facts: Array
         }
       }
 
       _getTopicSummary() {
         console.log(this.topic);
+        this.$.facts.url = "https://agora-be.herokuapp.com/facts/topic/" + this.topic.id;
+        this.$.facts.generateRequest();
+
+        var post = this.$.post;
+        var text = this.$.newPost;
+        var topic = this.topic;
+
+        var toggleTextbox = function() {
+          console.log(text.style.opacity);
+          text.style.opacity = 1 - text.style.opacity;
+          if (text.style.opacity == 0) {
+            text.style.opacity = 1;
+          } else {
+            text.style.opacity = 0;
+          }
+        }
+
+        var handleSubmission = function() {
+          post.url = "https://agora-be.herokuapp.com/facts";
+          post.body = JSON.stringify({
+            owner: 1,
+            "topic": "https://agora-be.herokuapp.com/topics/" + topic.id,
+            content: text.value
+          });
+          post.generateRequest();
+        }
+
+        console.log(this.$);
+        this.$.postAdd.addEventListener('click', toggleTextbox);
+        // this.$.postSubmit.addEventListener('click', handleSubmission);
       }
 
-      _computeDate() {
-        if (this.topic === undefined) {
-          return ;
-        }
-        return moment(this.topic.published_at).format("dddd, MMMM Do YYYY");
+      collectFacts(data) {
+        console.log("GETTING FACTS");
+        console.log(data.detail.response);
+        this.facts = data.detail.response;
+      }
+
+      handlePostResponse(data) {
+        console.log(data.detail.response);
       }
 
     }
