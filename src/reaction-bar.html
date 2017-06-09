@@ -33,10 +33,9 @@
     <iron-ajax id="ajax"
                handle-as="json"
                content-type="application/json"
-               method="PUT"
+               method="POST"
                on-response="handleResponse"
-               on-error="handleError"
-               debounce-duration="300"></iron-ajax>
+               on-error="handleError"></iron-ajax>
 
     <paper-slider id="reaction" pin snaps max="100" max-markers="5" step="20" value="10"></paper-slider>
     <paper-button id="reactionSubmit" raised class="green">SUBMIT</paper-button>
@@ -73,7 +72,7 @@
         var article = this.article;
         var reaction = this.$.reaction;
 
-        var test = function() {
+        var handleSubmission = function() {
           ajax.url = "https://agora-be.herokuapp.com/metrics/";
           console.log(reaction.value);
           ajax.body = JSON.stringify({
@@ -88,7 +87,7 @@
           ajax.generateRequest();
         }
 
-        this.$.reactionSubmit.addEventListener('click', test);
+        this.$.reactionSubmit.addEventListener('click', handleSubmission);
       }
     }
 

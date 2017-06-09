@@ -67,10 +67,19 @@
         color: white;
       }
 
-      .topic-title {
+      #topic_header {
         padding: 2rem;
         border-bottom: 1px var(--app-black-color) solid;
       }
+
+      #topic_title {
+      }
+
+      #topic_real_date {
+        float: right;
+      }
+
+
     </style>
 
     <app-location route="{{route}}"></app-location>
@@ -93,7 +102,11 @@
       <div class="topic-main-space flex">
         <div class="centered sm-shadow">
           <div class="topic-panel">
-            <h1 class="topic-title">{{topic.title}}</h1>
+            <div id="topic_header">
+              <h1 id="topic_title">{{topic.title}}</h1>
+              <h4 id="topic_real_date"></h4>
+              <h4 id="topic_date"></h4>
+            </div>
             <iron-pages selected="{{panel}}" attr-for-selected="name">
               <topic-summary name="topic-summary" topic="{{topic}}"></topic-summary>
               <topic-comments name="topic-comments" topic="{{routeData.topic_id}}"></topic-comments>
@@ -122,7 +135,10 @@
       static get properties() {
         return {
           topic_id: Number,
-          topic: Object,
+          topic: {
+            type: Object,
+            observer: "_computeDate"
+          },
           panel: {
             type: String,
             value: "topic-summary"
@@ -130,7 +146,7 @@
           articles: {
             type: Array,
             value: []
-          },
+          }
         }
       }
 
@@ -156,6 +172,12 @@
         this.topic = data.detail.response;
         this.articles = this.topic.article_set;
       }
+
+      _computeDate() {
+        this.$.topic_date.innerHTML = moment(this.topic.published_at).fromNow();
+        this.$.topic_real_date.innerHTML = moment(this.topic.published_at).format("dddd, MMMM Do YYYY [at] HH:mm");
+      }
+
 
     }
 

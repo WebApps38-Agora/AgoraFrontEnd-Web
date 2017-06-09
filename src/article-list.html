@@ -44,20 +44,13 @@
       }
 
       #filler {
-        /*height: calc( 100% - ;*/
         max-width: 100%;
-        padding-top: 1rem;
         text-align: center;
         color: var(--app-dark-color);
       }
 
     </style>
 
-    <template is="dom-if" if="{{!articles.length}}">
-      <div class="article" style="margin:2rem;margin-top:0;margin-bottom:0;">
-        <p>We don't have any headlines on this topic</p>
-      </div>
-    </template>
 
     <iron-list id="headline-list" items="[[articles]]" as="article">
       <template>
@@ -68,7 +61,7 @@
       <div class="pad">
         <div class="pad-cell">
           <h3>That's it folks!</h3>
-          <p>We don't seem to have any more articles on the topic</p>
+          <p>We don't seem to have any more articles on the topic.</p>
         </div>
       </div>
     </div>
@@ -91,7 +84,9 @@
 
       _formatList() {
         if (this.articles.length < 5) {
+          console.log(this.articles.length);
           this.$.filler.style.height = 100 - (this.articles.length * 20) + "%" ;
+          this.$.filler.style['padding-top'] = this.articles.length * 2 + "rem" ;
         } else {
           this.$.filler.style.display = 'none';
         }
