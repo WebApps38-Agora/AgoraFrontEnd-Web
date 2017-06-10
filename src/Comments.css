@@ -1,10 +1,10 @@
-div #center {
+.center {
   text-align: center;
   border-style: solid;
   border-width: 5px;
 }
 
-div #inner {
+.inner {
   display: inline-block;
 }
 
