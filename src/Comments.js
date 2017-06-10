@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import RaisedButton from '../node_modules/material-ui/RaisedButton';
 import './Comments.css';
 
 class Comments extends Component {
@@ -30,6 +31,7 @@ class Comments extends Component {
         <div className="inner">
           <ul>{cs}</ul>
         </div>
+        <RaisedButton label="Add Comment" />
       </div>
     );
   }
