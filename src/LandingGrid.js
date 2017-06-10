@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import IconButton from 'material-ui/IconButton';
 import {GridList, GridTile} from 'material-ui/GridList';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+import {Link} from 'react-router-dom'
 
 const styles = {
   root: {
@@ -14,55 +15,10 @@ const styles = {
   },
 };
 
-const tilesData = [
-  {
-    img: 'images/grid-list/00-52-29-429_640.jpg',
-    title: 'Breakfast',
-    author: 'jill111',
-    featured: true,
-  },
-  {
-    img: 'images/grid-list/burger-827309_640.jpg',
-    title: 'Tasty burger',
-    author: 'pashminu',
-  },
-  {
-    img: 'images/grid-list/camera-813814_640.jpg',
-    title: 'Camera',
-    author: 'Danson67',
-  },
-  {
-    img: 'images/grid-list/morning-819362_640.jpg',
-    title: 'Morning',
-    author: 'fancycrave1',
-    featured: true,
-  },
-  {
-    img: 'images/grid-list/hats-829509_640.jpg',
-    title: 'Hats',
-    author: 'Hans',
-  },
-  {
-    img: 'images/grid-list/honey-823614_640.jpg',
-    title: 'Honey',
-    author: 'fancycravel',
-  },
-  {
-    img: 'images/grid-list/vegetables-790022_640.jpg',
-    title: 'Vegetables',
-    author: 'jill111',
-  },
-  {
-    img: 'images/grid-list/water-plant-821293_640.jpg',
-    title: 'Water plant',
-    author: 'BkrmadtyaKarki',
-  },
-];
-
 class LandingGrid extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {topics: [], isLoaded: false};
   }
 
   componentDidMount() {
@@ -71,10 +27,14 @@ class LandingGrid extends Component {
 
   loadTopics = () => {
     const component = this;
-    fetch('https://agora-be.herokuapp.com/').then(function(response) {
+    fetch('https://agora-be.herokuapp.com/topics').then(function(response) {
+      console.log('mua');
       return response.json();
     }).then(function(j) {
-      component.setState({comments: [j.articles]});
+      console.log(j.results);
+      console.log(j.results[0].title);
+      component.setState({topics: j.results, isLoaded: true});
+      console.log(component.state.isLoaded);
     });
   }
 
@@ -87,21 +47,23 @@ class LandingGrid extends Component {
           padding={1}
           style={styles.gridList}
         >
-          {tilesData.map((tile, index) => (
-            <GridTile
-              key={tile.img}
-              title={tile.title}
-              actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-              actionPosition="left"
-              titlePosition="bottom"
-              titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,
-                                rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
-              cols={index % 3 === 0 ? 2 : 1}
-              rows={index % 3 === 0 ? 2 : 1}
-            >
-              <img alt="News main pic" src={tile.img} />
-            </GridTile>
-          ))}
+          {this.state.isLoaded ? this.state.topics.map((tile, index) => (
+            <Link to="/summary">
+              <GridTile
+                key={tile.id}
+                title={tile.title}
+                actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+                actionPosition="left"
+                titlePosition="bottom"
+                titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,
+                                  rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
+                cols={index % 3 === 0 ? 2 : 1}
+                rows={index % 3 === 0 ? 2 : 1}
+              >
+                <img alt={tile.title} src={tile.article_images[0]} />
+              </GridTile>
+            </Link>
+          )) : <h1>Loading</h1>}
         </GridList>
       </div>
     );
