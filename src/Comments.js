@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Comments.css';
 
 class Comments extends Component {
   constructor(props) {
@@ -10,8 +11,13 @@ class Comments extends Component {
     const cs = this.state.comments.map((comment) =>
         <li> {comment} </li>
     );
+
     return (
-      <ul>{cs}</ul>
+      <div id="center">
+      <div id="inner">
+        <ul>{cs}</ul>
+      </div>
+    </div>
     );
   }
 }
