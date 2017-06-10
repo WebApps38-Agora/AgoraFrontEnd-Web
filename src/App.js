@@ -1,18 +1,31 @@
-import injectTapEventPlugin from '../node_modules/react-tap-event-plugin';
 import React, { Component } from 'react';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { darkBlack } from 'material-ui/styles/colors';
 import logo from './logo.svg';
 import './App.css';
 import LoginControl from './LoginControl';
+import LandingGrid from './LandingGrid';
 import Comments from './Comments';
-import MuiThemeProvider from '../node_modules/material-ui/styles/MuiThemeProvider';
 
 // Needed for onTouchTap
 injectTapEventPlugin();
 
+// Overrides default material-ui theme
+const muiTheme = getMuiTheme({
+  palette: {
+    textColor: darkBlack,
+  },
+  appBar: {
+    height: 50,
+  },
+});
+
 class App extends Component {
   render() {
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={muiTheme}>
         <div className="App">
           <div className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
@@ -23,6 +36,7 @@ class App extends Component {
           </p>
           <LoginControl />
           <Comments />
+          <LandingGrid />
         </div>
      </MuiThemeProvider>
     );
