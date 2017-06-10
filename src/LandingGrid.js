@@ -10,8 +10,6 @@ const styles = {
     justifyContent: 'space-around',
   },
   gridList: {
-    width: 500,
-    height: 450,
     overflowY: 'auto',
   },
 };
@@ -64,6 +62,7 @@ const tilesData = [
 class LandingGrid extends Component {
   constructor(props) {
     super(props);
+    this.state = {};
   }
 
   componentDidMount() {
@@ -94,13 +93,13 @@ class LandingGrid extends Component {
               title={tile.title}
               actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
               actionPosition="left"
-              titlePosition="top"
+              titlePosition="bottom"
               titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,
                                 rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
               cols={index % 3 === 0 ? 2 : 1}
               rows={index % 3 === 0 ? 2 : 1}
             >
-              <img alt="no-image" src={tile.img} />
+              <img alt="News main pic" src={tile.img} />
             </GridTile>
           ))}
         </GridList>
