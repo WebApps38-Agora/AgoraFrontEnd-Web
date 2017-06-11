@@ -1,19 +1,9 @@
 import React, { Component } from 'react';
-import IconButton from 'material-ui/IconButton';
-import {GridList, GridTile} from 'material-ui/GridList';
-import StarBorder from 'material-ui/svg-icons/toggle/star-border';
-import {Link} from 'react-router-dom'
+import { Grid, Image, Loader, Dimmer, Segment } from 'semantic-ui-react'
+import LandingGridTile from './LandingGridTile';
+import 'semantic-ui-css/semantic.min.css';
+import './Card.css'
 
-const styles = {
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-  },
-  gridList: {
-    overflowY: 'auto',
-  },
-};
 
 class LandingGrid extends Component {
   constructor(props) {
@@ -39,34 +29,26 @@ class LandingGrid extends Component {
   }
 
   render() {
-    return (
-      <div style={styles.root}>
-        <GridList
-          cols={2}
-          cellHeight={200}
-          padding={1}
-          style={styles.gridList}
-        >
-          {this.state.isLoaded ? this.state.topics.map((tile, index) => (
-            <Link to="/summary">
-              <GridTile
-                key={tile.id}
-                title={tile.title}
-                actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-                actionPosition="left"
-                titlePosition="bottom"
-                titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,
-                                  rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
-                cols={index % 3 === 0 ? 2 : 1}
-                rows={index % 3 === 0 ? 2 : 1}
-              >
-                <img alt={tile.title} src={tile.article_images[0]} />
-              </GridTile>
-            </Link>
-          )) : <h1>Loading</h1>}
-        </GridList>
-      </div>
-    );
+    const isThirdElem = (i) =>  i % 3 === 0 ? 16 : 8;
+    let cols = this.state.topics.map((topic, index) =>
+                <Grid.Column className="Grid-column" key={topic.id} mobile={16} tablet={isThirdElem(index)} computer={8}>
+                    <LandingGridTile to={"/summary/" + topic.id}
+                                     src={topic.article_images[0]}
+                                     title={topic.title}
+                                     published_at={topic.published_at}
+                                     views={topic.views}/>
+                </Grid.Column>
+              );
+
+    if(this.state.isLoaded) {
+      return <Grid padded={false} relaxed={false}>
+                {cols}
+              </Grid>;
+      } else {
+      return <Dimmer active>
+              <Loader>Loading the latest topics</Loader>
+            </Dimmer>;
+    }
   }
 }
 

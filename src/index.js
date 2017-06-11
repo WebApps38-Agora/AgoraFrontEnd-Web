@@ -5,15 +5,17 @@ import {
   Route
 } from 'react-router-dom'
 import App from './App';
+import AppHeader from './AppHeader';
+import Feedback from './Feedback';
 import SummaryLayout from './SummaryLayout';
 import registerServiceWorker from './registerServiceWorker';
-import './index.css';
 
 ReactDOM.render(
   <Router forceRefresh={false}>
     <div>
+        <AppHeader />
         <Route exact path="/" component={App}/>
-        <Route path="/summary" component={SummaryLayout}/>
+        <Route path="/summary/:id" component={SummaryLayout}/>
     </div>
   </Router>,
   document.getElementById('root'));
