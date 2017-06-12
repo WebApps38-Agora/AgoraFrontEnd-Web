@@ -35,7 +35,7 @@ class TopicIndex extends Component {
 
   render() {
     const makeTile = (index) => {
-      return <TopicIndexTile to={"/summary/" + this.state.topics[index].id}
+      return <TopicIndexTile to={"/topic/" + this.state.topics[index].id}
                        src={this.state.topics[index].article_images[0]}
                        title={this.state.topics[index].title}
                        published_at={this.state.topics[index].published_at}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Grid, Step, Segment } from 'semantic-ui-react'
+import { Grid, Card, Segment } from 'semantic-ui-react'
 import TopicViews from './TopicViews'
-import ArticleStep from './ArticleStep'
+import ArticleCard from './ArticleCard'
 import './Card.css'
 
 class TopicPage extends Component {
@@ -40,22 +40,22 @@ class TopicPage extends Component {
 
 
   render() {
-    let steps;
+    let cards;
     if(this.state.isLoaded){
-      steps = this.state.articles.map((article, index) =>
-      <ArticleStep key={index} id={index} article={article} handleStepClick={this.handleStepClick}/>
+      cards = this.state.articles.map((article, index) =>
+      <ArticleCard key={index} id={index} article={article} handleStepClick={this.handleStepClick}/>
     );
     } else {
-      steps = <Step>Loading</Step>;
+      cards = <Card>Loading</Card>;
     }
 
     return (
       <div className="app-shell" style={{ marginTop: 6 + "rem" }}>
         <Grid padded={false} relaxed={false} columns={2}>
           <Grid.Column style={{padding:0}} className="Grid-column" width={6}>
-            <Step.Group fluid vertical>
-              {steps}
-            </Step.Group>
+            <Card.Group fluid vertical>
+              {cards}
+            </Card.Group>
           </Grid.Column>
 
           <Grid.Column style={{padding:0}} className="Grid-column" width={10}>
