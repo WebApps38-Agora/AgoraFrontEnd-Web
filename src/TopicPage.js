@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Grid, Card, Segment } from 'semantic-ui-react'
+import { Card, Header, List } from 'semantic-ui-react'
+import { Grid, Row, Col } from 'react-bootstrap'
 import TopicViews from './TopicViews'
 import ArticleCard from './ArticleCard'
 import './Card.css'
@@ -49,24 +50,29 @@ class TopicPage extends Component {
     let cards;
     if(this.state.isLoaded){
       cards = this.state.articles.map((article, index) =>
-      <ArticleCard key={index} id={index} article={article} handleStepClick={this.handleStepClick}/>
+      <List.Item key={index}>
+        <ArticleCard id={index} article={article} handleStepClick={this.handleStepClick}/>
+      </List.Item>
     );
     } else {
       cards = <Card>Loading</Card>;
     }
 
     return (
-      <div className="app-shell" style={{ marginTop: 6 + "rem" }}>
-        <Grid padded={false} relaxed={false} columns={2}>
-          <Grid.Column style={{padding:0}} className="Grid-column" width={10}>
-            <TopicViews facts={this.state.facts}/>
-          </Grid.Column>
+      <div style={{ marginTop: 6 + "rem", padding: "0 1rem" }}>
+        <Grid>
+          <Row>
+            <Col style={{padding:0}} className="Grid-column" xs={9} md={7} mdOffset={1}>
+              <TopicViews facts={this.state.facts}/>
+            </Col>
 
-          <Grid.Column style={{padding:0}} className="Grid-column" width={6}>
-            <Card.Group>
-              {cards}
-            </Card.Group>
-          </Grid.Column>
+            <Col style={{padding:0}} className="Grid-column" xs={3} md={3} mdOffset={1}>
+              <List relaxed>
+                <ArticleCard key={-1} id={-1} article={null} text="HEADLINES" />
+                {cards}
+              </List>
+            </Col>
+          </Row>
         </Grid>
       </div>
     );

@@ -1,4 +1,4 @@
-.card {
+.topic-card {
   height: calc(100% - 1rem);
   /*max-height: 100%;*/
   /*width: 100%;*/
@@ -17,14 +17,14 @@
           transition: all 0.3s ease;
 }
 
-.card:hover {
+.topic-card:hover {
   cursor: pointer;
   -webkit-box-shadow:  3px 3px 7px rgba(0,0,0,.8);
       -moz-box-shadow: 3px 3px 7px rgba(0,0,0,.8);
            box-shadow: 3px 3px 7px rgba(0,0,0,.8);
 }
 
-.card-title, .card:hover > .card-title {
+.topic-card-title, .topic-card:hover > .topic-card-title {
   position: absolute;
   z-index: 6;
   bottom: 0.5rem;
