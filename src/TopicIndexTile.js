@@ -11,13 +11,13 @@ var moment = require('moment');
 const TopicIndexTile = (props) => (
   <VisibilitySensor>
     <Link to={props.to}>
-      <div className="card" style={{backgroundImage: 'url(' + props.src + ')'}}>
-        <div className='card-title'>
+      <div className="topic-card" style={{backgroundImage: 'url(' + props.src + ')'}}>
+        <div className='topic-card-title'>
           <h3>{props.title}</h3>
-          <span className='card-date'>
+          <span className='topic-card-date'>
             {moment(props.published_at).format("dddd, MMMM Do YYYY")}
           </span>
-          <span style={{float: "right"}} className='card-view'>
+          <span style={{float: "right"}} className='topic-card-view'>
             <Icon name='unhide' />
             {props.views}
           </span>

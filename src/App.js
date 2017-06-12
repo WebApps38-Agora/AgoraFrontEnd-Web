@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import AppHeader from './AppHeader';
-import Feedback from './Feedback';
+// import Feedback from './Feedback';
 import TopicIndex from './TopicIndex';
 import TopicPage from './TopicPage';
 import './App.css';
@@ -9,6 +9,7 @@ import './App.css';
 class App extends Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
       main_color: "",
       topics: [],
@@ -40,7 +41,7 @@ class App extends Component {
     let props = this.state;
     return (<div>
       <AppHeader />
-      <div className="app-shell">
+      <div>
         <Route exact path="/" render={()=> <TopicIndex {...props}/>}/>
         <Route path="/topic/:id" component={TopicPage}/>
       </div>

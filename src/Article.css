@@ -1,0 +1,28 @@
+.card {
+  /*width: 100%;*/
+}
+
+a {
+  /*margin-top: 2rem;*/
+}
+
+.card img {
+  width: 50px;
+  height: 50px;
+}
+
+@media screen and (max-width: 800px) {
+  .card img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.card .content {
+  display: inline-flex;
+}
+
+.card .header .meta {
+  font-size: 1rem;
+  font-weight: lighter;
+}
