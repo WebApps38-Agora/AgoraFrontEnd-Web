@@ -12,13 +12,11 @@ class TopicPage extends Component {
       id: props.match.params.id,
       isLoaded: false,
       topics: {},
-      facts: []
     };
   }
 
   componentDidMount() {
     this.loadTopic();
-    this.loadFacts();
   }
 
   loadTopic = () => {
@@ -32,15 +30,6 @@ class TopicPage extends Component {
                           views: j.views,
                           article_images: j.article_images,
                           isLoaded: true});
-    });
-  }
-
-  loadFacts = () => {
-    const component = this;
-    fetch('https://agora-be.herokuapp.com/facts/topic/' + this.state.id + '/').then(function(response) {
-      return response.json();
-    }).then(function(j) {
-      component.setState({facts: j.results});
     });
   }
 
@@ -61,7 +50,7 @@ class TopicPage extends Component {
         <Grid>
           <Row>
             <Col style={{padding:0}} className="Grid-column" xs={9} md={7} mdOffset={1}>
-              <TopicViews facts={this.state.facts}/>
+              <TopicViews />
             </Col>
 
             <Col style={{padding:0}} className="Grid-column" xs={3} md={3} mdOffset={1}>
