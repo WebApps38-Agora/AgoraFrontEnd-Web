@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import AppHeader from './AppHeader';
 import Feedback from './Feedback';
 import TopicIndex from './TopicIndex';
@@ -10,17 +10,40 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      main_color: ""
-    }
+      main_color: "",
+      topics: [],
+      isLoaded: false};
+  }
+
+  componentWillMount() {
+    console.log("Bouta mount");
+    console.log(this.state);
+  }
+
+  componentDidMount() {
+    console.log("Loading sources");
+    console.log(this.state);
+    this.loadTopics();
+  }
+
+  loadTopics = () => {
+    const component = this;
+    fetch('https://agora-be.herokuapp.com/topics').then(function(response) {
+      return response.json();
+    }).then(function(j) {
+      component.setState({topics: j.results, isLoaded: true});
+
+    });
   }
 
   render() {
+    let props = this.state;
     return (<div>
       <AppHeader />
-      <Switch className="app-shell">
-        <Route exact path="/" component={TopicIndex}/>
+      <div className="app-shell">
+        <Route exact path="/" render={()=> <TopicIndex {...props}/>}/>
         <Route path="/topic/:id" component={TopicPage}/>
-      </Switch>
+      </div>
     </div>);
   }
 }

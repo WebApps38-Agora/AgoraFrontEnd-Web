@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Menu } from 'semantic-ui-react'
 
-var GLOBAL = require('./Globals.js');
-
 export default class MenuExampleStackable extends Component {
   state = {}
 
