@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Icon, Menu, Segment } from 'semantic-ui-react'
 import CommentSection from './CommentSection'
 import FactSection from './FactSection'
+import './Views.css'
 
 export default class TopicViews extends Component {
   constructor(props) {
@@ -33,7 +34,7 @@ export default class TopicViews extends Component {
 
     return (
       <div>
-        <Segment attached='top'>
+        <Segment attached='top' id="content">
           {content}
         </Segment>
 
