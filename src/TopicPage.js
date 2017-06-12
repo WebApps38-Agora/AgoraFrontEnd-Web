@@ -11,11 +11,13 @@ class TopicPage extends Component {
       id: props.match.params.id,
       isLoaded: false,
       topics: {},
+      facts: []
     };
   }
 
   componentDidMount() {
     this.loadTopic();
+    this.loadFacts();
   }
 
   loadTopic = () => {
@@ -29,6 +31,17 @@ class TopicPage extends Component {
                           views: j.views,
                           article_images: j.article_images,
                           isLoaded: true});
+    });
+  }
+
+  loadFacts = () => {
+    const component = this;
+    fetch('https://agora-be.herokuapp.com/facts/topic/' + this.state.id + '/').then(function(response) {
+      console.log(response);
+      return response.json();
+    }).then(function(j) {
+      component.setState({facts: j.results});
+      console.log('Content: ' + component.state.facts[0].content);
     });
   }
 
@@ -46,11 +59,11 @@ class TopicPage extends Component {
       <div className="app-shell" style={{ marginTop: 6 + "rem" }}>
         <Grid padded={false} relaxed={false} columns={2}>
           <Grid.Column style={{padding:0}} className="Grid-column" width={10}>
-            <TopicViews />
+            <TopicViews facts={this.state.facts}/>
           </Grid.Column>
 
           <Grid.Column style={{padding:0}} className="Grid-column" width={6}>
-            <Card.Group fluid vertical>
+            <Card.Group>
               {cards}
             </Card.Group>
           </Grid.Column>

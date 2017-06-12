@@ -1,9 +1,16 @@
 import React, { Component } from 'react'
 import { Icon, Menu, Segment } from 'semantic-ui-react'
 import CommentSection from './CommentSection'
+import FactSection from './FactSection'
 
 export default class TopicViews extends Component {
-  state = { activeItem: 'facts' }
+  constructor(props) {
+    super(props);
+    console.log('topics views: ' + props.facts);
+    this.state = {
+      activeItem: 'facts',
+    }
+  }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
@@ -13,10 +20,10 @@ export default class TopicViews extends Component {
     let content;
     switch (this.state.activeItem) {
       case 'facts':
-        content = <CommentSection />
+        content = <FactSection facts={this.props.facts}/>
         break;
       case 'discussion':
-        content = <h2>Discussion</h2>
+        content = <CommentSection topic_id={this.props}/>
         break;
       case 'stats':
       default:
@@ -32,7 +39,7 @@ export default class TopicViews extends Component {
 
         <Menu fluid widths={3} attached='bottom' tabular>
           <Menu.Item name='facts' active={activeItem === 'facts'} onClick={this.handleItemClick}>
-            Summary
+            Facts
           </Menu.Item>
 
           <Menu.Item name='discussion' active={activeItem === 'discussion'} onClick={this.handleItemClick}>
