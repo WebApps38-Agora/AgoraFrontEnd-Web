@@ -5,6 +5,7 @@ import AppHeader from './AppHeader';
 import TopicIndex from './TopicIndex';
 import TopicPage from './TopicPage';
 import LoginPage from './LoginPage';
+import 'semantic-ui-css/semantic.min.css';
 import './App.css';
 
 class App extends Component {

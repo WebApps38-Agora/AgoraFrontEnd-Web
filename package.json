@@ -8,6 +8,7 @@
     "react": "^15.5.4",
     "react-bootstrap": "^0.31.0",
     "react-dom": "^15.5.4",
+    "react-facebook": "^4.0.13",
     "react-grid-system": "^2.9.2",
     "react-image": "^1.0.1",
     "react-responsive": "^1.3.0",
