@@ -1,26 +1,32 @@
-
 import React, { Component } from 'react';
-import { Card, Segment } from 'semantic-ui-react'
+import { Card, Image } from 'semantic-ui-react';
+import './Article.css';
+
+var moment = require('moment');
+var MediaQuery = require('react-responsive');
 
 class ArticleCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       id: props.id,
-      response: {},
       active: props.active,
       article: props.article,
+      text: props.text,
+      article_resp: {},
+      source_resp: {},
       isLoaded: false,
     };
   }
 
   componentDidMount() {
-    this.loadArticle();
+    if (this.state.article) {
+      this.loadArticle();
+    }
   }
 
   handleStepClick = (e, d) => {
     e.preventDefault();
-    console.log('click2');
     this.props.handleStepClick(e, d);
   }
 
@@ -28,22 +34,50 @@ class ArticleCard extends Component {
     const component = this;
     fetch(this.state.article).then(function(response) {
       return response.json();
-    }).then(function(j) {
-      console.log(j);
-      component.setState({response: j, isLoaded: true});
+    }).then(function (resp) {
+      component.setState({article_resp: resp});
+      component.loadSource();
+    });
+  }
+
+  loadSource = () => {
+    const component = this;
+    fetch(this.state.article_resp.source).then(function(response) {
+      return response.json();
+    }).then(function(resp) {
+      component.setState({source_resp: resp, isLoaded: true});
     });
   }
 
   render() {
     let card;
-    let resp = this.state.response;
+    let article = this.state.article_resp;
+    let source  = this.state.source_resp;
 
-    if(this.state.isLoaded){
-      card = <Segment as={Card} id={this.props.id}
-               active={this.state.active === this.state.id} link completed
-               {...resp} icon='truck' onClick={this.handleStepClick}/>;
+    if(this.state.isLoaded ){
+      card = (<a href={article.url} target="_blank">
+                <Card id={this.props.id} className="article" raised link fluid >
+                  <Card.Content>
+                      <Image floated='left' src={source.url_logo} />
+                      <Card.Header>
+                        <MediaQuery minWidth={800}>
+                          {article.headline}
+                          <Card.Meta>
+                            {moment(article.published_at).fromNow()}
+                          </Card.Meta>
+                        </MediaQuery>
+                      </Card.Header>
+                  </Card.Content>
+                </Card>
+              </a>);
     } else {
-      card = <h1>Loading...</h1>;
+      card = (<Card id={-1} fluid>
+              <Card.Content>
+                <Card.Header style={{textAlign: "center", width: "100%"}}>
+                  {this.state.text}
+                </Card.Header>
+              </Card.Content>
+            </Card>);
     }
 
     return card;

@@ -13,14 +13,7 @@ class TopicIndex extends Component {
     this.state = {topics: [], isLoaded: false};
   }
 
-  componentWillMount() {
-    console.log("Bouta mount");
-    console.log(this.state);
-  }
-
   componentDidMount() {
-    console.log("Loading sources");
-    console.log(this.state);
     this.loadTopics();
   }
 
