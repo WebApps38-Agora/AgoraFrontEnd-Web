@@ -50,17 +50,19 @@ class SummaryLayout extends Component {
     }
 
     return (
-      <Grid padded={false} relaxed={false} columns={2}>
-        <Grid.Column style={{padding:0}} className="Grid-column" width={6}>
-          <Step.Group fluid vertical>
-            {steps}
-          </Step.Group>
-        </Grid.Column>
+      <div className="app-shell">
+        <Grid padded={false} relaxed={false} columns={2}>
+          <Grid.Column style={{padding:0}} className="Grid-column" width={6}>
+            <Step.Group fluid vertical>
+              {steps}
+            </Step.Group>
+          </Grid.Column>
 
-        <Grid.Column style={{padding:0}} className="Grid-column" width={10}>
-          <SummaryLayoutViews />
-        </Grid.Column>
-      </Grid>
+          <Grid.Column style={{padding:0}} className="Grid-column" width={10}>
+            <SummaryLayoutViews />
+          </Grid.Column>
+        </Grid>
+      </div>
     );
   }
 }

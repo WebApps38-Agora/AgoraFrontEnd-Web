@@ -1,49 +1,64 @@
 import React, { Component } from 'react';
-import { Grid, Image, Loader, Dimmer, Segment } from 'semantic-ui-react'
+import { Image, Loader, Dimmer, Segment } from 'semantic-ui-react'
 import LandingGridTile from './LandingGridTile';
+import { Grid, Row, Col } from 'react-bootstrap';
 import 'semantic-ui-css/semantic.min.css';
-import './Card.css'
+import './Card.css';
 
 
 class LandingGrid extends Component {
+
   constructor(props) {
     super(props);
     this.state = {topics: [], isLoaded: false};
   }
 
+  componentWillMount() {
+    console.log("Bouta mount");
+    console.log(this.state);
+  }
+
   componentDidMount() {
+    console.log("Loading sources");
+    console.log(this.state);
     this.loadTopics();
   }
 
   loadTopics = () => {
     const component = this;
     fetch('https://agora-be.herokuapp.com/topics').then(function(response) {
-      console.log('mua');
       return response.json();
     }).then(function(j) {
-      console.log(j.results);
-      console.log(j.results[0].title);
       component.setState({topics: j.results, isLoaded: true});
-      console.log(component.state.isLoaded);
     });
   }
 
   render() {
-    const isThirdElem = (i) =>  i % 3 === 0 ? 16 : 8;
-    let cols = this.state.topics.map((topic, index) =>
-                <Grid.Column className="Grid-column" key={topic.id} mobile={16} tablet={isThirdElem(index)} computer={8}>
-                    <LandingGridTile to={"/summary/" + topic.id}
-                                     src={topic.article_images[0]}
-                                     title={topic.title}
-                                     published_at={topic.published_at}
-                                     views={topic.views}/>
-                </Grid.Column>
-              );
+    const makeTile = (index) => {
+      return <LandingGridTile to={"/summary/" + this.state.topics[index].id}
+                       src={this.state.topics[index].article_images[0]}
+                       title={this.state.topics[index].title}
+                       published_at={this.state.topics[index].published_at}
+                       views={this.state.topics[index].views}/>
+    }
+
+    let rows = [];
+    for (var i = 0; i < this.state.topics.length; i += 5) {
+      rows.push(<Row className="show-grid tall-row" key={i}>
+                  <Col className="grid-tile" xs={12} md={8}> {makeTile(i)} </Col>
+                  <Col className="grid-tile" xs={6} md={4}>  {makeTile(i + 1)} </Col>
+                </Row>);
+      rows.push(<Row className="show-grid" key={i + 1}>
+                  <Col className="grid-tile" xs={6} md={4}> {makeTile(i + 2)} </Col>
+                  <Col className="grid-tile" xs={6} md={4}> {makeTile(i + 3)} </Col>
+                  <Col className="grid-tile" xs={6} md={4}> {makeTile(i + 4)} </Col>
+                </Row>);
+    }
 
     if(this.state.isLoaded) {
-      return <Grid padded={false} relaxed={false}>
-                {cols}
-              </Grid>;
+      return <Grid className="app-shell">
+              {rows}
+            </Grid>;
       } else {
       return <Dimmer active>
               <Loader>Loading the latest topics</Loader>

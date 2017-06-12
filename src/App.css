@@ -1,5 +1,36 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css?family=Neuton|Raleway');
+
+html {
+  --app-main-color: #ADBFCE;
+  --app-dark-color: #4F6170;
+  --app-black-color: #525456;
+  --app-white-color: #F4FAFF;
+  --app-light-color: #DEE3E8;
+
+  --app-nav-size: 51.41px;
+}
+
+body {
+  margin: 0;
+  font-family: 'Raleway',  sans-serif;
+  line-height: 1.5;
+  height: calc(100vh - var(--app-nav-size));
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Neuton', serif;
+  margin: 0;
+}
+
+p {
+  font-family: 'Raleway', sans-serif;
+}
+
+.app-shell {
+  max-width: 1000px;
+  min-width: 300px;
+  margin: 4rem auto;
+  /*padding: 0 2rem;*/
 }
 
 .App-logo {
@@ -7,15 +38,43 @@
   height: 80px;
 }
 
-.App-header {
-  background-color: #222;
+#app-header {
+  background: var(--app-dark-color);
+  /*background-color: #222;
   height: 150px;
   padding: 20px;
-  color: white;
+  color: white;*/
 }
 
-.App-intro {
-  font-size: large;
+#app-header > .header {
+  padding-left: 0.5rem;
+}
+
+.container {
+  width: 100%;
+}
+
+.Grid-column {
+  padding: 0.5rem !important;
+}
+
+.show-grid {
+  display: flex;
+  padding: 0;
+  height: 250px;
+}
+
+.tall-row {
+  height: 40vmax;
+}
+
+.grid-tile {
+  padding: 0;
+}
+
+a, a:hover, a:visited {
+  color: inherit;
+  text-decoration: none;
 }
 
 @keyframes App-logo-spin {

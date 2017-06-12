@@ -1,29 +1,30 @@
-import React from 'react'
-import { Card, Icon, Image } from 'semantic-ui-react'
-import {Link} from 'react-router-dom'
-import './Card.css'
+import React from 'react';
+import { Link } from 'react-router-dom'
+import VisibilitySensor from 'react-visibility-sensor';
+import { Icon } from 'semantic-ui-react';
+import './Card.css';
+
+var moment = require('moment');
+
+
 
 const LandingGridTile = (props) => (
-  <Card as={Link} to={props.to} className="Landing-grid-card" fluid={true}>
-    <Image src={props.src} />
-    <Card.Content>
-      <Card.Header>
-        {props.title}
-      </Card.Header>
-      <Card.Meta>
-        <span className='date'>
-          {props.published_at}
-        </span>
-      </Card.Meta>
-      <Card.Description>
-        Views: {props.views}
-      </Card.Description>
-    </Card.Content>
-    <Card.Content link extra>
-        <Icon name='user' />
-        22 Friends
-    </Card.Content>
-  </Card>
+  <VisibilitySensor>
+    <Link to={props.to}>
+      <div className="card" style={{backgroundImage: 'url(' + props.src + ')'}}>
+        <div className='card-title'>
+          <h3>{props.title}</h3>
+          <span className='card-date'>
+            {moment(props.published_at).format("dddd, MMMM Do YYYY")}
+          </span>
+          <span style={{float: "right"}} className='card-view'>
+            <Icon name='unhide' />
+            {props.views}
+          </span>
+        </div>
+      </div>
+    </Link>
+  </VisibilitySensor>
 )
 
 export default LandingGridTile
