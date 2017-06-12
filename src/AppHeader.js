@@ -15,11 +15,7 @@ export default class MenuExampleStackable extends Component {
 
     return (
       <Menu id="app-header" fixed="top" size="massive" borderless={true} inverted>
-        <Link to="/"><Menu.Item icon='home'></Menu.Item></Link>
-
-        <Menu.Item header name='agora'>
-          Agora
-        </Menu.Item>
+        <Link to="/"><Menu.Item><img src={require("./agora_full_logo.jpg")} /></Menu.Item></Link>
 
         <Menu.Item icon="user outline"
                    onClick={this.openLogin}

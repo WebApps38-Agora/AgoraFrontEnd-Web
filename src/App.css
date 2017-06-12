@@ -1,9 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Neuton|Raleway');
-
 html {
-  --app-main-color: #ADBFCE;
-  --app-dark-color: #4F6170;
-  --app-black-color: #525456;
+  --app-main-color: #4F5255;
+  --app-light-color: #4F6170;
+  --app-snd-color: #FF706E;
   --app-white-color: #F4FAFF;
   --app-light-color: #DEE3E8;
 
@@ -12,7 +10,7 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Raleway',  sans-serif;
+  font-family: 'Montserrat',  sans-serif;
   line-height: 1.5;
   height: calc(100vh - var(--app-nav-size));
 }
@@ -29,8 +27,7 @@ p {
 .app-shell {
   max-width: 1000px;
   min-width: 300px;
-  margin: 4rem auto;
-  /*padding: 0 2rem;*/
+  margin: 5rem auto;
 }
 
 .App-logo {
@@ -39,7 +36,7 @@ p {
 }
 
 #app-header {
-  background: var(--app-dark-color);
+  background: var(--app-main-color);
   -webkit-box-shadow:  1px 1px 5px rgba(0,0,0,.8);
       -moz-box-shadow: 1px 1px 5px rgba(0,0,0,.8);
            box-shadow: 1px 1px 5px rgba(0,0,0,.8);
