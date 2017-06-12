@@ -26,10 +26,14 @@
           margin: 1rem auto;
         }
 
-        .reply {
-          margin-left: 20px;
+        .comment, .reply {
+          margin-bottom: 5px;
         }
-        
+
+        .reply {
+          margin-left: 40px;
+        }
+
         .arrow-container {
           margin: 10px;
         }
@@ -58,7 +62,7 @@
 
 
       <template is="dom-repeat" items="{{comments}}" class="layout horizontal">
-        <paper-card class="layout horizontal center">
+        <paper-card class="layout horizontal center comment">
           <div class="layout vertical arrow-container">
             <div class="up layout horizontal center">
               1
@@ -67,8 +71,17 @@
             <div class="down layout horizontal center">
               2
               <iron-icon class="star" icon="arrow-drop-down"></iron-icon>
+            </div>
           </div>
+
+          <div class="user-icon">
+            <iron-image preload
+                        src="https://avatars3.githubusercontent.com/u/1637946?v=3&s=460"
+                        sizing="contain"
+                        style="width:40px; min-width: 40px; height:40px;
+                               margin: 1rem; margin-left: 0.5rem;"></iron-image>
           </div>
+
           <div class="card-content">
             {{item}}
           </div>
@@ -85,7 +98,14 @@
                 <div class="down layout horizontal center">
                   2
                   <iron-icon class="star" icon="arrow-drop-down"></iron-icon>
+                </div>
               </div>
+              <div class="user-icon">
+                <iron-image preload
+                            src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAdjAAAAJDkzZTg5ZGVjLTk0OWMtNGZlYi1hZDQwLWQxMGEwMjI1ZDU2OQ.jpg"
+                            sizing="contain"
+                            style="width:40px; min-width: 40px; height:40px;
+                                   margin: 1rem; margin-left: 0.5rem;"></iron-image>
               </div>
               <div class="card-content">
                 {{reply}}
