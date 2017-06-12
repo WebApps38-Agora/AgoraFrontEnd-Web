@@ -19,7 +19,7 @@ class App extends Component {
       <AppHeader />
       <Switch className="app-shell">
         <Route exact path="/" component={TopicIndex}/>
-        <Route path="/summary/:id" component={TopicPage}/>
+        <Route path="/topic/:id" component={TopicPage}/>
       </Switch>
     </div>);
   }

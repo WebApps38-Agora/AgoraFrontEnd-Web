@@ -1,8 +1,8 @@
 
 import React, { Component } from 'react';
-import { Step, Segment } from 'semantic-ui-react'
+import { Card, Segment } from 'semantic-ui-react'
 
-class ArticleStep extends Component {
+class ArticleCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,19 +35,19 @@ class ArticleStep extends Component {
   }
 
   render() {
-    let step;
+    let card;
     let resp = this.state.response;
 
     if(this.state.isLoaded){
-      step = <Segment as={Step} id={this.props.id}
+      card = <Segment as={Card} id={this.props.id}
                active={this.state.active === this.state.id} link completed
                {...resp} icon='truck' onClick={this.handleStepClick}/>;
     } else {
-      step = <h1>Loading...</h1>;
+      card = <h1>Loading...</h1>;
     }
 
-    return step;
+    return card;
   }
 }
 
-export default ArticleStep
+export default ArticleCard
