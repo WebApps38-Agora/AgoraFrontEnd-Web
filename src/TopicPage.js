@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Grid, Step, Segment } from 'semantic-ui-react'
-import SummaryLayoutViews from './SummaryLayoutViews'
+import TopicViews from './TopicViews'
 import ArticleStep from './ArticleStep'
 import './Card.css'
 
-class SummaryLayout extends Component {
+class TopicPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -59,7 +59,7 @@ class SummaryLayout extends Component {
           </Grid.Column>
 
           <Grid.Column style={{padding:0}} className="Grid-column" width={10}>
-            <SummaryLayoutViews />
+            <TopicViews />
           </Grid.Column>
         </Grid>
       </div>
@@ -67,4 +67,4 @@ class SummaryLayout extends Component {
   }
 }
 
-export default SummaryLayout
+export default TopicPage

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Image, Loader, Dimmer, Segment } from 'semantic-ui-react'
-import LandingGridTile from './LandingGridTile';
+import TopicIndexTile from './TopicIndexTile';
 import { Grid, Row, Col } from 'react-bootstrap';
 import 'semantic-ui-css/semantic.min.css';
 import './Card.css';
 
 
-class LandingGrid extends Component {
+class TopicIndex extends Component {
 
   constructor(props) {
     super(props);
@@ -35,7 +35,7 @@ class LandingGrid extends Component {
 
   render() {
     const makeTile = (index) => {
-      return <LandingGridTile to={"/summary/" + this.state.topics[index].id}
+      return <TopicIndexTile to={"/summary/" + this.state.topics[index].id}
                        src={this.state.topics[index].article_images[0]}
                        title={this.state.topics[index].title}
                        published_at={this.state.topics[index].published_at}
@@ -67,4 +67,4 @@ class LandingGrid extends Component {
   }
 }
 
-export default LandingGrid;
+export default TopicIndex;

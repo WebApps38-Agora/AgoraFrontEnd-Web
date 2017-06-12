@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Icon, Menu, Segment } from 'semantic-ui-react'
 import CommentSection from './CommentSection'
 
-export default class SummaryLayoutViews extends Component {
+export default class TopicViews extends Component {
   state = { activeItem: 'active' }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })

@@ -8,7 +8,7 @@ var moment = require('moment');
 
 
 
-const LandingGridTile = (props) => (
+const TopicIndexTile = (props) => (
   <VisibilitySensor>
     <Link to={props.to}>
       <div className="card" style={{backgroundImage: 'url(' + props.src + ')'}}>
@@ -27,4 +27,4 @@ const LandingGridTile = (props) => (
   </VisibilitySensor>
 )
 
-export default LandingGridTile
+export default TopicIndexTile

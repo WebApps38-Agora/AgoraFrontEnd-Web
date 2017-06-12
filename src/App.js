@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import AppHeader from './AppHeader';
 import Feedback from './Feedback';
-import LandingGrid from './LandingGrid';
-import SummaryLayout from './SummaryLayout';
+import TopicIndex from './TopicIndex';
+import TopicPage from './TopicPage';
 import './App.css';
 
 class App extends Component {
@@ -18,8 +18,8 @@ class App extends Component {
     return (<div>
       <AppHeader />
       <Switch className="app-shell">
-        <Route exact path="/" component={LandingGrid}/>
-        <Route path="/summary/:id" component={SummaryLayout}/>
+        <Route exact path="/" component={TopicIndex}/>
+        <Route path="/summary/:id" component={TopicPage}/>
       </Switch>
     </div>);
   }
