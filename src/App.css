@@ -9,14 +9,20 @@ html {
 }
 
 body {
+  height: auto;
+  max-height: 100vh;
+}
+
+main {
   margin: 0;
   font-family: 'Montserrat',  sans-serif;
   line-height: 1.5;
-  height: calc(100vh - var(--app-nav-size));
+  /*height: 80vh;*/
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Neuton', serif;
+  letter-spacing: 0.025rem;
   margin: 0;
 }
 
@@ -27,7 +33,7 @@ p {
 .app-shell {
   max-width: 1000px;
   min-width: 300px;
-  margin: 5rem auto;
+  margin: 6rem auto;
 }
 
 .App-logo {
@@ -59,9 +65,17 @@ p {
 }
 
 .show-grid {
-  display: flex;
-  height: 250px;
+  display: block;
+  height: 40vmax;
   padding: 0 2rem;
+}
+
+@media screen and (min-width: 768px) {
+  .show-grid {
+    height: 250px;
+    display: block;
+  }
+
 }
 
 .tall-row {
@@ -70,6 +84,7 @@ p {
 
 .grid-tile {
   padding: 0;
+  height: 100%;
 }
 
 a, a:hover, a:visited, a:focus {

@@ -40,14 +40,14 @@ class App extends Component {
 
   render() {
     let props = this.state;
-    return (<div>
+    return (<main>
       <AppHeader />
-      <div>
+      <div className="app-wrapper">
         <Route exact path="/" render={()=> <TopicIndex {...props}/>}/>
         <Route path="/login" component={LoginPage}/>
         <Route path="/topic/:id" component={TopicPage}/>
       </div>
-    </div>);
+    </main>);
   }
 }
 
