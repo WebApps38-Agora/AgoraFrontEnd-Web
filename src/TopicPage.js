@@ -8,7 +8,6 @@ class TopicPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: 0,
       id: props.match.params.id,
       isLoaded: false,
       topics: {},
@@ -16,32 +15,26 @@ class TopicPage extends Component {
   }
 
   componentDidMount() {
-    this.loadSources();
+    this.loadTopic();
   }
 
-  loadSources = () => {
-    const component = this;
+  loadTopic = () => {
+    const component = this
     fetch('https://agora-be.herokuapp.com/topics/' + this.state.id).then(function(response) {
       return response.json();
     }).then(function(j) {
-      console.log(j);
-      component.setState({title: j.title, articles: j.article_set, published_at: j.published_at,
-        views: j.views, article_images: j.article_images, isLoaded: true});
-      console.log(component.state.isLoaded);
+      component.setState({title: j.title,
+                          articles: j.article_set,
+                          published_at: j.published_at,
+                          views: j.views,
+                          article_images: j.article_images,
+                          isLoaded: true});
     });
   }
 
-  handleStepClick = (event, data) => {
-    console.log('data', data);
-    console.log('event', data);
-    let key = data['id'];
-    this.setState({active: [key]});
-  }
-
-
   render() {
     let steps;
-    if(this.state.isLoaded){
+    if (this.state.isLoaded){
       steps = this.state.articles.map((article, index) =>
       <ArticleStep key={index} id={index} article={article} handleStepClick={this.handleStepClick}/>
     );
@@ -52,14 +45,14 @@ class TopicPage extends Component {
     return (
       <div className="app-shell" style={{ marginTop: 6 + "rem" }}>
         <Grid padded={false} relaxed={false} columns={2}>
+          <Grid.Column style={{padding:0}} className="Grid-column" width={10}>
+            <TopicViews />
+          </Grid.Column>
+
           <Grid.Column style={{padding:0}} className="Grid-column" width={6}>
             <Step.Group fluid vertical>
               {steps}
             </Step.Group>
-          </Grid.Column>
-
-          <Grid.Column style={{padding:0}} className="Grid-column" width={10}>
-            <TopicViews />
           </Grid.Column>
         </Grid>
       </div>

@@ -3,7 +3,7 @@ import { Icon, Menu, Segment } from 'semantic-ui-react'
 import CommentSection from './CommentSection'
 
 export default class TopicViews extends Component {
-  state = { activeItem: 'active' }
+  state = { activeItem: '1' }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
@@ -17,7 +17,7 @@ export default class TopicViews extends Component {
         </Segment>
 
         <Menu fluid widths={3} attached='bottom' tabular>
-          <Menu.Item name='active' active={activeItem === 'active'} onClick={this.handleItemClick}>
+          <Menu.Item name='1' active={activeItem === '1'} onClick={this.handleItemClick}>
             Summary
           </Menu.Item>
 
