@@ -5,6 +5,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import 'semantic-ui-css/semantic.min.css';
 import './Card.css';
 
+var MediaQuery = require('react-responsive');
 
 class TopicIndex extends Component {
 
@@ -20,13 +21,13 @@ class TopicIndex extends Component {
     let rows = [];
     for (var i = 0; i < this.props.topics.length; i += 5) {
       rows.push(<Row className="show-grid tall-row" key={i}>
-                  <Col className="grid-tile" xs={12} md={8}> {makeTile(i)} </Col>
-                  <Col className="grid-tile" xs={6} md={4}>  {makeTile(i + 1)} </Col>
+                  <Col className="grid-tile" xs={12} sm={8}> {makeTile(i)} </Col>
+                  <Col className="grid-tile" xs={12} sm={4}>  {makeTile(i + 1)} </Col>
                 </Row>);
       rows.push(<Row className="show-grid" key={i + 1}>
-                  <Col className="grid-tile" xs={6} md={4}> {makeTile(i + 2)} </Col>
-                  <Col className="grid-tile" xs={6} md={4}> {makeTile(i + 3)} </Col>
-                  <Col className="grid-tile" xs={6} md={4}> {makeTile(i + 4)} </Col>
+                  <Col className="grid-tile" xs={12} sm={4}> {makeTile(i + 2)} </Col>
+                  <Col className="grid-tile" xs={12} sm={4}> {makeTile(i + 3)} </Col>
+                  <Col className="grid-tile" xs={12} sm={4}> {makeTile(i + 4)} </Col>
                 </Row>);
     }
 
