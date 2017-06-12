@@ -38,11 +38,9 @@ class TopicPage extends Component {
   loadFacts = () => {
     const component = this;
     fetch('https://agora-be.herokuapp.com/facts/topic/' + this.state.id + '/').then(function(response) {
-      console.log(response);
       return response.json();
     }).then(function(j) {
       component.setState({facts: j.results});
-      console.log('Content: ' + component.state.facts[0].content);
     });
   }
 

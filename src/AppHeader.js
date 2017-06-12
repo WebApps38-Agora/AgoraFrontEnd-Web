@@ -11,11 +11,11 @@ export default class MenuExampleStackable extends Component {
     };
   }
 
-  openLogin = (e, { name }) => 5;
+  openLogin = (e, { name }) => {
+    this.state = {}
+  };
 
   render() {
-    const { activeItem } = this.state;
-
     return (
       <Menu id="app-header" fixed="top" size="massive" borderless={true} inverted>
         <Link to="/"><Menu.Item><img src={require("./agora_full_logo.jpg")} /></Menu.Item></Link>
