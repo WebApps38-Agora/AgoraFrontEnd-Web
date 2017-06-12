@@ -3,29 +3,43 @@ import { Icon, Menu, Segment } from 'semantic-ui-react'
 import CommentSection from './CommentSection'
 
 export default class TopicViews extends Component {
-  state = { activeItem: '1' }
+  state = { activeItem: 'facts' }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render() {
     const { activeItem } = this.state
 
+    let content;
+    switch (this.state.activeItem) {
+      case 'facts':
+        content = <CommentSection />
+        break;
+      case 'discussion':
+        content = <h2>Discussion</h2>
+        break;
+      case 'stats':
+      default:
+        content = <h2>Stats</h2>
+        break;
+    }
+
     return (
       <div>
         <Segment attached='top'>
-          <CommentSection />
+          {content}
         </Segment>
 
         <Menu fluid widths={3} attached='bottom' tabular>
-          <Menu.Item name='1' active={activeItem === '1'} onClick={this.handleItemClick}>
+          <Menu.Item name='facts' active={activeItem === 'facts'} onClick={this.handleItemClick}>
             Summary
           </Menu.Item>
 
-          <Menu.Item name='2' active={activeItem === '2'} onClick={this.handleItemClick}>
+          <Menu.Item name='discussion' active={activeItem === 'discussion'} onClick={this.handleItemClick}>
             Comments
           </Menu.Item>
 
-          <Menu.Item name='3' active={activeItem === '3'} onClick={this.handleItemClick}>
+          <Menu.Item name='stats' active={activeItem === 'stats'} onClick={this.handleItemClick}>
             Stats
           </Menu.Item>
         </Menu>
