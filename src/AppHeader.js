@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { Menu, Header } from 'semantic-ui-react'
+import { Menu } from 'semantic-ui-react'
 
-export default class MenuExampleStackable extends Component {
+export default class AppHeader extends Component {
   state = {}
 
   constructor(props) {
@@ -18,11 +18,13 @@ export default class MenuExampleStackable extends Component {
   render() {
     return (
       <Menu id="app-header" fixed="top" size="massive" borderless={true} inverted>
-        <Link to="/"><Menu.Item><img src={require("./agora_full_logo.jpg")} /></Menu.Item></Link>
-        <Menu.Item icon="user outline"
-                   onClick={this.openLogin}
-                   position="right">
+        <Menu.Item as={Link} to="/">
+          <img src={require("./agora_full_logo.jpg")} />
         </Menu.Item>
+        <Menu.Item as={Link} to='/login'
+                   icon="user outline"
+                   onClick={this.openLogin}
+                   position="right" />
       </Menu>
     )
   }

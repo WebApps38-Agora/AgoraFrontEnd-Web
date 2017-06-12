@@ -4,6 +4,7 @@ import AppHeader from './AppHeader';
 // import Feedback from './Feedback';
 import TopicIndex from './TopicIndex';
 import TopicPage from './TopicPage';
+import LoginPage from './LoginPage';
 import './App.css';
 
 class App extends Component {
@@ -43,6 +44,7 @@ class App extends Component {
       <AppHeader />
       <div>
         <Route exact path="/" render={()=> <TopicIndex {...props}/>}/>
+        <Route path="/login" component={LoginPage}/>
         <Route path="/topic/:id" component={TopicPage}/>
       </div>
     </div>);
