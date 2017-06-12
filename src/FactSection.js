@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Icon, Button } from 'semantic-ui-react';
+import { Card, Icon, Button, Form, Modal, Header } from 'semantic-ui-react';
 
 class FactSection extends Component {
   constructor(props) {
@@ -37,7 +37,14 @@ class FactSection extends Component {
       <div>
         {facts}
 
-        <Button primary onClick={this.addFact}><Icon name='plus'/></Button>
+        <Modal dimmer={false} trigger={
+            <Button content='Add Fact' labelPosition='left' icon='edit' primary/>
+          }>
+          <Modal.Header>Add a fact</Modal.Header>
+          <Modal.Content>
+            hi
+          </Modal.Content>
+        </Modal>
       </div>
     );
   }
