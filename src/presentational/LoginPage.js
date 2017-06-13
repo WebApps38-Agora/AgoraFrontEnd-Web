@@ -4,40 +4,67 @@ import { Icon, Form, Message } from 'semantic-ui-react'
 import FacebookProvider, { Login } from 'react-facebook';
 
 export default class LoginPage extends Component {
-  handleResponse = (data) => {
-    console.log(data);
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoggedIn: false
+    };
   }
 
+  handleResponse = (data) => {
+    console.log(data);
+    this.setState({
+      first_name: data.profile.first_name,
+      gender: data.profile.gender,
+      id: data.profile.id,
+      last_name: data.profile.last_name,
+      link: data.profile.link,
+      locale: data.profile.locale,
+      name: data.profile.name,
+      timezone: data.profile.timezone,
+      verified: data.profile.verified ,
+      accessToken: data.tokenDetail.accessToken,
+      expiresIn: data.tokenDetail.expiresIn,
+      signedRequest: data.tokenDetail.signedRequest,
+      isLoggedIn: true
+    })
+
+    fetch('http://graph.facebook.com/'+data.profile.id+'/picture')
+  	.then(function(response) {
+  	  return response.blob();
+  	})
+  	.then(function(imageBlob) {
+  	  document.querySelector('img').src = URL.createObjectURL(imageBlob);
+  	});
+
+    //get key
+    fetch('http://localhost:8000/rest_auth/facebook/', {method: 'post', mode: 'cors',
+    	redirect: 'follow',
+    	headers: new Headers({
+    		'content-type': 'application/json'
+    	}), body: JSON.stringify({
+    		access_token: this.state.accessToken
+    	})}).then( (r)=> r.json())
+          .then( (j) => {
+        console.log(j)
+      })
+    }
+
   handleError = (error) => {
+    console.log(error)
     this.setState({ error });
   }
 
   render() {
     return (
       <div style={{ marginTop: 6 + "rem", padding: "0 1rem" }}>
-        <Segment padded>
-          <Form success={false}>
-            <Message
-              header='Login'
-            />
-            <Form.Input label='Email' placeholder='agora@gmail.com' />
-            <Form.Input label='Password' placeholder='Password' type='Password' />
-            <Message
+        <Message
               success
-              header='Form Completed'
-              content="You're all signed up for the newsletter"
+              header={'Welcome '}
+              content="You're all signed in!"
             />
-            <Message
-              error
-              header='Oh no!'
-              content="There seems to be an error with that email."
-            />
-            <Button>Submit</Button>
-          </Form>
-          <Divider horizontal>Or</Divider>
-          <Button secondary fluid>Sign Up Now</Button>
-          <Divider horizontal>Or</Divider>
-          <FacebookProvider appId="123456789">
+        <Segment padded>
+          <FacebookProvider appId="1959921887623211">
             <Login
               scope="email"
               onResponse={this.handleResponse}
@@ -46,6 +73,20 @@ export default class LoginPage extends Component {
               <Button color='facebook' fluid><Icon name='facebook' />Login via Facebook</Button>
             </Login>
           </FacebookProvider>
+          <Divider horizontal>Or</Divider>
+          <Form success={false}>
+            <Message
+              header='Login'
+            />
+            <Form.Input label='Email' placeholder='agora@gmail.com' />
+            <Form.Input label='Password' placeholder='Password' type='Password' />
+            <Message
+              error
+              header='Oh no!'
+              content="There seems to be an error with that email."
+            />
+            <Button>Submit</Button>
+          </Form>
         </Segment>
       </div>
     );
