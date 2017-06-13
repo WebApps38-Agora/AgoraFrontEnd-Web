@@ -31,7 +31,6 @@ export function fetchTopics() {
     return fetch(`${getState().backendUrl}/topics/`)
       .then(response => response.json())
       .then(json => {
-        console.log(json)
         dispatch(receiveTopics(json))
       })
   }
@@ -39,7 +38,7 @@ export function fetchTopics() {
 
 export function fetchTopicsIfNeeded() {
   return (dispatch, getState) => {
-    if (Object.keys(getState().topics).length == 0) {
+    if (!getState().topics.loaded) {
       dispatch(fetchTopics())
     }
   }

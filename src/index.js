@@ -9,7 +9,14 @@ import configureStore from './configureStore'
 import { fetchTopics } from './actions/TopicIndex'
 import App from './App';
 
-let store = configureStore()
+let store = configureStore({
+  selectedTopic: 0,
+  topics: {
+    loaded: false,
+    isFetching: false,
+    items: {}
+  }
+})
 //store.dispatch(fetchTopics())
 
 const Root = ({ store }) => (

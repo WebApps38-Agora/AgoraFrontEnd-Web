@@ -19,20 +19,16 @@ class TopicPage extends Component {
   }
 
   render() {
-    if (!this.props.isFetching) {
-      return <Topic topic={this.props.topic} />
-    } else {
-      return null
-    }
+    return !this.props.isFetching && <Topic topic={this.props.topic} />
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    isFetching:    Object.keys(state.topics).length == 0
-                || !(state.selectedTopic in state.topics)
-                || state.topics[state.selectedTopic].isFetching,
-    topic: state.topics[state.selectedTopic] || {}
+    isFetching:    Object.keys(state.topics.items).length == 0
+                || !(state.selectedTopic in state.topics.items)
+                || state.topics.items[state.selectedTopic].isFetching,
+    topic: state.topics.items[state.selectedTopic] || {}
   }
 }
 

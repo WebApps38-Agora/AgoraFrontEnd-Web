@@ -14,7 +14,7 @@ class TopicIndex extends Component {
   }
 
   render() {
-    if (!this.props.isFetching) {
+    if (this.props.loaded) {
       return <Topics topics={this.props.topics} />
     } else {
       return <Dimmer active><Loader>Loading the latest topics</Loader></Dimmer>
@@ -24,7 +24,7 @@ class TopicIndex extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isFetching: state.topics.isFetching,
+    loaded: state.topics.loaded,
     topics: state.topics || []
   }
 }

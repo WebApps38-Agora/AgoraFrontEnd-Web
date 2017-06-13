@@ -9,11 +9,12 @@ import '../style/TopicIndexTile.css';
 class Topics extends Component {
 
   render() {
-    const topics = this.props.topics
+    const topics = this.props.topics.items
     const numTopics = Object.keys(topics).length
 
     const makeTile = (index) => {
       const topic = topics[Object.keys(topics)[index]]
+      console.log(topic)
       return topic &&
              <TopicIndexTile
                to={"/topic/" + topic.id}
