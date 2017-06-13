@@ -34,7 +34,14 @@ export function fetchFacts(topic) {
       .then(response => response.json())
       .then(json => {
         dispatch(receiveFacts(topic, json))
-      }
-      )
+      })
+  }
+}
+
+export function fetchFactsIfNeeded(topic) {
+  return (dispatch, getState) => {
+    if (getState().topics[topic].facts == []) {
+      dispatch(fetchFacts(topic))
+    }
   }
 }

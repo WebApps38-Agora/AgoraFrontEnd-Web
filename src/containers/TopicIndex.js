@@ -8,7 +8,7 @@ class TopicIndex extends Component {
     super(props);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.dispatch(fetchTopics())
   }
 

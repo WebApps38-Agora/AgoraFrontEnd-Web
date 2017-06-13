@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { fetchTopic } from '../actions/FactSection'
+import { Loader, Dimmer } from 'semantic-ui-react'
 import { selectTopic } from '../actions/TopicIndex'
+import { fetchTopicIfNeeded } from '../actions/TopicPage'
+import { fetchFactsIfNeeded } from '../actions/FactSection'
 import Topic from '../presentational/Topic'
 
 class TopicPage extends Component {
@@ -12,14 +14,17 @@ class TopicPage extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.dispatch(selectTopic(this.state.id))
+    this.props.dispatch(fetchTopicIfNeeded(this.state.id))
   }
 
   render() {
-    return (
-      <Topic topic={this.props.topic} />
-    )
+    if (this.props.topic) {
+      return <Topic topic={this.props.topic} />
+    } else {
+      return <Dimmer active><Loader>Loading topic</Loader></Dimmer>
+    }
   }
 }
 

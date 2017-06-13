@@ -6,20 +6,20 @@ import { fetchFacts } from '../actions/FactSection';
 
 class FactSection extends Component {
   componentDidMount() {
-    this.props.dispatch(fetchFacts(this.props.selectedTopic))
+    if (this.props.isLoaded) {
+      this.props.dispatch(fetchFacts(this.props.topic.id))
+    }
   }
 
   render() {
-    return (
-      <Facts facts={this.props.facts} />
-    )
+    return this.props.isLoaded && <Facts facts={this.props.topic.facts} />
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    selectedTopic: state.selectedTopic,
-    facts: state.factsByTopic[state.selectedTopic] || [],
+    isLoaded: state.selectedTopic in state.topics,
+    topic: state.topics[state.selectedTopic] || [],
   }
 }
 

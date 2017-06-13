@@ -1,12 +1,10 @@
 import thunkMiddleware from 'redux-thunk'
 import { createStore, applyMiddleware, compose, combineReducers} from 'redux'
-import { selectedTopic, topics } from './reducers/TopicIndex'
-import { factsByTopic } from './reducers/FactSection'
+import { selectedTopic, topics, facts } from './reducers/TopicIndex'
 
 const rootReducer = combineReducers({
   selectedTopic,
   topics,
-  factsByTopic
 })
 
 export default function configureStore(preloadedState) {
