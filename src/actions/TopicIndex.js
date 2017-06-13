@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import Cookies from 'js-cookie'
+import backendUrl from '../configureStore'
 
 export const RECEIVE_LOGIN = 'RECEIVE_LOGIN'
 export function receiveLogin(key) {
@@ -55,7 +56,7 @@ export function fetchTopicsIfNeeded() {
 
 export function sendLogin(accessToken) {
   return (dispatch, getState) => {
-    return fetch('http://localhost:8000/rest_auth/facebook/', {
+    return fetch(`${backendUrl()}/rest_auth/facebook/`, {
         method: 'post',
       	headers: {'content-type': 'application/json'},
         body: JSON.stringify({
