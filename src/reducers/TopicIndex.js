@@ -31,11 +31,12 @@ export function topics(state = {}, action) {
       action.topics.map((topic, index) => {
         topics[topic.id] = {
           ...topic,
+          article_set: [],
+          fact_set: [],
+          isFetching: false
         }
       })
-      return update(topics, {
-        isFetching: {$set: false}
-      })
+      return topics
 
     case RECEIVE_FACTS:
       return update(state, {
@@ -46,11 +47,18 @@ export function topics(state = {}, action) {
         }
       })
 
+    case REQUEST_TOPIC:
+      return update(state, {
+        $merge: {[action.topic]: {
+          isFetching: true
+        }}
+      })
+
     case RECEIVE_TOPIC:
-      console.log(action)
       return update(state, {
         $merge: {[action.topic.id]: {
           ...action.topic,
+          isFetching: false
         }}
       })
     default:

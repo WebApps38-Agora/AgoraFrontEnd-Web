@@ -24,6 +24,7 @@ export function fetchTopic(topic) {
     return fetch(`${getState().backendUrl}/topics/${topic}/`)
       .then(response => response.json())
       .then(json => {
+        console.log(json)
         dispatch(receiveTopic(json))
       })
   }

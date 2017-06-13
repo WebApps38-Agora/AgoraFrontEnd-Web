@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Loader, Dimmer } from 'semantic-ui-react'
 import { selectTopic } from '../actions/TopicIndex'
-import { fetchTopicIfNeeded } from '../actions/TopicPage'
-import { fetchFactsIfNeeded } from '../actions/FactSection'
+import { fetchTopic } from '../actions/TopicPage'
 import Topic from '../presentational/Topic'
 
 class TopicPage extends Component {
@@ -16,21 +15,23 @@ class TopicPage extends Component {
 
   componentWillMount() {
     this.props.dispatch(selectTopic(this.state.id))
-    this.props.dispatch(fetchTopicIfNeeded(this.state.id))
+    this.props.dispatch(fetchTopic(this.state.id))
   }
 
   render() {
-    if (this.props.isLoaded) {
+    if (!this.props.isFetching) {
       return <Topic topic={this.props.topic} />
     } else {
-      return <Dimmer active><Loader>Loading topic</Loader></Dimmer>
+      return null
     }
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    isLoaded: state.selectedTopic in state.topics,
+    isFetching:    Object.keys(state.topics).length == 0
+                || !(state.selectedTopic in state.topics)
+                || state.topics[state.selectedTopic].isFetching,
     topic: state.topics[state.selectedTopic] || {}
   }
 }
