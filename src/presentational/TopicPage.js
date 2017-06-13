@@ -4,8 +4,8 @@ import { Card, List } from 'semantic-ui-react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import TopicViews from './TopicViews'
 import ArticleCard from './ArticleCard'
-import './Card.css'
-import { selectTopic } from './actions/FactSection'
+import '../style/TopicIndexTile.css'
+import { selectTopic } from '../actions/FactSection'
 
 class TopicPage extends Component {
   constructor(props) {
@@ -27,12 +27,7 @@ class TopicPage extends Component {
     fetch('https://agora-be.herokuapp.com/topics/' + this.state.id).then(function(response) {
       return response.json();
     }).then(function(j) {
-      component.setState({title: j.title,
-                          articles: j.article_set,
-                          published_at: j.published_at,
-                          views: j.views,
-                          article_images: j.article_images,
-                          isLoaded: true});
+      component.setState({...j});
     });
   }
 

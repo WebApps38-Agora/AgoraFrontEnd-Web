@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Facts from './Facts';
-import { fetchFacts } from './actions/FactSection';
+import Facts from '../presentational/Facts';
+import { fetchFacts } from '../actions/FactSection';
 
 class FactSection extends Component {
   componentDidMount() {

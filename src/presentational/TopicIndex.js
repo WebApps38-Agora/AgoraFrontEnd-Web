@@ -3,7 +3,7 @@ import { Loader, Dimmer } from 'semantic-ui-react'
 import TopicIndexTile from './TopicIndexTile';
 import { Grid, Row, Col } from 'react-bootstrap';
 import 'semantic-ui-css/semantic.min.css';
-import './Card.css';
+import '../style/TopicIndexTile.css';
 
 //var MediaQuery = require('react-responsive');
 

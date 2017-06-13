@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import RaisedButton from '../node_modules/material-ui/RaisedButton';
-import './Comments.css';
+import '../style/Comments.css';
 
 class Comments extends Component {
   constructor(props) {

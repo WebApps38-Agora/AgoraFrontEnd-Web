@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Image } from 'semantic-ui-react';
-import './Article.css';
+import '../style/Article.css';
 
 var moment = require('moment');
 var MediaQuery = require('react-responsive');

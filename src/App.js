@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import AppHeader from './AppHeader';
+import AppHeader from './presentational/AppHeader';
 // import Feedback from './Feedback';
-import TopicIndex from './TopicIndex';
-import TopicPage from './TopicPage';
-import LoginPage from './LoginPage';
+import TopicIndex from './presentational/TopicIndex';
+import TopicPage from './presentational/TopicPage';
+import LoginPage from './presentational/LoginPage';
 import 'semantic-ui-css/semantic.min.css';
-import './App.css';
+import './style/App.css';
 
 class App extends Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class App extends Component {
 
   loadTopics = () => {
     const component = this;
-    fetch('https://agora-be.herokuapp.com/topics').then(function(response) {
+    fetch('https://agora-be.herokuapp.com/topics/').then(function(response) {
       return response.json();
     }).then(function(j) {
       component.setState({topics: j.results, isLoaded: true});

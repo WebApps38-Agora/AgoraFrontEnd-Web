@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import VisibilitySensor from 'react-visibility-sensor';
 import { Icon } from 'semantic-ui-react';
-import './Card.css';
+import '../style/TopicIndexTile.css';
 
 var moment = require('moment');
 
