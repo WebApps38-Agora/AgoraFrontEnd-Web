@@ -23,10 +23,10 @@ export function receiveTopics(json) {
   }
 }
 
-export function fetchTopics(topic) {
+export function fetchTopics() {
 
   return function (dispatch, getState) {
-    dispatch(requestTopics(topic))
+    dispatch(requestTopics())
 
     return fetch(`${getState().backendUrl}/topics/`)
       .then(response => response.json())
@@ -34,5 +34,13 @@ export function fetchTopics(topic) {
         console.log(json)
         dispatch(receiveTopics(json))
       })
+  }
+}
+
+export function fetchTopicsIfNeeded() {
+  return (dispatch, getState) => {
+    if (Object.keys(getState().topics).length == 0) {
+      dispatch(fetchTopics())
+    }
   }
 }

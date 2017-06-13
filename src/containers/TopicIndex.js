@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { fetchTopics } from '../actions/TopicIndex'
+import { fetchTopicsIfNeeded } from '../actions/TopicIndex'
 import { Loader, Dimmer } from 'semantic-ui-react'
 import Topics from '../presentational/Topics'
 
@@ -10,7 +10,7 @@ class TopicIndex extends Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(fetchTopics())
+    this.props.dispatch(fetchTopicsIfNeeded())
   }
 
   render() {

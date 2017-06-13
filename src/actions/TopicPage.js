@@ -29,11 +29,3 @@ export function fetchTopic(topic) {
       })
   }
 }
-
-export function fetchTopicIfNeeded(topic) {
-  return (dispatch, getState) => {
-    if (!(topic in getState().topics)) {
-      dispatch(fetchTopic(topic))
-    }
-  }
-}
