@@ -6,13 +6,15 @@ import { fetchFacts } from '../actions/FactSection';
 
 class FactSection extends Component {
   render() {
-    return this.props.isLoaded && <Facts facts={this.props.topic.fact_set} />
+    return !this.props.isFetching && <Facts facts={this.props.topic.fact_set} />
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    isLoaded: state.selectedTopic in state.topics,
+    isFetching:    Object.keys(state.topics).length == 0
+                || !(state.selectedTopic in state.topics)
+                || state.topics[state.selectedTopic].isFetching,
     topic: state.topics[state.selectedTopic] || [],
   }
 }

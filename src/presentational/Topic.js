@@ -8,6 +8,7 @@ import '../style/TopicIndexTile.css'
 
 class Topic extends Component {
   render() {
+    console.log(this.props.topic)
     let cards = this.props.topic.article_set.map((article, index) =>
       <List.Item key={index}>
         <ArticleCard id={index} article={article} handleStepClick={this.handleStepClick}/>
