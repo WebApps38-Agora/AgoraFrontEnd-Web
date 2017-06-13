@@ -4,11 +4,41 @@ import { Icon, Form, Message } from 'semantic-ui-react'
 import FacebookProvider, { Login } from 'react-facebook';
 
 export default class LoginPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loggedIn: false
+    };
+  }
+
   handleResponse = (data) => {
     console.log(data);
+    this.setState({
+      first_name: data.profile.first_name,
+      gender: data.profile.gender,
+      id: data.profile.id,
+      last_name: data.profile.last_name,
+      link: data.profile.link,
+      locale: data.profile.locale,
+      name: data.profile.name,
+      timezone: data.profile.timezone,
+      verified: data.profile.verified ,
+      accessToken: data.tokenDetail.accessToken,
+      expiresIn: data.tokenDetail.expiresIn,
+      signedRequest: data.tokenDetail.signedRequest
+    })
+
+    fetch('http://graph.facebook.com/'+data.profile.id+'/picture')
+  	.then(function(response) {
+  	  return response.blob();
+  	})
+  	.then(function(imageBlob) {
+  	  document.querySelector('img').src = URL.createObjectURL(imageBlob);
+  	});
   }
 
   handleError = (error) => {
+    console.log(error)
     this.setState({ error });
   }
 
@@ -16,6 +46,16 @@ export default class LoginPage extends Component {
     return (
       <div style={{ marginTop: 6 + "rem", padding: "0 1rem" }}>
         <Segment padded>
+          <FacebookProvider appId="1959921887623211">
+            <Login
+              scope="email"
+              onResponse={this.handleResponse}
+              onError={this.handleError}
+            >
+              <Button color='facebook' fluid><Icon name='facebook' />Login via Facebook</Button>
+            </Login>
+          </FacebookProvider>
+          <Divider horizontal>Or</Divider>
           <Form success={false}>
             <Message
               header='Login'
@@ -34,18 +74,6 @@ export default class LoginPage extends Component {
             />
             <Button>Submit</Button>
           </Form>
-          <Divider horizontal>Or</Divider>
-          <Button secondary fluid>Sign Up Now</Button>
-          <Divider horizontal>Or</Divider>
-          <FacebookProvider appId="123456789">
-            <Login
-              scope="email"
-              onResponse={this.handleResponse}
-              onError={this.handleError}
-            >
-              <Button color='facebook' fluid><Icon name='facebook' />Login via Facebook</Button>
-            </Login>
-          </FacebookProvider>
         </Segment>
       </div>
     );
