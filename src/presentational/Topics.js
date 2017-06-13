@@ -17,7 +17,7 @@ class Topics extends Component {
       return topic &&
              <TopicIndexTile
                to={"/topic/" + topic.id}
-               src={topic.article_images[0]}
+               src={topic.article_set[0].url_image}
                title={topic.title}
                published_at={topic.published_at}
                views={topic.views}

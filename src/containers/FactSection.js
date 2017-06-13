@@ -5,14 +5,8 @@ import Facts from '../presentational/Facts';
 import { fetchFacts } from '../actions/FactSection';
 
 class FactSection extends Component {
-  componentDidMount() {
-    if (this.props.isLoaded) {
-      this.props.dispatch(fetchFacts(this.props.topic.id))
-    }
-  }
-
   render() {
-    return this.props.isLoaded && <Facts facts={this.props.topic.facts} />
+    return this.props.isLoaded && <Facts facts={this.props.topic.fact_set} />
   }
 }
 

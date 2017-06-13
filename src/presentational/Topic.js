@@ -6,25 +6,13 @@ import TopicViews from './TopicViews'
 import ArticleCard from './ArticleCard'
 import '../style/TopicIndexTile.css'
 
-class TopicPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoaded: false,
-    };
-  }
-
+class Topic extends Component {
   render() {
-    let cards;
-    if (this.state.isLoaded) {
-      cards = this.props.articles.map((article, index) =>
+    let cards = this.props.topic.article_set.map((article, index) =>
       <List.Item key={index}>
         <ArticleCard id={index} article={article} handleStepClick={this.handleStepClick}/>
       </List.Item>
     );
-    } else {
-      cards = <Card>Loading</Card>;
-    }
 
     return (
       <div style={{ marginTop: 6 + "rem", padding: "0 1rem" }}>
@@ -36,7 +24,13 @@ class TopicPage extends Component {
 
             <Col style={{padding:0}} className="Grid-column" xs={3} md={3} mdOffset={1}>
               <List relaxed>
-                <ArticleCard key={-1} id={-1} article={null} text="HEADLINES" />
+                <Card id={this.props.id} className="article" raised fluid >
+                  <Card.Content>
+                      <Card.Header>
+                        HEADLINES
+                      </Card.Header>
+                  </Card.Content>
+                </Card>
                 {cards}
               </List>
             </Col>
@@ -47,4 +41,4 @@ class TopicPage extends Component {
   }
 }
 
-export default connect()(TopicPage)
+export default connect()(Topic)

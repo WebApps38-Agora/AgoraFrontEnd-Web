@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Card, Image } from 'semantic-ui-react';
 import '../style/Article.css';
 
@@ -10,78 +11,43 @@ class ArticleCard extends Component {
     super(props);
     this.state = {
       id: props.id,
-      active: props.active,
-      article: props.article,
       text: props.text,
-      article_resp: {},
-      source_resp: {},
-      isLoaded: false,
+      isLoaded: true
     };
   }
 
-  componentDidMount() {
-    if (this.state.article) {
-      this.loadArticle();
-    }
-  }
-
-  handleStepClick = (e, d) => {
-    e.preventDefault();
-    this.props.handleStepClick(e, d);
-  }
-
-  loadArticle = () => {
-    const component = this;
-    fetch(this.state.article).then(function(response) {
-      return response.json();
-    }).then(function (resp) {
-      component.setState({article_resp: resp});
-      component.loadSource();
-    });
-  }
-
-  loadSource = () => {
-    const component = this;
-    fetch(this.state.article_resp.source).then(function(response) {
-      return response.json();
-    }).then(function(resp) {
-      component.setState({source_resp: resp, isLoaded: true});
-    });
-  }
-
   render() {
-    let card;
-    let article = this.state.article_resp;
-    let source  = this.state.source_resp;
+    let article = this.props.article;
+    let source  = this.props.article.source;
 
-    if(this.state.isLoaded ){
-      card = (<a href={article.url} target="_blank">
-                <Card id={this.props.id} className="article" raised link fluid >
-                  <Card.Content>
-                      <Image floated='left' src={source.url_logo} />
-                      <Card.Header>
-                        <MediaQuery minWidth={800}>
-                          {article.headline}
-                          <Card.Meta>
-                            {moment(article.published_at).fromNow()}
-                          </Card.Meta>
-                        </MediaQuery>
-                      </Card.Header>
-                  </Card.Content>
-                </Card>
-              </a>);
+    if (this.state.isLoaded) {
+      return (
+       <a href={article.url} target="_blank">
+        <Card id={this.props.id} className="article" raised link fluid >
+          <Card.Content>
+              <Image floated='left' src={source.url_logo} />
+              <Card.Header>
+                <MediaQuery minWidth={800}>
+                  {article.headline}
+                  <Card.Meta>
+                    {moment(article.published_at).fromNow()}
+                  </Card.Meta>
+                </MediaQuery>
+              </Card.Header>
+          </Card.Content>
+        </Card>
+      </a>)
     } else {
-      card = (<Card id={-1} fluid>
-              <Card.Content>
-                <Card.Header style={{textAlign: "center", width: "100%"}}>
-                  {this.state.text}
-                </Card.Header>
-              </Card.Content>
-            </Card>);
+      return (
+      <Card id={-1} fluid>
+        <Card.Content>
+          <Card.Header style={{textAlign: "center", width: "100%"}}>
+            {this.state.text}
+          </Card.Header>
+        </Card.Content>
+      </Card>)
     }
-
-    return card;
   }
 }
 
-export default ArticleCard
+export default connect()(ArticleCard)

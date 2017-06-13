@@ -31,7 +31,6 @@ export function topics(state = {}, action) {
       action.topics.map((topic, index) => {
         topics[topic.id] = {
           ...topic,
-          facts: []
         }
       })
       return update(topics, {
@@ -52,7 +51,6 @@ export function topics(state = {}, action) {
       return update(state, {
         $merge: {[action.topic.id]: {
           ...action.topic,
-          facts: []
         }}
       })
     default:

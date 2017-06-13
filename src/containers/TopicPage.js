@@ -20,7 +20,7 @@ class TopicPage extends Component {
   }
 
   render() {
-    if (this.props.topic) {
+    if (this.props.isLoaded) {
       return <Topic topic={this.props.topic} />
     } else {
       return <Dimmer active><Loader>Loading topic</Loader></Dimmer>
@@ -30,6 +30,7 @@ class TopicPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    isLoaded: state.selectedTopic in state.topics,
     topic: state.topics[state.selectedTopic] || {}
   }
 }
