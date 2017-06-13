@@ -4,11 +4,13 @@ import {
   SELECT_TOPIC, REQUEST_TOPICS, RECEIVE_TOPICS
 } from '../actions/TopicIndex'
 import {
-  REQUEST_FACTS, RECEIVE_FACTS
+  REQUEST_FACTS, RECEIVE_FACTS, ADD_FACT_REQUEST, ADD_FACT_RESPONSE
 } from '../actions/FactSection'
 import {
   REQUEST_TOPIC, RECEIVE_TOPIC
 } from '../actions/TopicPage'
+
+import { backendUrl } from '../configureStore'
 
 export function selectedTopic(state = 0, action) {
   switch (action.type) {
@@ -33,7 +35,8 @@ export function topics(state = {}, action) {
           ...topic,
           article_set: [],
           fact_set: [],
-          isFetching: false
+          isFetching: false,
+          url: backendUrl() + `/topics/${topic.id}/`,
         }
       })
 
@@ -68,8 +71,20 @@ export function topics(state = {}, action) {
         items: {
           $merge: {[action.topic.id]: {
             ...action.topic,
-            isFetching: false
+            isFetching: false,
+            url: backendUrl() + `/topics/${action.topic.id}/`,
           }}
+        }
+      })
+
+    case ADD_FACT_RESPONSE:
+      return update(state, {
+        items: {
+          [action.topic]: {
+            fact_set: {
+              $push: action.fact
+            }
+          }
         }
       })
     default:
