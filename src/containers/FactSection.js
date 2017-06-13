@@ -12,10 +12,10 @@ class FactSection extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    isFetching:    Object.keys(state.topics).length == 0
-                || !(state.selectedTopic in state.topics)
-                || state.topics[state.selectedTopic].isFetching,
-    topic: state.topics[state.selectedTopic] || [],
+    isFetching:    Object.keys(state.topics.items).length == 0
+                || !(state.selectedTopic in state.topics.items)
+                || state.topics.items[state.selectedTopic].isFetching,
+    topic: state.topics.items[state.selectedTopic] || [],
   }
 }
 

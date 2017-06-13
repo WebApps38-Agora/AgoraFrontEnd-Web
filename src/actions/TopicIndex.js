@@ -23,16 +23,23 @@ export function receiveTopics(json) {
   }
 }
 
-export function fetchTopics(topic) {
+export function fetchTopics() {
 
   return function (dispatch, getState) {
-    dispatch(requestTopics(topic))
+    dispatch(requestTopics())
 
     return fetch(`${getState().backendUrl}/topics/`)
       .then(response => response.json())
       .then(json => {
-        console.log(json)
         dispatch(receiveTopics(json))
       })
+  }
+}
+
+export function fetchTopicsIfNeeded() {
+  return (dispatch, getState) => {
+    if (!getState().topics.loaded) {
+      dispatch(fetchTopics())
+    }
   }
 }

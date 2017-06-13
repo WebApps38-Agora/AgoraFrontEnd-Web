@@ -36,30 +36,41 @@ export function topics(state = {}, action) {
           isFetching: false
         }
       })
-      return topics
+
+      return update(state, {
+        isFetching: {$set: false},
+        loaded: {$set: true},
+        items: {$merge: topics}
+      })
 
     case RECEIVE_FACTS:
       return update(state, {
-        [action.topic]: {
-          facts: {
-            $push: action.facts
+        items: {
+          [action.topic]: {
+            facts: {
+              $push: action.facts
+            }
           }
         }
       })
 
     case REQUEST_TOPIC:
       return update(state, {
-        $merge: {[action.topic]: {
-          isFetching: true
-        }}
+        items: {
+          $merge: {[action.topic]: {
+            isFetching: true
+          }}
+        }
       })
 
     case RECEIVE_TOPIC:
       return update(state, {
-        $merge: {[action.topic.id]: {
-          ...action.topic,
-          isFetching: false
-        }}
+        items: {
+          $merge: {[action.topic.id]: {
+            ...action.topic,
+            isFetching: false
+          }}
+        }
       })
     default:
       return state
