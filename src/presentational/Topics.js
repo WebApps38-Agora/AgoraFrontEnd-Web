@@ -7,7 +7,7 @@ import '../style/TopicIndexTile.css';
 
 //var MediaQuery = require('react-responsive');
 
-class TopicIndex extends Component {
+class Topics extends Component {
 
   render() {
     const makeTile = (index) => {
@@ -31,7 +31,7 @@ class TopicIndex extends Component {
                 </Row>);
     }
 
-    if(this.props.isLoaded) {
+    if (this.props.topics.length) {
       return <Grid className="app-shell">
               {rows}
             </Grid>;
@@ -43,4 +43,4 @@ class TopicIndex extends Component {
   }
 }
 
-export default TopicIndex;
+export default Topics;

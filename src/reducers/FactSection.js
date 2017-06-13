@@ -1,18 +1,9 @@
 import { combineReducers } from 'redux'
 import {
-  SELECT_TOPIC, ADD_FACT, REQUEST_FACTS, RECEIVE_FACTS
+  ADD_FACT, REQUEST_FACTS, RECEIVE_FACTS
 } from '../actions/FactSection'
 
-function selectedTopic(state = 0, action) {
-  switch (action.type) {
-    case SELECT_TOPIC:
-      return action.topic
-    default:
-      return state
-  }
-}
-
-function facts(state = [], action) {
+export function facts(state = [], action) {
   switch (action.type) {
     case RECEIVE_FACTS:
       return action.facts
@@ -21,7 +12,7 @@ function facts(state = [], action) {
   }
 }
 
-function factsByTopic(state = {}, action) {
+export function factsByTopic(state = {}, action) {
   switch (action.type) {
     case RECEIVE_FACTS:
     case REQUEST_FACTS:
@@ -32,10 +23,3 @@ function factsByTopic(state = {}, action) {
       return state
   }
 }
-
-const rootReducer = combineReducers({
-  selectedTopic,
-  factsByTopic,
-})
-
-export default rootReducer

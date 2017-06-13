@@ -3,8 +3,8 @@ import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import AppHeader from './presentational/AppHeader';
 // import Feedback from './Feedback';
-import TopicIndex from './presentational/TopicIndex';
-import TopicPage from './presentational/TopicPage';
+import TopicIndex from './containers/TopicIndex';
+import TopicPage from './containers/TopicPage';
 import LoginPage from './presentational/LoginPage';
 import 'semantic-ui-css/semantic.min.css';
 import './style/App.css';
@@ -14,25 +14,8 @@ class App extends Component {
     super(props);
     this.state = {
       main_color: "",
-      topics: [],
-      isLoaded: false};
-  }
-
-  componentWillMount() {
-  }
-
-  componentDidMount() {
-    this.loadTopics();
-  }
-
-  loadTopics = () => {
-    const component = this;
-    fetch('https://agora-be.herokuapp.com/topics/').then(function(response) {
-      return response.json();
-    }).then(function(j) {
-      component.setState({topics: j.results, isLoaded: true});
-
-    });
+      topics: []
+    };
   }
 
   render() {

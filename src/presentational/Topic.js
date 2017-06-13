@@ -5,36 +5,19 @@ import { Grid, Row, Col } from 'react-bootstrap'
 import TopicViews from './TopicViews'
 import ArticleCard from './ArticleCard'
 import '../style/TopicIndexTile.css'
-import { selectTopic } from '../actions/FactSection'
 
 class TopicPage extends Component {
   constructor(props) {
     super(props);
-    this.props.dispatch(selectTopic(props.match.params.id))
     this.state = {
-      id: props.match.params.id,
       isLoaded: false,
-      topics: {},
     };
-  }
-
-  componentDidMount() {
-    this.loadTopic();
-  }
-
-  loadTopic = () => {
-    const component = this
-    fetch('https://agora-be.herokuapp.com/topics/' + this.state.id).then(function(response) {
-      return response.json();
-    }).then(function(j) {
-      component.setState({...j});
-    });
   }
 
   render() {
     let cards;
-    if(this.state.isLoaded){
-      cards = this.state.articles.map((article, index) =>
+    if (this.state.isLoaded) {
+      cards = this.props.articles.map((article, index) =>
       <List.Item key={index}>
         <ArticleCard id={index} article={article} handleStepClick={this.handleStepClick}/>
       </List.Item>

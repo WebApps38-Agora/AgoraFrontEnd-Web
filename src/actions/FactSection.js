@@ -1,13 +1,5 @@
 import fetch from 'isomorphic-fetch'
 
-export const SELECT_TOPIC = 'SELECT_TOPIC'
-export function selectTopic(topic) {
-  return {
-    type: SELECT_TOPIC,
-    topic
-  }
-}
-
 export const ADD_FACT = 'ADD_FACT'
 export function addFact(fact) {
   return {
