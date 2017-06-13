@@ -2,13 +2,18 @@ import React, { Component} from 'react';
 import { Segment, Button, Divider } from 'semantic-ui-react'
 import { Icon, Form, Message } from 'semantic-ui-react'
 import FacebookProvider, { Login } from 'react-facebook';
+import { sendLogin } from '../actions/TopicIndex'
+import { connect } from 'react-redux'
+import Cookies from 'js-cookie'
 
-export default class LoginPage extends Component {
+class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoggedIn: false
     };
+    Cookies.set('name', 'value', {expires : 365})
+    console.log(Cookies.get('name'))
   }
 
   handleResponse = (data) => {
@@ -37,18 +42,9 @@ export default class LoginPage extends Component {
   	  document.querySelector('img').src = URL.createObjectURL(imageBlob);
   	});
 
-    //get key
-    fetch('http://localhost:8000/rest_auth/facebook/', {method: 'post', mode: 'cors',
-    	redirect: 'follow',
-    	headers: new Headers({
-    		'content-type': 'application/json'
-    	}), body: JSON.stringify({
-    		access_token: this.state.accessToken
-    	})}).then( (r)=> r.json())
-          .then( (j) => {
-        console.log(j)
-      })
-    }
+    this.props.dispatch(sendLogin(data.tokenDetail.accessToken))
+  }
+
 
   handleError = (error) => {
     console.log(error)
@@ -93,10 +89,4 @@ export default class LoginPage extends Component {
   }
 }
 
-function Greeting(props) {
-  const isLoggedIn = props.isLoggedIn;
-  if (isLoggedIn) {
-    return <h1> "Welcome Back" </h1>;
-  }
-  return <h1> "Please sign in" </h1>;
-}
+export default connect()(LoginPage)

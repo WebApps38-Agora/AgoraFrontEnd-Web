@@ -1,6 +1,6 @@
 import thunkMiddleware from 'redux-thunk'
 import { createStore, applyMiddleware, compose, combineReducers} from 'redux'
-import { selectedTopic, topics, facts } from './reducers/TopicIndex'
+import { loginKey, selectedTopic, topics, facts } from './reducers/TopicIndex'
 
 const backendUrl = (state, action) => {
   // return 'https://agora-be.herokuapp.com'
@@ -8,6 +8,7 @@ const backendUrl = (state, action) => {
 }
 
 const rootReducer = combineReducers({
+  loginKey,
   backendUrl,
   selectedTopic,
   topics,

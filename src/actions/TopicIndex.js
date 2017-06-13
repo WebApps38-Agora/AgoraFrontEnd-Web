@@ -1,4 +1,13 @@
 import fetch from 'isomorphic-fetch'
+import Cookies from 'js-cookie'
+
+export const RECEIVE_LOGIN = 'RECEIVE_LOGIN'
+export function receiveLogin(key) {
+  return {
+    type: RECEIVE_LOGIN,
+    key
+  }
+}
 
 export const SELECT_TOPIC = 'SELECT_TOPIC'
 export function selectTopic(topic) {
@@ -41,5 +50,21 @@ export function fetchTopicsIfNeeded() {
     if (!getState().topics.loaded) {
       dispatch(fetchTopics())
     }
+  }
+}
+
+export function sendLogin(accessToken) {
+  return (dispatch, getState) => {
+    return fetch('http://localhost:8000/rest_auth/facebook/', {
+        method: 'post',
+      	headers: {'content-type': 'application/json'},
+        body: JSON.stringify({
+      		access_token: accessToken
+      	})
+    }).then( (r)=> r.json())
+      .then( (j) => {
+          dispatch(receiveLogin(j.key)) //j.key is the returned key
+          Cookies.set('login_key', j.key ,{expires : 7})
+      })
   }
 }

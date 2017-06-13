@@ -8,8 +8,14 @@ import configureStore from './configureStore'
 
 import { fetchTopics } from './actions/TopicIndex'
 import App from './App';
+import $ from "jquery";
+import Cookies from 'js-cookie'
+
+let login_key = Cookies.get('login_key') || false
+console.log(login_key)
 
 let store = configureStore({
+  loginKey: login_key,
   selectedTopic: 0,
   topics: {
     loaded: false,
