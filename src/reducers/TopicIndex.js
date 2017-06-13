@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import update from 'immutability-helper'
 import {
-  SELECT_TOPIC, REQUEST_TOPICS, RECEIVE_TOPICS
+  SELECT_TOPIC, REQUEST_TOPICS, RECEIVE_TOPICS, RECEIVE_LOGIN
 } from '../actions/TopicIndex'
 import {
   REQUEST_FACTS, RECEIVE_FACTS, ADD_FACT_REQUEST, ADD_FACT_RESPONSE
@@ -16,6 +16,15 @@ export function selectedTopic(state = 0, action) {
   switch (action.type) {
     case SELECT_TOPIC:
       return action.topic
+    default:
+      return state
+  }
+}
+
+export function loginKey(state = false, action) {
+  switch (action.type) {
+    case RECEIVE_LOGIN:
+      return action.key
     default:
       return state
   }
