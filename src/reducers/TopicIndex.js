@@ -21,6 +21,11 @@ export function selectedTopic(state = 0, action) {
 
 export function topics(state = {}, action) {
   switch (action.type) {
+    case REQUEST_TOPICS:
+      return update(state, {
+        isFetching: {$set: true}
+      })
+
     case RECEIVE_TOPICS:
       let topics = {}
       action.topics.map((topic, index) => {
@@ -29,7 +34,9 @@ export function topics(state = {}, action) {
           facts: []
         }
       })
-      return topics
+      return update(topics, {
+        isFetching: {$set: false}
+      })
 
     case RECEIVE_FACTS:
       return update(state, {
