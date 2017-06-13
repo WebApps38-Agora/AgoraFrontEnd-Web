@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Image, Loader, Dimmer, Segment } from 'semantic-ui-react'
+import { Loader, Dimmer } from 'semantic-ui-react'
 import TopicIndexTile from './TopicIndexTile';
 import { Grid, Row, Col } from 'react-bootstrap';
 import 'semantic-ui-css/semantic.min.css';
 import './Card.css';
 
-var MediaQuery = require('react-responsive');
+//var MediaQuery = require('react-responsive');
 
 class TopicIndex extends Component {
 

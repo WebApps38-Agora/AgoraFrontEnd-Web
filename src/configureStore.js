@@ -1,6 +1,5 @@
 import thunkMiddleware from 'redux-thunk'
 import { createStore, applyMiddleware, compose } from 'redux'
-import { selectTopic, fetchFacts } from './actions/FactSection'
 import rootReducer from './reducers/FactSection'
 
 export default function configureStore(preloadedState) {

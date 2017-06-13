@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Icon, Menu, Segment } from 'semantic-ui-react'
+import { Menu, Segment } from 'semantic-ui-react'
 import CommentSection from './CommentSection'
 import FactSection from './FactSection'
 import './Views.css'

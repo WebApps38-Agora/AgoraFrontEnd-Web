@@ -1,6 +1,6 @@
 import React, { Component} from 'react';
 import { Segment, Button, Divider } from 'semantic-ui-react'
-import { Icon, Form, Input, Message } from 'semantic-ui-react'
+import { Icon, Form, Message } from 'semantic-ui-react'
 import FacebookProvider, { Login } from 'react-facebook';
 
 export default class LoginPage extends Component {
