@@ -7,7 +7,7 @@ export default class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: false
+      isLoggedIn: false
     };
   }
 
@@ -25,7 +25,8 @@ export default class LoginPage extends Component {
       verified: data.profile.verified ,
       accessToken: data.tokenDetail.accessToken,
       expiresIn: data.tokenDetail.expiresIn,
-      signedRequest: data.tokenDetail.signedRequest
+      signedRequest: data.tokenDetail.signedRequest,
+      isLoggedIn: true
     })
 
     fetch('http://graph.facebook.com/'+data.profile.id+'/picture')
@@ -35,7 +36,19 @@ export default class LoginPage extends Component {
   	.then(function(imageBlob) {
   	  document.querySelector('img').src = URL.createObjectURL(imageBlob);
   	});
-  }
+
+    //get key
+    fetch('http://localhost:8000/rest_auth/facebook/', {method: 'post', mode: 'cors',
+    	redirect: 'follow',
+    	headers: new Headers({
+    		'content-type': 'application/json'
+    	}), body: JSON.stringify({
+    		access_token: this.state.accessToken
+    	})}).then( (r)=> r.json())
+          .then( (j) => {
+        console.log(j)
+      })
+    }
 
   handleError = (error) => {
     console.log(error)
@@ -45,6 +58,11 @@ export default class LoginPage extends Component {
   render() {
     return (
       <div style={{ marginTop: 6 + "rem", padding: "0 1rem" }}>
+        <Message
+              success
+              header={'Welcome '}
+              content="You're all signed in!"
+            />
         <Segment padded>
           <FacebookProvider appId="1959921887623211">
             <Login
@@ -62,11 +80,6 @@ export default class LoginPage extends Component {
             />
             <Form.Input label='Email' placeholder='agora@gmail.com' />
             <Form.Input label='Password' placeholder='Password' type='Password' />
-            <Message
-              success
-              header='Form Completed'
-              content="You're all signed up for the newsletter"
-            />
             <Message
               error
               header='Oh no!'
