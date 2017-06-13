@@ -27,10 +27,10 @@ export function receiveFacts(topic, json) {
 
 export function fetchFacts(topic) {
 
-  return function (dispatch) {
+  return function (dispatch, getState) {
     dispatch(requestFacts(topic))
 
-    return fetch(`https://agora-be.herokuapp.com/facts/topic/${topic}/`)
+    return fetch(`${getState().backendUrl}/facts/topic/${topic}/`)
       .then(response => response.json())
       .then(json => {
         dispatch(receiveFacts(topic, json))

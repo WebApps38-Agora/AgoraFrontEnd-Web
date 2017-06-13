@@ -25,12 +25,13 @@ export function receiveTopics(json) {
 
 export function fetchTopics(topic) {
 
-  return function (dispatch) {
+  return function (dispatch, getState) {
     dispatch(requestTopics(topic))
 
-    return fetch(`https://agora-be.herokuapp.com/topics/`)
+    return fetch(`${getState().backendUrl}/topics/`)
       .then(response => response.json())
       .then(json => {
+        console.log(json)
         dispatch(receiveTopics(json))
       })
   }
