@@ -37,7 +37,7 @@ export default class LoginPage extends Component {
           <Divider horizontal>Or</Divider>
           <Button secondary fluid>Sign Up Now</Button>
           <Divider horizontal>Or</Divider>
-          <FacebookProvider appId="123456789">
+          <FacebookProvider appId="1959921887623211">
             <Login
               scope="email"
               onResponse={this.handleResponse}
