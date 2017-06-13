@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 import AppHeader from './AppHeader';
 // import Feedback from './Feedback';
 import TopicIndex from './TopicIndex';
@@ -11,7 +12,6 @@ import './App.css';
 class App extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       main_color: "",
       topics: [],
@@ -19,13 +19,9 @@ class App extends Component {
   }
 
   componentWillMount() {
-    console.log("Bouta mount");
-    console.log(this.state);
   }
 
   componentDidMount() {
-    console.log("Loading sources");
-    console.log(this.state);
     this.loadTopics();
   }
 
@@ -52,4 +48,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect()(App);

@@ -11,10 +11,10 @@ import App from './App';
 let store = configureStore();
 
 ReactDOM.render(
-  <Router>
-    <Provider store={store}>
+  <Provider store={store}>
+    <Router>
       <App/>
-    </Provider>
-  </Router>,
+    </Router>
+  </Provider>,
   document.getElementById('root'));
 registerServiceWorker();

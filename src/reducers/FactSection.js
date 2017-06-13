@@ -3,9 +3,7 @@ import {
   SELECT_TOPIC, ADD_FACT, REQUEST_FACTS, RECEIVE_FACTS
 } from '../actions/FactSection'
 
-function selectedTopic(state = {
-  selectedTopic: 0
-}, action) {
+function selectedTopic(state = 0, action) {
   switch (action.type) {
     case SELECT_TOPIC:
       return action.topic

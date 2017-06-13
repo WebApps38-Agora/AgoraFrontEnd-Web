@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
-import { Card, Icon, Button, Form, Modal, Header } from 'semantic-ui-react';
+import React, { PropTypes, Component } from 'react';
+import { Card, Button, Modal } from 'semantic-ui-react';
 
 export default class Facts extends Component {
   render() {
-    console.log(this.props)
-
     const facts = this.props.facts.map((fact, index) =>
         <Card key={index} header={fact.content} fluid />
     );

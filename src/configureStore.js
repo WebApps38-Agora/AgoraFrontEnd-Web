@@ -1,5 +1,5 @@
 import thunkMiddleware from 'redux-thunk'
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import { selectTopic, fetchFacts } from './actions/FactSection'
 import rootReducer from './reducers/FactSection'
 
@@ -7,14 +7,12 @@ export default function configureStore(preloadedState) {
   const store = createStore(
     rootReducer,
     preloadedState,
-    applyMiddleware(
-      thunkMiddleware
+    compose(
+      applyMiddleware(
+        thunkMiddleware
+      ),
+      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
     )
-  );
-
-  store.dispatch(selectTopic(404));
-  store.dispatch(fetchFacts(404)).then(() =>
-    console.log(store.getState())
   );
 
   return store;

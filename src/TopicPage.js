@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import { Card, Header, List } from 'semantic-ui-react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import TopicViews from './TopicViews'
 import ArticleCard from './ArticleCard'
 import './Card.css'
+import { selectTopic } from './actions/FactSection'
 
 class TopicPage extends Component {
   constructor(props) {
     super(props);
+    this.props.dispatch(selectTopic(props.match.params.id))
     this.state = {
       id: props.match.params.id,
       isLoaded: false,
@@ -66,4 +69,4 @@ class TopicPage extends Component {
   }
 }
 
-export default TopicPage
+export default connect()(TopicPage)

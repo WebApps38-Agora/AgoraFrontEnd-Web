@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Icon, Menu, Segment } from 'semantic-ui-react'
 import CommentSection from './CommentSection'
 import FactSection from './FactSection'
 import './Views.css'
 
-export default class TopicViews extends Component {
+class TopicViews extends Component {
   constructor(props) {
     super(props);
-    console.log('topics views: ' + props.facts);
     this.state = {
       activeItem: 'facts',
     }
@@ -55,3 +55,5 @@ export default class TopicViews extends Component {
     )
   }
 }
+
+export default connect()(TopicViews)
