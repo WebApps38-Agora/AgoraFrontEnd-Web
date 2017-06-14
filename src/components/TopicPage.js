@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
-import { Card, List } from 'semantic-ui-react'
-import { Grid, Row, Col } from 'react-bootstrap'
+import { List } from 'semantic-ui-react'
+import { Grid, Col } from 'react-bootstrap'
 
 import TopicViews from './TopicViews'
 import ArticleCard from './ArticleCard'
