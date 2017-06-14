@@ -1,6 +1,5 @@
-import fetch from 'isomorphic-fetch'
 import Cookies from 'js-cookie'
-import Globals from '../globals'
+import ActionsHelper from './ActionsHelper'
 
 export const RECEIVE_LOGIN = 'RECEIVE_LOGIN'
 export function receiveLogin(key) {
@@ -34,15 +33,12 @@ export function receiveTopics(json) {
 }
 
 export function fetchTopics() {
-
-  return function (dispatch, getState) {
-    dispatch(requestTopics())
-
-    return fetch(`${Globals.BACKEND_URL}/topics/`)
-      .then(response => response.json())
-      .then(json => {
-        dispatch(receiveTopics(json))
-      })
+  return (dispatch, getState) => {
+    return ActionsHelper.sendGet('/topics/', (dispatch) => {
+      dispatch(requestTopics())
+    }, (dispatch, getState, response) => {
+      dispatch(receiveTopics(response))
+    })(dispatch, getState)
   }
 }
 
@@ -56,16 +52,16 @@ export function fetchTopicsIfNeeded() {
 
 export function sendLogin(accessToken) {
   return (dispatch, getState) => {
-    return fetch(`${Globals.BACKEND_URL}/rest_auth/facebook/`, {
+    return ActionsHelper.sendPost('/rest_auth/facebook/', () => {}, (dispatch, getState, response, accessToken) => {
+      dispatch(receiveLogin(response.key))
+      Cookies.set('login_key', response.key ,{expires : 7})
+    }, {
         method: 'post',
       	headers: {'content-type': 'application/json'},
         body: JSON.stringify({
       		access_token: accessToken
       	})
-    }).then( (r)=> r.json())
-      .then( (j) => {
-          dispatch(receiveLogin(j.key)) //j.key is the returned key
-          Cookies.set('login_key', j.key ,{expires : 7})
-      })
+      }
+    )(dispatch, getState)
   }
 }
