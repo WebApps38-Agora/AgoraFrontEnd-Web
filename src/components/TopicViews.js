@@ -17,7 +17,9 @@ class TopicViews extends Component {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render() {
-    const { activeItem } = this.state
+    const { activeItem} = this.state;
+
+    let realHeight = this.props.titleHeight + 20;
 
     let content;
     switch (this.state.activeItem) {
@@ -34,7 +36,7 @@ class TopicViews extends Component {
     }
 
     return (
-      <div>
+      <div style={{height: "calc(100% - " + realHeight + "px)"}}>
         <Segment attached='top' id="content">
           {content}
         </Segment>

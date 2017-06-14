@@ -1,9 +1,5 @@
-.card {
-  /*width: 100%;*/
-}
-
-a {
-  /*margin-top: 2rem;*/
+.title-card {
+  margin-bottom: 1rem;
 }
 
 .card img {
@@ -11,15 +7,24 @@ a {
   height: 50px;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 768px) {
   .card img {
-    width: 100%;
-    height: auto;
+    width: 100px;
+    height: 100px;
   }
 }
 
 .card .content {
   display: inline-flex;
+}
+
+.header {
+  font-family: Spectral, serif !important;
+}
+
+.non-article {
+  width: 100%;
+  font-size: 1.5rem !important;
 }
 
 .card .header .meta {

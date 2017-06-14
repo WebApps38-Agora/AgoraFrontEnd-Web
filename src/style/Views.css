@@ -1,4 +1,9 @@
+#views {
+  /*height: calc(100% - 60px);*/
+}
+
 #content {
   min-height: 300px;
-  height: calc(100vh - 7rem - 50px);
+  height: 100%;
+  height: calc(100% - 50px);
 }

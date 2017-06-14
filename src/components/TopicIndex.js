@@ -42,7 +42,7 @@ class TopicIndex extends Component {
           </Row>);
       }
 
-      return <Grid className="app-shell">{rows}</Grid>;
+      return <Grid className="app-shell" id="topic-index">{rows}</Grid>;
     } else {
       return <Dimmer active><Loader>Loading the latest topics</Loader></Dimmer>
     }
