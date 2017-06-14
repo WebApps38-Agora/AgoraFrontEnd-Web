@@ -34,7 +34,7 @@ class LoginPage extends Component {
       isLoggedIn: true
     })
 
-    fetch('http://graph.facebook.com/'+data.profile.id+'/picture')
+    fetch('https://graph.facebook.com/'+data.profile.id+'/picture')
   	.then(function(response) {
   	  return response.blob();
   	})
