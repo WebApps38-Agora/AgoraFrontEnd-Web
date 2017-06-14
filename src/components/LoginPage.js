@@ -4,17 +4,13 @@ import { Icon, Form, Message } from 'semantic-ui-react'
 import FacebookProvider, { Login } from 'react-facebook';
 import { sendLogin } from '../actions/TopicIndex'
 import { connect } from 'react-redux'
+import ProfilePage from './ProfilePage'
 import Cookies from 'js-cookie'
 import Globals from '../globals'
 
 class LoginPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isLoggedIn: false
-    };
-    Cookies.set('name', 'value', {expires : 365})
-    console.log(Cookies.get('name'))
   }
 
   handleResponse = (data) => {
@@ -32,20 +28,14 @@ class LoginPage extends Component {
       accessToken: data.tokenDetail.accessToken,
       expiresIn: data.tokenDetail.expiresIn,
       signedRequest: data.tokenDetail.signedRequest,
-      isLoggedIn: true
     })
 
-    fetch('https://graph.facebook.com/'+data.profile.id+'/picture')
-  	.then(function(response) {
-  	  return response.blob();
-  	})
-  	.then(function(imageBlob) {
-  	  document.querySelector('img').src = URL.createObjectURL(imageBlob);
-  	});
+    let image = 'https://graph.facebook.com/'+data.profile.id+'/picture'
 
-    this.props.dispatch(sendLogin(data.tokenDetail.accessToken))
+    this.props.dispatch(sendLogin(data.tokenDetail.accessToken,
+                                  image
+                                  ))
   }
-
 
   handleError = (error) => {
     console.log(error)
@@ -54,12 +44,11 @@ class LoginPage extends Component {
 
   render() {
     return (
-      <div style={{ marginTop: 6 + "rem", padding: "0 1rem" }}>
-        <Message
-              success
-              header={'Welcome '}
-              content="You're all signed in!"
-            />
+      <div className="app-shell">
+        { this.props.loginKey &&
+          <ProfilePage />
+          }
+        { !this.props.loginKey &&
         <Segment padded>
           <FacebookProvider appId={Globals.FACEBOOK_APP_ID}>
             <Login
@@ -85,9 +74,15 @@ class LoginPage extends Component {
             <Button>Submit</Button>
           </Form>
         </Segment>
+      }
       </div>
     );
   }
 }
 
-export default connect()(LoginPage)
+const mapStateToProps = (state, ownProps) => {
+  return {
+    loginKey: state.loginKey
+  }
+}
+export default connect(mapStateToProps)(LoginPage)

@@ -65,7 +65,7 @@ export function sendLogin(accessToken) {
     }).then( (r)=> r.json())
       .then( (j) => {
           dispatch(receiveLogin(j.key)) //j.key is the returned key
-          Cookies.set('login_key', j.key ,{expires : 7})
+          Cookies.set('login_key', j.key ,{ expires : 7 })
       })
   }
 }

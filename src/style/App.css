@@ -34,6 +34,7 @@ p {
   max-width: 1000px;
   min-width: 300px;
   margin: 6rem auto;
+  padding: 0 1rem;
 }
 
 .App-logo {

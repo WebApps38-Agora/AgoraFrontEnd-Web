@@ -64,6 +64,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(
-  mapStateToProps
-)(FactSection)
+export default connect( mapStateToProps )(FactSection)

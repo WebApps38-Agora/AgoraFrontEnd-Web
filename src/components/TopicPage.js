@@ -33,7 +33,7 @@ class TopicPage extends Component {
       )
 
       return (
-        <div style={{ marginTop: 6 + "rem", padding: "0 1rem" }}>
+        <div className="app-shell">
           <Grid>
             <Row>
               <Col style={{padding:0}} className="Grid-column" xs={9} md={7} mdOffset={1}>
