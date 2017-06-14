@@ -23,6 +23,7 @@ class FactSection extends Component {
   }
 
   render() {
+    if (this.props) {
       let facts = this.props.topic.fact_set.map((fact, index) =>
           <Card key={index} header={fact.content} fluid />
       );
