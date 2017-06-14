@@ -19,6 +19,15 @@ export function addCommentResponse(topic, json) {
   }
 }
 
+export const SHOW_REPLY_INPUT = 'SHOW_REPLY_INPUT'
+export function showReplyInput(topic, chain) {
+  return {
+    type: SHOW_REPLY_INPUT,
+    topic,
+    chain,
+  }
+}
+
 export function sendAddCommentRequest(topic, content) {
   return function (dispatch, getState) {
     dispatch(addCommentRequest())

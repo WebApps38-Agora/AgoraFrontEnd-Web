@@ -6,7 +6,7 @@ import {
   RECEIVE_FACTS, ADD_FACT_RESPONSE
 } from '../actions/FactSection'
 import {
-  ADD_COMMENT_RESPONSE
+  ADD_COMMENT_RESPONSE, SHOW_REPLY_INPUT
 } from '../actions/Comments'
 import {
   REQUEST_TOPIC, RECEIVE_TOPIC
@@ -32,6 +32,20 @@ export function loginKey(state = false, action) {
   }
 }
 
+const createTopic = (topic) => {
+  let new_comment_set = {}
+  topic.comment_set.forEach((comment) => {
+    new_comment_set[comment.id] = comment
+  })
+
+  return {
+    ...topic,
+    comment_set: new_comment_set,
+    isFetching: false,
+    url: `${Globals.BACKEND_URL}/topics/${topic.id}/`,
+  }
+}
+
 export function topics(state = {}, action) {
   switch (action.type) {
     case REQUEST_TOPICS:
@@ -42,13 +56,7 @@ export function topics(state = {}, action) {
     case RECEIVE_TOPICS:
       let topics = {}
       action.topics.forEach((topic) => {
-          topics[topic.id] = {
-            ...topic,
-            article_set: [],
-            fact_set: [],
-            isFetching: false,
-            url: `${Globals.BACKEND_URL}/topics/${topic.id}/`,
-          }
+          topics[topic.id] = createTopic(topic)
         }
       )
 
@@ -81,11 +89,7 @@ export function topics(state = {}, action) {
     case RECEIVE_TOPIC:
       return update(state, {
         items: {
-          $merge: {[action.topic.id]: {
-            ...action.topic,
-            isFetching: false,
-            url: `${Globals.BACKEND_URL}/topics/${action.topic.id}/`,
-          }}
+          $merge: {[action.topic.id]: createTopic(action.topic)}
         }
       })
 
@@ -110,7 +114,18 @@ export function topics(state = {}, action) {
           }
         }
       })
-      
+
+    case SHOW_REPLY_INPUT:
+      console.log(action.chain)
+      console.log(action.topic)
+      return update(state, {
+        items: {
+          [action.topic]: {
+            reply_to_comment: {$set: action.chain}
+          }
+        }
+      })
+
     default:
       return state
   }
