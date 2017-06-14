@@ -6,6 +6,7 @@ import { Grid, Row, Col } from 'react-bootstrap'
 import TopicIndexTile from './TopicIndexTile'
 
 class TopicIndex extends Component {
+
   componentWillMount() {
     this.props.dispatch(fetchTopicsIfNeeded())
   }
@@ -14,6 +15,7 @@ class TopicIndex extends Component {
     if (this.props.loaded) {
       const topics = this.props.topics.items
       const numTopics = Object.keys(topics).length
+
 
       const makeTile = (index) => {
         const topic = topics[Object.keys(topics)[index]]
@@ -52,7 +54,8 @@ class TopicIndex extends Component {
 const mapStateToProps = (state) => {
   return {
     loaded: state.topics.loaded,
-    topics: state.topics || []
+    topics: state.topics || [],
+    nextPage: state.topics.nextPage
   }
 }
 

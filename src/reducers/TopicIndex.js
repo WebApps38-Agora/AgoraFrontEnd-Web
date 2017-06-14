@@ -52,7 +52,8 @@ export function topics(state = {}, action) {
       return update(state, {
         isFetching: {$set: false},
         loaded: {$set: true},
-        items: {$merge: topics}
+        items: {$merge: topics},
+        nextPage: {$set: action.nextPage}
       })
 
     case RECEIVE_FACTS:

@@ -47,11 +47,11 @@ class TopicViews extends Component {
           </Menu.Item>
 
           <Menu.Item name='discussion' active={activeItem === 'discussion'} onClick={this.handleItemClick}>
-            Comments
+            Discussion
           </Menu.Item>
 
           <Menu.Item name='stats' active={activeItem === 'stats'} onClick={this.handleItemClick}>
-            Stats
+            Statistics
           </Menu.Item>
         </Menu>
       </div>
