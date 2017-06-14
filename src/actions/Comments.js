@@ -1,5 +1,4 @@
-import fetch from 'isomorphic-fetch'
-import Globals from '../globals'
+import ActionsHelper from './ActionsHelper'
 
 export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST'
 export function addCommentRequest(topic, content) {
@@ -29,23 +28,13 @@ export function showReplyInput(topic, chain) {
 }
 
 export function sendAddCommentRequest(topic, content) {
-  return function (dispatch, getState) {
+  return ActionsHelper.sendPost('/comments/', (dispatch) => {
     dispatch(addCommentRequest())
-
-    return fetch(`${Globals.BACKEND_URL}/comments/`, {
-        method: 'post',
-        headers: new Headers({
-          'Content-Type': 'application/json',
-          'Authorization': 'Token ' + getState().loginKey
-        }),
-        body: JSON.stringify({
-          topic: Globals.BACKEND_URL + `/topics/${topic}/`,
-          content: content,
-          parent_comment: null,
-        })
-    }).then(response => response.json())
-      .then(json => {
-        dispatch(addCommentResponse(topic, json))
-      })
-  }
+  }, (dispatch, getState, response) => {
+    dispatch(addCommentResponse())
+  }, {
+    topic: topic,
+    content: content,
+    parent_comment: null,
+  })
 }

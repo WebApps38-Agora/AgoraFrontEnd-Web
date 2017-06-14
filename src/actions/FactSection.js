@@ -1,4 +1,3 @@
-import Globals from '../globals'
 import ActionsHelper from './ActionsHelper'
 
 export const ADD_FACT_REQUEST = 'ADD_FACT_REQUEST'
@@ -59,7 +58,7 @@ export function sendAddFactRequest(topic, content) {
   }, (dispatch, getState, response) => {
     dispatch(addFactResponse(topic, response))
   }, {
-    topic: Globals.BACKEND_URL + `/topics/${topic}/`,
+    topic: topic,
     content: content,
     factreaction_set: []
   })

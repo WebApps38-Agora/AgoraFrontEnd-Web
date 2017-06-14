@@ -28,10 +28,6 @@ class TopicPage extends Component {
     this.props.dispatch(fetchTopic(this.state.id))
   }
 
-  componentDidMount() {
-    console.log(this.props.children);
-  }
-
   setHeight(height) {
     if (height) {
       this.setState({height: height});
@@ -44,6 +40,7 @@ class TopicPage extends Component {
 
   render() {
     if (!this.props.isFetching) {
+      console.log(this.props.topic)
       let cards = this.props.topic.article_set.map((article, index) =>
         <List.Item key={index}>
           <ArticleCard id={index} article={article} handleStepClick={this.handleStepClick}/>

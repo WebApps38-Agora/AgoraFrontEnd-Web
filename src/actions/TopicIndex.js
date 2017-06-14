@@ -51,17 +51,11 @@ export function fetchTopicsIfNeeded() {
 }
 
 export function sendLogin(accessToken) {
-  return (dispatch, getState) => {
-    return ActionsHelper.sendPost('/rest_auth/facebook/', () => {}, (dispatch, getState, response, accessToken) => {
-      dispatch(receiveLogin(response.key))
-      Cookies.set('login_key', response.key ,{expires : 7})
-    }, {
-        method: 'post',
-      	headers: {'content-type': 'application/json'},
-        body: JSON.stringify({
-      		access_token: accessToken
-      	})
-      }
-    )(dispatch, getState)
-  }
+  return ActionsHelper.sendPost('/rest_auth/facebook/', (dispatch, getState) => {
+  }, (dispatch, getState, response) => {
+    dispatch(receiveLogin(response.key))
+    Cookies.set('login_key', response.key ,{expires : 7})
+  }, {
+    access_token: accessToken
+  })
 }
