@@ -82,7 +82,8 @@ const mapStateToProps = (state) => {
     isFetching:    Object.keys(state.topics.items).length === 0
                 || !(state.selectedTopic in state.topics.items)
                 || state.topics.items[state.selectedTopic].isFetching,
-    topic: state.topics.items[state.selectedTopic] || {}
+    topic: state.topics.items[state.selectedTopic] || {},
+    nextPage: state.topics.nextPage
   }
 }
 

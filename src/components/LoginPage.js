@@ -35,12 +35,17 @@ class LoginPage extends Component {
       isLoggedIn: true
     })
 
-    fetch('https://graph.facebook.com/'+data.profile.id+'/picture')
+    fetch('https://graph.facebook.com/' + data.profile.id + '/picture')
   	.then(function(response) {
   	  return response.blob();
   	})
   	.then(function(imageBlob) {
-  	  document.querySelector('img').src = URL.createObjectURL(imageBlob);
+      var loginLogo = document.getElementById('login-logo');
+      var profileLogo = document.getElementById('profile-logo');
+      loginLogo.style.display = 'none';
+      profileLogo.querySelector('img').src = URL.createObjectURL(imageBlob);
+      profileLogo.style.display = 'block';
+  	  // document.querySelector('img').src = URL.createObjectURL(imageBlob);
   	});
 
     this.props.dispatch(sendLogin(data.tokenDetail.accessToken))

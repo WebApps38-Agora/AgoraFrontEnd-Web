@@ -10,10 +10,19 @@ export default class AppHeader extends Component {
         <Menu.Item as={Link} to="/">
           <img src={require("../images/agora_logo.png")} alt="logo" />
         </Menu.Item>
-        <Menu.Item as={Link} to='/login'
+        <Menu.Item as={Link}
+                   id="login-logo"
+                   to='/login'
                    icon="user outline"
                    onClick={this.openLogin}
                    position="right" />
+        <Menu.Item style={{display: 'none'}}
+                   as={Link}
+                   id="profile-logo"
+                   to='/profile'
+                   position="right">
+          <img src="#" alt="logo" />
+        </Menu.Item>
       </Menu>
     )
   }

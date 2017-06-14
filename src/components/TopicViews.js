@@ -51,7 +51,7 @@ class TopicViews extends Component {
           </Menu.Item>
 
           <Menu.Item name='stats' active={activeItem === 'stats'} onClick={this.handleItemClick}>
-            Stats
+            Statistics
           </Menu.Item>
         </Menu>
       </div>
