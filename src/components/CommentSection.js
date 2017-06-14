@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Segment, Button, Comment, Form, Header } from 'semantic-ui-react'
+import { Segment, Button, Comment, Form, Icon, Header } from 'semantic-ui-react'
 import Textarea from 'react-textarea-autosize';
 import ReactHeight from 'react-height'
 import '../style/Views.css';
@@ -89,6 +89,16 @@ class CommentSection extends Component {
     Object.keys(this.props.comment_hierarchy).forEach((id, index) => {
       comments.push(this.makeComment(this.props.comment_hierarchy[id], []))
     })
+
+    if (!comments.length) {
+      comments = (<div className="missing">
+                <div className="missing-inner">
+                  <Icon name="comments" size="massive" />
+                  <h1>No comments on this topic!</h1>
+                  <p>Start the discussion on this topic by writing a comment below.</p>
+                </div>
+               </div>);
+    }
 
     return (
       <div className="section" id="comment-section">
