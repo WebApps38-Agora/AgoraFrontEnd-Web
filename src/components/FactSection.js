@@ -18,6 +18,11 @@ class FactSection extends Component {
     this.props.dispatch(actions.sendAddFactRequest(this.props.topic.id, this.state.fact_content))
   }
 
+  checkInputEmpty() {
+    console.log(this.state.fact_content);
+    return this.state.fact_content === "";
+  }
+
   render() {
     const { isFetching, topic } = this.props
     if (!isFetching) {
@@ -39,6 +44,7 @@ class FactSection extends Component {
                             placeholder='Write an unbiased, objective fact about this news topic' />
 
                 <Button onClick={this.handleSubmit}
+                        disabled={this.checkInputEmpty()}
                         width={4}
                         content='Add Fact'
                         labelPosition='left'
