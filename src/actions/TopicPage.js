@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch'
+import Globals from '../globals'
 
 export const REQUEST_TOPIC = 'REQUEST_TOPIC'
 export function requestTopic(topic) {
@@ -20,8 +21,8 @@ export function fetchTopic(topic) {
 
   return function (dispatch, getState) {
     dispatch(requestTopic(topic))
-
-    return fetch(`${getState().backendUrl}/topics/${topic}/`)
+    
+    return fetch(`${Globals.BACKEND_URL}/topics/${topic}/`)
       .then(response => response.json())
       .then(json => {
         dispatch(receiveTopic(json))

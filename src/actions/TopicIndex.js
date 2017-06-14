@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import Cookies from 'js-cookie'
-import backendUrl from '../configureStore'
+import Globals from '../globals'
 
 export const RECEIVE_LOGIN = 'RECEIVE_LOGIN'
 export function receiveLogin(key) {
@@ -38,7 +38,7 @@ export function fetchTopics() {
   return function (dispatch, getState) {
     dispatch(requestTopics())
 
-    return fetch(`${getState().backendUrl}/topics/`)
+    return fetch(`${Globals.BACKEND_URL}/topics/`)
       .then(response => response.json())
       .then(json => {
         dispatch(receiveTopics(json))
@@ -56,7 +56,7 @@ export function fetchTopicsIfNeeded() {
 
 export function sendLogin(accessToken) {
   return (dispatch, getState) => {
-    return fetch(`${backendUrl()}/rest_auth/facebook/`, {
+    return fetch(`${Globals.BACKEND_URL}/rest_auth/facebook/`, {
         method: 'post',
       	headers: {'content-type': 'application/json'},
         body: JSON.stringify({

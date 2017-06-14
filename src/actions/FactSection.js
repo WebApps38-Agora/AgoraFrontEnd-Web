@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch'
+import Globals from '../globals'
 
 export const ADD_FACT_REQUEST = 'ADD_FACT_REQUEST'
 export function addFactRequest(topic, content) {
@@ -40,7 +41,7 @@ export function fetchFacts(topic) {
   return function (dispatch, getState) {
     dispatch(requestFacts(topic))
 
-    return fetch(`${getState().backendUrl}/facts/topic/${topic}/`)
+    return fetch(`${Globals.BACKEND_URL}/facts/topic/${topic}/`)
       .then(response => response.json())
       .then(json => {
         dispatch(receiveFacts(topic, json))
@@ -60,7 +61,7 @@ export function sendAddFactRequest(topic, content) {
   return function (dispatch, getState) {
     dispatch(addFactRequest())
 
-    return fetch(`${getState().backendUrl}/facts/`, {
+    return fetch(`${Globals.BACKEND_URL}/facts/`, {
         method: 'post',
         headers: {
           'Content-Type': 'application/json'

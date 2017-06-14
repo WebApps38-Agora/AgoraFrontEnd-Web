@@ -1,23 +1,28 @@
 import thunkMiddleware from 'redux-thunk'
 import { createStore, applyMiddleware, compose, combineReducers} from 'redux'
 import { loginKey, selectedTopic, topics } from './reducers/TopicIndex'
+import Cookies from 'js-cookie'
 
-//const BACKEND_URL_DEV = 'http://localhost:8000'/
-const BACKEND_URL_PROD = 'https://agora-be.herokuapp.com'
-
-export const backendUrl = () => {
-  return BACKEND_URL_PROD
+const login_key = Cookies.get('login_key') || false
+const preloadedState = {
+  loginKey: login_key,
+  selectedTopic: 0,
+  topics: {
+    loaded: false,
+    isFetching: false,
+    items: {}
+  }
 }
 
 const rootReducer = combineReducers({
   loginKey,
-  backendUrl,
   selectedTopic,
   topics,
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-export default function configureStore(preloadedState) {
+
+export default function configureStore() {
   const store = createStore(
     rootReducer,
     preloadedState,
