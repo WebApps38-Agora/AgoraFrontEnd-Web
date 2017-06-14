@@ -1,9 +1,41 @@
 #fact-section {
+  --fact-section-fact-form-size: 60px;
   min-height: 200px;
   height: 100%;
 }
 
+.field {
+  width: calc(100% - 10%);
+}
+
+#fact-button {
+  min-width: 135px;
+  width: 10%;
+}
+
+#fact-form {
+  width: 100%;
+  margin: 0;
+}
+
+@media screen and (max-width: 770px) {
+  #fact-section {
+    --fact-section-fact-form-size: 100px;
+  }
+
+  .field {
+    width: 100%;
+  }
+
+  #fact-button {
+    width: 100%;
+    margin: 0.5rem;
+    margin-bottom: 0;
+  }
+
+}
+
 #facts {
-  min-height: calc(100% - 60px);
-  height: calc(100% - 60px);
+  min-height: calc(100% - var(--fact-section-fact-form-size));
+  height: calc(100% - var(--fact-section-fact-form-size));
 }
