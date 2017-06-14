@@ -11,12 +11,10 @@ addons:
     packages:
       - google-chrome-stable
 install:
-  - npm install -g bower web-component-tester polymer-cli
-  - bower install
+  - npm install
 script:
-  - xvfb-run wct
 before_deploy:
-  - polymer build --preset es5-bundled
+  - npm run build
 deploy:
   provider: firebase
   skip_cleanup: true
