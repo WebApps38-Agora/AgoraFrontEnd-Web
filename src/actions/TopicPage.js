@@ -17,7 +17,8 @@ export function receiveTopic(json) {
 }
 
 export function fetchTopic(topic) {
-  return ActionsHelper.sendGet(`/topics/${topic}`, (dispatch) => {
+  console.log("Fetching tpic")
+  return ActionsHelper.sendGet(`/topics/${topic}/`, (dispatch) => {
     dispatch(requestTopic(topic))
   }, (dispatch, getState, response) => {
     dispatch(receiveTopic(response))
