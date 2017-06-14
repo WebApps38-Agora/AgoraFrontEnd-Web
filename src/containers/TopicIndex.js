@@ -5,10 +5,6 @@ import { Loader, Dimmer } from 'semantic-ui-react'
 import Topics from '../presentational/Topics'
 
 class TopicIndex extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentWillMount() {
     this.props.dispatch(fetchTopicsIfNeeded())
   }

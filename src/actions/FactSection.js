@@ -50,7 +50,7 @@ export function fetchFacts(topic) {
 
 export function fetchFactsIfNeeded(topic) {
   return (dispatch, getState) => {
-    if (getState().topics[topic].facts == []) {
+    if (getState().topics[topic].facts === []) {
       dispatch(fetchFacts(topic))
     }
   }

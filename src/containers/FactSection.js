@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Divider, Button, Form, Segment } from 'semantic-ui-react'
+import { Button, Form, Segment } from 'semantic-ui-react'
 
 import Facts from '../presentational/Facts';
 import * as actions from '../actions/FactSection';
@@ -50,7 +50,7 @@ class FactSection extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    isFetching:    Object.keys(state.topics.items).length == 0
+    isFetching:    Object.keys(state.topics.items).length === 0
                 || !(state.selectedTopic in state.topics.items)
                 || state.topics.items[state.selectedTopic].isFetching,
     topic: state.topics.items[state.selectedTopic] || [],

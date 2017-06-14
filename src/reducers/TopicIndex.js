@@ -1,10 +1,9 @@
-import { combineReducers } from 'redux'
 import update from 'immutability-helper'
 import {
   SELECT_TOPIC, REQUEST_TOPICS, RECEIVE_TOPICS, RECEIVE_LOGIN
 } from '../actions/TopicIndex'
 import {
-  REQUEST_FACTS, RECEIVE_FACTS, ADD_FACT_REQUEST, ADD_FACT_RESPONSE
+  RECEIVE_FACTS, ADD_FACT_RESPONSE
 } from '../actions/FactSection'
 import {
   REQUEST_TOPIC, RECEIVE_TOPIC
@@ -39,15 +38,16 @@ export function topics(state = {}, action) {
 
     case RECEIVE_TOPICS:
       let topics = {}
-      action.topics.map((topic, index) => {
-        topics[topic.id] = {
-          ...topic,
-          article_set: [],
-          fact_set: [],
-          isFetching: false,
-          url: backendUrl() + `/topics/${topic.id}/`,
+      action.topics.forEach((topic) => {
+          topics[topic.id] = {
+            ...topic,
+            article_set: [],
+            fact_set: [],
+            isFetching: false,
+            url: backendUrl() + `/topics/${topic.id}/`,
+          }
         }
-      })
+      )
 
       return update(state, {
         isFetching: {$set: false},

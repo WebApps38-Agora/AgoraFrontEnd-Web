@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button, Modal } from 'semantic-ui-react';
+import { Card } from 'semantic-ui-react';
 
 export default class Facts extends Component {
   render() {

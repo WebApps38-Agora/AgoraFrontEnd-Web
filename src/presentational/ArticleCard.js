@@ -22,7 +22,7 @@ class ArticleCard extends Component {
 
     if (this.state.isLoaded) {
       return (
-       <a href={article.url} target="_blank">
+       <a href={article.url} target="_blank" rel="noopener noreferrer">
         <Card id={this.props.id} className="article" raised link fluid >
           <Card.Content>
               <Image floated='left' src={source.url_logo} />

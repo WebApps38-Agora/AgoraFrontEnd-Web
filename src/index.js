@@ -6,9 +6,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import configureStore from './configureStore'
 
-import { fetchTopics } from './actions/TopicIndex'
 import App from './App';
-import $ from "jquery";
 import Cookies from 'js-cookie'
 
 let login_key = Cookies.get('login_key') || false
