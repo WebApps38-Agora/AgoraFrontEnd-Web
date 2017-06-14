@@ -8,7 +8,7 @@ export default class AppHeader extends Component {
     return (
       <Menu id="app-header" fixed="top" size="massive" borderless={true} inverted>
         <Menu.Item as={Link} to="/">
-          <img src={require("../images/agora_full_logo.jpg")} alt="logo" />
+          <img src={require("../images/agora_logo.png")} alt="logo" />
         </Menu.Item>
         <Menu.Item as={Link} to='/login'
                    icon="user outline"
