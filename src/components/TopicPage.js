@@ -37,7 +37,7 @@ class TopicPage extends Component {
           <Grid>
             <Row>
               <Col style={{padding:0}} className="Grid-column" xs={9} md={7} mdOffset={1}>
-                <TopicViews />
+                <TopicViews isFetching={this.props.isFetching} topic={this.props.topic}/>
               </Col>
 
               <Col style={{padding:0}} className="Grid-column" xs={3} md={3} mdOffset={1}>
@@ -61,7 +61,6 @@ class TopicPage extends Component {
     }
   }
 }
-
 
 const mapStateToProps = (state) => {
   return {

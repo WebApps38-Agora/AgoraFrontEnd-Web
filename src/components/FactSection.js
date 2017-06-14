@@ -19,9 +19,7 @@ class FactSection extends Component {
   }
 
   render() {
-    const { isFetching, topic } = this.props
-    if (!isFetching) {
-      const facts = topic.fact_set.map((fact, index) =>
+      const facts = this.props.topic.fact_set.map((fact, index) =>
           <Card key={index} header={fact.content} fluid />
       );
 
@@ -49,21 +47,8 @@ class FactSection extends Component {
           </Segment>
         </div>
       )
-    } else {
-      return <div></div>
-    }
-  }
-}
-
-const mapStateToProps = (state, ownProps) => {
-  return {
-    isFetching:    Object.keys(state.topics.items).length === 0
-                || !(state.selectedTopic in state.topics.items)
-                || state.topics.items[state.selectedTopic].isFetching,
-    topic: state.topics.items[state.selectedTopic] || [],
   }
 }
 
 export default connect(
-  mapStateToProps
 )(FactSection)

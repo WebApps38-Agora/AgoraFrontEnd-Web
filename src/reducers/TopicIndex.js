@@ -6,6 +6,9 @@ import {
   RECEIVE_FACTS, ADD_FACT_RESPONSE
 } from '../actions/FactSection'
 import {
+  ADD_COMMENT_RESPONSE
+} from '../actions/Comments'
+import {
   REQUEST_TOPIC, RECEIVE_TOPIC
 } from '../actions/TopicPage'
 
@@ -96,6 +99,18 @@ export function topics(state = {}, action) {
           }
         }
       })
+
+    case ADD_COMMENT_RESPONSE:
+      return update(state, {
+        items: {
+          [action.topic]: {
+            comment_set: {
+              $push: [action.comment]
+            }
+          }
+        }
+      })
+      
     default:
       return state
   }

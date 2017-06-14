@@ -1,40 +1,65 @@
 import React, { Component } from 'react';
-import RaisedButton from '../node_modules/material-ui/RaisedButton';
+import { connect } from 'react-redux'
+import { Button, Comment, Form, Header } from 'semantic-ui-react'
 import '../style/Comments.css';
+import * as actions from '../actions/Comments'
 
 class Comments extends Component {
   constructor(props) {
-    super(props);
-    this.state = {comments: [1,2,3,4]};
+    super(props)
+    this.state = {
+      comment_content: ''
+    }
   }
 
-  componentDidMount() {
-    this.loadCommentsFromServer();
+  makeComment(comment, index) {
+    //const children = comment.children.map((comment, index) => makeComment(comment))
+    const children = <div></div>
+
+    return (
+      <Comment key={index}>
+        <Comment.Avatar src='http://www.ruralagriventures.com/wp-content/uploads/2017/05/man-team.jpg' />
+        <Comment.Content>
+          <Comment.Author as='a'>Elliot</Comment.Author>
+          <Comment.Metadata>
+            <div>{comment.published_at}</div>
+          </Comment.Metadata>
+          <Comment.Text>
+            <p>{comment.content}</p>
+          </Comment.Text>
+          <Comment.Actions>
+            <Comment.Action>Reply</Comment.Action>
+          </Comment.Actions>
+        </Comment.Content>
+        <Comment.Group>
+          {children}
+        </Comment.Group>
+      </Comment>
+    )
   }
 
-  loadCommentsFromServer = () => {
-    const component = this;
-    fetch('https://agora-be.herokuapp.com/').then(function(response) {
-      return response.json();
-    }).then(function(j) {
-      component.setState({comments: [j.articles]});
-    });
+  handleSubmit = e => {
+    e.preventDefault()
+    this.props.dispatch(actions.sendAddCommentRequest(this.props.topic.id, this.state.comment_content))
   }
 
   render() {
-    const cs = this.state.comments.map((comment, index) =>
-        <li key={index}> {comment} </li>
-    );
+    const comments = this.props.topic.comment_set.map((comment, index) => this.makeComment(comment, index))
 
     return (
-      <div className="center">
-        <div className="inner">
-          <ul>{cs}</ul>
-        </div>
-        <RaisedButton label="Add Comment" />
-      </div>
-    );
+      <Comment.Group minimal>
+        <Header as='h3' dividing>Comments</Header>
+        {comments}
+        <Form reply>
+          <Form.TextArea
+            value={this.state.comment_contnet}
+            onChange={(e, {name, value}) => this.setState({comment_content: value})}
+          />
+          <Button onClick={this.handleSubmit} content='Add Reply' labelPosition='left' icon='edit' primary />
+        </Form>
+      </Comment.Group>
+    )
   }
 }
 
-export default Comments;
+export default connect()(Comments);
