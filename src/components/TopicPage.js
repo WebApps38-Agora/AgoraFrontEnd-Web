@@ -12,6 +12,7 @@ import { fetchTopic } from '../actions/TopicPage'
 
 import ReactHeight from 'react-height'
 var moment = require('moment');
+var MediaQuery = require('react-responsive');
 
 class TopicPage extends Component {
   constructor(props) {
@@ -53,19 +54,21 @@ class TopicPage extends Component {
       return (
         <Grid id="topic-page">
           {/* <Row> */}
-            <Col id="topic-headlines" xs={12} sm={4} smPush={8} md={3} mdPush={9}>
-              <List relaxed>
-                <ArticleCard article={null} title="Headlines" center/>
-                {cards}
-              </List>
-            </Col>
+            <MediaQuery minWidth={768}>
+              <Col id="topic-headlines" xs={12} sm={4} smPush={8} md={3} mdPush={9}>
+                <List relaxed>
+                  <ArticleCard article={null} title="Headlines" center/>
+                  {cards}
+                </List>
+              </Col>
+            </MediaQuery>
 
             <Col id="topic-views" xs={12} sm={8} smPull={4} md={7} mdPull={2}>
-              <ReactHeight className="title-card" onHeightReady={ height => this.setHeight(height) }>
-                <ArticleCard article={null} title={this.props.topic.title}
-                           right_subtitle={moment(this.props.topic.published_at).format("dddd, MMMM Do YYYY")}
-                           left_subtitle={moment(this.props.topic.published_at).fromNow()} />
-              </ReactHeight>
+                <ReactHeight className="title-card" onHeightReady={ height => this.setHeight(height) }>
+                  <ArticleCard article={null} title={this.props.topic.title}
+                             right_subtitle={moment(this.props.topic.published_at).format("dddd, MMMM Do YYYY")}
+                             left_subtitle={moment(this.props.topic.published_at).fromNow()} />
+                </ReactHeight>
               <TopicViews isFetching={this.props.isFetching} topic={this.props.topic} titleHeight={this.state.height} />
             </Col>
           {/* </Row> */}

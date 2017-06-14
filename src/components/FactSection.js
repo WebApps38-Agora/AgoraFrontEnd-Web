@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Form, Segment, Card } from 'semantic-ui-react'
 
 import * as actions from '../actions/FactSection';
-import '../style/FactSection.css'
+import '../style/Views.css'
 
 class FactSection extends Component {
   constructor(props) {
@@ -29,18 +29,18 @@ class FactSection extends Component {
       );
 
       return (
-        <div id="fact-section">
-          <Segment vertical id="facts">
+        <div className="section" id="fact-section">
+          <Segment vertical className="section-content" id="facts">
             {facts}
           </Segment>
           <Segment vertical>
             <Form success={false}>
-              <Form.Group id="fact-form">
+              <Form.Group className="section-form">
                 <Form.Input style={{width: 100 + "%"}}
                             id="fact-input"
                             value={this.state.fact_content}
                             onChange={(e, {name, value}) => this.setState({fact_content: value})}
-                            placeholder='Write an unbiased, objective fact about this news topic' />
+                            placeholder='Write an unbiased, objective fact about this news topic...' />
 
                 <Button id="fact-button"
                         onClick={this.handleSubmit}

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Button, Comment, Form, Header } from 'semantic-ui-react'
+import { Segment, Button, Comment, Form, Header } from 'semantic-ui-react'
+import Textarea from 'react-textarea-autosize';
+import ReactHeight from 'react-height'
+import '../style/Views.css';
 import '../style/Comments.css';
 import * as actions from '../actions/Comments'
 
@@ -22,6 +25,7 @@ class Comments extends Component {
     super(props)
     this.state = {
       comment_content: '',
+      textAreaHeight: 125,
     }
   }
 
@@ -72,6 +76,14 @@ class Comments extends Component {
     this.props.dispatch(actions.sendAddCommentRequest(this.props.topic.id, this.state.comment_content))
   }
 
+  checkInputEmpty() {
+    return this.state.comment_content == "";
+  }
+
+  updateTextAreaSize(height) {
+    this.setState({textAreaHeight: height + 67});
+  }
+
   render() {
     let comments = []
     Object.keys(this.props.comment_hierarchy).forEach((id, index) => {
@@ -79,17 +91,31 @@ class Comments extends Component {
     })
 
     return (
-      <Comment.Group minimal>
-        <Header as='h3' dividing>Comments</Header>
-        {comments}
-        <Form reply>
-          <Form.TextArea
-            value={this.state.comment_content}
-            onChange={(e, {name, value}) => this.setState({comment_content: value})}
-          />
-          <Button onClick={this.handleSubmit} content='Add Reply' labelPosition='left' icon='edit' primary />
-        </Form>
-      </Comment.Group>
+      <div className="section" id="comment-section">
+        <Comment.Group minimal style={{height: "calc(100% - " + this.state.textAreaHeight + "px)",
+                                      maxWidth: "none"}}>
+          <Segment vertical className="section-content" id="comments">
+            {comments}
+          </Segment>
+          <Segment vertical>
+            <Form reply id="comment-form">
+              {/* <Form.Group> */}
+                <Textarea
+                  minRows={2}
+                  maxRows={5}
+                  value={this.state.comment_content}
+                  onChange={ (e) => this.setState({comment_content: e.target.value}) }
+                  onHeightChange={ (height, instance) => this.updateTextAreaSize(height)}
+                  placeholder='Write a reply or a new comment on the topic...' />
+                <Button onClick={this.handleSubmit}
+                        disabled={this.checkInputEmpty()}
+                        content='Comment'
+                        labelPosition='left' icon='edit' primary />
+              {/* </Form.Group> */}
+            </Form>
+          </Segment>
+        </Comment.Group>
+      </div>
     )
   }
 }
