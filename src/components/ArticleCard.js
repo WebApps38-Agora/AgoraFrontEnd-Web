@@ -30,7 +30,7 @@ class ArticleCard extends Component {
           <Card.Content>
               <Image floated='left' src={source.url_logo} />
               <Card.Header>
-                {/* <MediaQuery minWidth={800}> */}
+                {/* <MediaQuery minWidth={768}> */}
                   {article.headline}
                   <Card.Meta>
                     {moment(article.published_at).fromNow()}

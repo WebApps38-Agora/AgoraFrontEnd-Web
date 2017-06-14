@@ -1,5 +1,5 @@
-import fetch from 'isomorphic-fetch'
 import Globals from '../globals'
+import ActionsHelper from './ActionsHelper'
 
 export const ADD_FACT_REQUEST = 'ADD_FACT_REQUEST'
 export function addFactRequest(topic, content) {
@@ -36,19 +36,6 @@ export function receiveFacts(topic, json) {
   }
 }
 
-export function fetchFacts(topic) {
-
-  return function (dispatch, getState) {
-    dispatch(requestFacts(topic))
-
-    return fetch(`${Globals.BACKEND_URL}/facts/topic/${topic}/`)
-      .then(response => response.json())
-      .then(json => {
-        dispatch(receiveFacts(topic, json))
-      })
-  }
-}
-
 export function fetchFactsIfNeeded(topic) {
   return (dispatch, getState) => {
     if (getState().topics[topic].facts === []) {
@@ -57,24 +44,23 @@ export function fetchFactsIfNeeded(topic) {
   }
 }
 
-export function sendAddFactRequest(topic, content) {
-  return function (dispatch, getState) {
-    dispatch(addFactRequest())
+export function fetchFacts(topic) {
+  return ActionsHelper.sendGet('/fact/topic/', (dispatch) => {
+    dispatch(requestFacts(topic))
+  }, (dispatch, getState, response) => {
+    dispatch(receiveFacts(response))
+  })
+}
 
-    return fetch(`${Globals.BACKEND_URL}/facts/`, {
-        method: 'post',
-        headers: new Headers({
-          'Content-Type': 'application/json',
-          'Authorization': 'Token ' + getState().loginKey
-        }),
-        body: JSON.stringify({
-          topic: Globals.BACKEND_URL + `/topics/${topic}/`,
-          content: content,
-          factreaction_set: []
-        })
-    }).then(response => response.json())
-      .then(json => {
-        dispatch(addFactResponse(topic, json))
-      })
-  }
+
+export function sendAddFactRequest(topic, content) {
+  return ActionsHelper.sendPost('/facts/', (dispatch) => {
+    dispatch(addFactRequest(topic))
+  }, (dispatch, getState, response) => {
+    dispatch(addFactResponse(topic, response))
+  }, {
+    topic: Globals.BACKEND_URL + `/topics/${topic}/`,
+    content: content,
+    factreaction_set: []
+  })
 }
