@@ -35,15 +35,26 @@ export function loginKey(state = false, action) {
 const createTopic = (topic, deep) => {
   let new_comment_set = {}
 
+  let extra = {}
   if (deep) {
     topic.comment_set.forEach((comment) => {
       new_comment_set[comment.id] = comment
     })
+
+    extra = {
+      comment_set: new_comment_set,
+    }
+  } else {
+    extra = {
+      comment_set: [],
+      fact_set: [],
+      article_set: [],
+    }
   }
 
   return {
     ...topic,
-    comment_set: new_comment_set,
+    ...extra,
     isFetching: false,
     url: `${Globals.BACKEND_URL}/topics/${topic.id}/`,
   }
