@@ -23,7 +23,7 @@ const rootReducer = combineReducers({
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 export default function configureStore() {
-  const store = createStore(
+  return createStore(
     rootReducer,
     preloadedState,
     composeEnhancers(
@@ -32,6 +32,4 @@ export default function configureStore() {
       ),
     )
   );
-
-  return store;
 }

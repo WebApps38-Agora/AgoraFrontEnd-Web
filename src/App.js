@@ -1,23 +1,16 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import AppHeader from './presentational/AppHeader';
-// import Feedback from './Feedback';
-import TopicIndex from './containers/TopicIndex';
-import TopicPage from './containers/TopicPage';
-import LoginPage from './presentational/LoginPage';
+
+import AppHeader from './components/AppHeader';
+import TopicIndex from './components/TopicIndex';
+import TopicPage from './components/TopicPage';
+import LoginPage from './components/LoginPage';
+
 import 'semantic-ui-css/semantic.min.css';
 import './style/App.css';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      main_color: "",
-      topics: []
-    };
-  }
-
   render() {
     let props = this.state;
     return (<main>

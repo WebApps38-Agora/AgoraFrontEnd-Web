@@ -6,8 +6,6 @@ import '../style/TopicIndexTile.css';
 
 var moment = require('moment');
 
-
-
 const TopicIndexTile = (props) => (
   <VisibilitySensor>
     <Link to={props.to}>

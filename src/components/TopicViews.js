@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Menu, Segment } from 'semantic-ui-react'
+
 import CommentSection from './CommentSection'
-import FactSection from '../containers/FactSection'
+import FactSection from './FactSection'
 import '../style/Views.css'
 
 class TopicViews extends Component {
