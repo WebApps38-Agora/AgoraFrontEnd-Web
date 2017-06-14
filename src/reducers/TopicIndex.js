@@ -32,12 +32,14 @@ export function loginKey(state = false, action) {
   }
 }
 
-const createTopic = (topic) => {
+const createTopic = (topic, deep) => {
   let new_comment_set = {}
-  console.log(topic)
-  topic.comment_set.forEach((comment) => {
-    new_comment_set[comment.id] = comment
-  })
+
+  if (deep) {
+    topic.comment_set.forEach((comment) => {
+      new_comment_set[comment.id] = comment
+    })
+  }
 
   return {
     ...topic,
@@ -57,7 +59,7 @@ export function topics(state = {}, action) {
     case RECEIVE_TOPICS:
       let topics = {}
       action.topics.forEach((topic) => {
-          topics[topic.id] = createTopic(topic)
+          topics[topic.id] = createTopic(topic, false)
         }
       )
 
@@ -90,7 +92,7 @@ export function topics(state = {}, action) {
     case RECEIVE_TOPIC:
       return update(state, {
         items: {
-          $merge: {[action.topic.id]: createTopic(action.topic)}
+          $merge: {[action.topic.id]: createTopic(action.topic, true)}
         }
       })
 
@@ -117,8 +119,6 @@ export function topics(state = {}, action) {
       })
 
     case SHOW_REPLY_INPUT:
-      console.log(action.chain)
-      console.log(action.topic)
       return update(state, {
         items: {
           [action.topic]: {

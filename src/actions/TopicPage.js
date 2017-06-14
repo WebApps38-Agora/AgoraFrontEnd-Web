@@ -21,9 +21,12 @@ export function fetchTopic(topic) {
 
   return function (dispatch, getState) {
     dispatch(requestTopic(topic))
-    
-    return fetch(`${Globals.BACKEND_URL}/topics/${topic}/`)
-      .then(response => response.json())
+
+    return fetch(`${Globals.BACKEND_URL}/topics/${topic}/`, {
+      headers: {
+        Authorization: 'Token ' + getState().loginKey
+      }
+    }).then(response => response.json())
       .then(json => {
         dispatch(receiveTopic(json))
       })
