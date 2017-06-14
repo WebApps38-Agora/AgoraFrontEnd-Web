@@ -4,8 +4,8 @@ import { Segment, Button, Comment, Form, Header } from 'semantic-ui-react'
 import Textarea from 'react-textarea-autosize';
 import ReactHeight from 'react-height'
 import '../style/Views.css';
-import '../style/Comments.css';
-import * as actions from '../actions/Comments'
+import '../style/CommentSection.css';
+import * as actions from '../actions/CommentSection'
 
 function arraysEqual(arr1, arr2) {
     if (!arr1 || !arr2) return false
@@ -20,7 +20,7 @@ function arraysEqual(arr1, arr2) {
     return true;
 }
 
-class Comments extends Component {
+class CommentSection extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -144,4 +144,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps)(Comments);
+export default connect(mapStateToProps)(CommentSection);

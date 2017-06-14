@@ -7,7 +7,7 @@ import {
 } from '../actions/FactSection'
 import {
   ADD_COMMENT_RESPONSE, SHOW_REPLY_INPUT
-} from '../actions/Comments'
+} from '../actions/CommentSection'
 import {
   REQUEST_TOPIC, RECEIVE_TOPIC
 } from '../actions/TopicPage'
