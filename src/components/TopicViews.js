@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Menu, Segment } from 'semantic-ui-react'
 
-import Comments from './Comments'
+import CommentSection from './CommentSection'
 import FactSection from './FactSection'
 import '../style/Views.css'
 
@@ -27,7 +27,7 @@ class TopicViews extends Component {
         content = <FactSection isFetching={this.props.isFetching} topic={this.props.topic}/>
         break;
       case 'discussion':
-        content = <Comments isFetching={this.props.isFetching} topic={this.props.topic}/>
+        content = <CommentSection isFetching={this.props.isFetching} topic={this.props.topic}/>
         break;
       case 'stats':
       default:
