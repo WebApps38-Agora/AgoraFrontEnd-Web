@@ -11,10 +11,10 @@ export function addFactRequest(topic, content) {
 }
 
 export const ADD_FACT_RESPONSE = 'ADD_FACT_RESPONSE'
-export function addFactResponse(json) {
+export function addFactResponse(topic, json) {
   return {
     type: ADD_FACT_RESPONSE,
-    topic: json.topic,
+    topic: topic,
     fact: json
   }
 }
@@ -63,17 +63,18 @@ export function sendAddFactRequest(topic, content) {
 
     return fetch(`${Globals.BACKEND_URL}/facts/`, {
         method: 'post',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: new Headers({
+          'Content-Type': 'application/json',
+          'Authorization': 'Token ' + getState().loginKey
+        }),
         body: JSON.stringify({
-          topic: topic,
-          owner: 1,
-          content: content
+          topic: Globals.BACKEND_URL + `/topics/${topic}/`,
+          content: content,
+          factreaction_set: []
         })
     }).then(response => response.json())
       .then(json => {
-        dispatch(addFactResponse(json))
+        dispatch(addFactResponse(topic, json))
       })
   }
 }

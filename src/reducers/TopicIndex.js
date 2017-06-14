@@ -9,7 +9,7 @@ import {
   REQUEST_TOPIC, RECEIVE_TOPIC
 } from '../actions/TopicPage'
 
-import BACKEND_URL from '../configureStore'
+import Globals from '../globals'
 
 export function selectedTopic(state = 0, action) {
   switch (action.type) {
@@ -44,7 +44,7 @@ export function topics(state = {}, action) {
             article_set: [],
             fact_set: [],
             isFetching: false,
-            url: `${BACKEND_URL}/topics/${topic.id}/`,
+            url: `${Globals.BACKEND_URL}/topics/${topic.id}/`,
           }
         }
       )
@@ -81,7 +81,7 @@ export function topics(state = {}, action) {
           $merge: {[action.topic.id]: {
             ...action.topic,
             isFetching: false,
-            url: `${BACKEND_URL}/topics/${action.topic.id}/`,
+            url: `${Globals.BACKEND_URL}/topics/${action.topic.id}/`,
           }}
         }
       })
@@ -91,7 +91,7 @@ export function topics(state = {}, action) {
         items: {
           [action.topic]: {
             fact_set: {
-              $push: action.fact
+              $push: [action.fact]
             }
           }
         }

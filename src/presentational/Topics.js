@@ -14,7 +14,6 @@ class Topics extends Component {
 
     const makeTile = (index) => {
       const topic = topics[Object.keys(topics)[index]]
-      console.log(topic)
       return topic &&
              <TopicIndexTile
                to={"/topic/" + topic.id}

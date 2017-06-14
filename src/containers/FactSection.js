@@ -16,7 +16,7 @@ class FactSection extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    this.props.dispatch(actions.sendAddFactRequest(this.props.topic.url, this.state.fact_content))
+    this.props.dispatch(actions.sendAddFactRequest(this.props.topic.id, this.state.fact_content))
   }
 
   render() {
