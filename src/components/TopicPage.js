@@ -66,7 +66,7 @@ class TopicPage extends Component {
                            right_subtitle={moment(this.props.topic.published_at).format("dddd, MMMM Do YYYY")}
                            left_subtitle={moment(this.props.topic.published_at).fromNow()} />
               </ReactHeight>
-              <TopicViews titleHeight={this.state.height} />
+              <TopicViews isFetching={this.props.isFetching} topic={this.props.topic} titleHeight={this.state.height} />
             </Col>
           {/* </Row> */}
         </Grid>
@@ -76,7 +76,6 @@ class TopicPage extends Component {
     }
   }
 }
-
 
 const mapStateToProps = (state) => {
   return {
