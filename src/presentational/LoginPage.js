@@ -5,6 +5,7 @@ import FacebookProvider, { Login } from 'react-facebook';
 import { sendLogin } from '../actions/TopicIndex'
 import { connect } from 'react-redux'
 import Cookies from 'js-cookie'
+import Globals from '../globals'
 
 class LoginPage extends Component {
   constructor(props) {
@@ -60,7 +61,7 @@ class LoginPage extends Component {
               content="You're all signed in!"
             />
         <Segment padded>
-          <FacebookProvider appId="1959921887623211">
+          <FacebookProvider appId={Globals.FACEBOOK_APP_ID}>
             <Login
               scope="email"
               onResponse={this.handleResponse}
