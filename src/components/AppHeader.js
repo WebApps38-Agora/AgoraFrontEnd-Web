@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { Menu } from 'semantic-ui-react'
+import { Menu, Image } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
 
 export default class AppHeader extends Component {
@@ -21,7 +21,7 @@ export default class AppHeader extends Component {
                    id="profile-logo"
                    to='/profile'
                    position="right">
-          <img src="#" alt="logo" />
+          <Image src='#' shape='circular' bordered/>
         </Menu.Item>
       </Menu>
     )

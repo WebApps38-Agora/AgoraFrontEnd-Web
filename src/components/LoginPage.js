@@ -45,7 +45,6 @@ class LoginPage extends Component {
       loginLogo.style.display = 'none';
       profileLogo.querySelector('img').src = URL.createObjectURL(imageBlob);
       profileLogo.style.display = 'block';
-  	  // document.querySelector('img').src = URL.createObjectURL(imageBlob);
   	});
 
     this.props.dispatch(sendLogin(data.tokenDetail.accessToken))

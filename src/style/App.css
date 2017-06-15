@@ -122,3 +122,19 @@ a, a:hover, a:visited, a:focus {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+#login-logo i {
+
+}
+
+#profile-logo {
+  padding-top: 0.928571em;
+  padding-bottom: 0.928571em;
+}
+
+#profile-logo img {
+  height: 45px;
+  width: 45px;
+  border: 2px solid white;
+  /*box-shadow: 1px 1px 3px black;*/
+}
