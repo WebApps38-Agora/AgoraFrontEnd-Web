@@ -68,16 +68,16 @@ export function topics(state = {}, action) {
       })
 
     case RECEIVE_TOPICS:
-      let topics = {}
+      let topics = state.items
       action.topics.forEach((topic) => {
-          topics[topic.id] = createTopic(topic, false)
+          topics.push(createTopic(topic, false))
         }
       )
 
       return update(state, {
         isFetching: {$set: false},
         loaded: {$set: true},
-        items: {$merge: topics},
+        items: {$set: topics},
         nextPage: {$set: action.nextPage}
       })
 

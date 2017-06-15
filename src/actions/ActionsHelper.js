@@ -2,7 +2,7 @@ import Globals from '../globals'
 import fetch from 'isomorphic-fetch'
 
 class ActionsHelper {
-  fetchWithMethod(method, endpoint, beforeRequest, afterRequest, postBody) {
+  fetchWithMethod(method, endpoint, isEntireURL, beforeRequest, afterRequest, postBody) {
     console.log('Sending ' + method + ' to ' + endpoint + ' with body:')
     console.log(postBody)
 
@@ -24,12 +24,12 @@ class ActionsHelper {
         config.headers.append('Authorization', 'Token ' + getState().loginKey)
       }
 
-      return fetch(Globals.BACKEND_URL + endpoint, config)
+      let trueURL = ((isEntireURL) ? "" : Globals.BACKEND_URL) + endpoint;
+      console.log(endpoint);
+
+      return fetch(trueURL, config)
       .then(response => {
-        // if (response.status !== 200)  {
-        //   console.error('POST ERROR: Received status ' + response.status + ' from ' + endpoint + ' with body:')
-        //   console.error(response.json())
-        // }
+        console.log(response);
         return response.json()
       })
       .then(json => {
@@ -42,11 +42,15 @@ class ActionsHelper {
   }
 
   sendPost(endpoint, beforeRequest, afterRequest, postBody) {
-    return this.fetchWithMethod('post', endpoint, beforeRequest, afterRequest, postBody)
+    return this.fetchWithMethod('post', endpoint, false, beforeRequest, afterRequest, postBody)
   }
 
   sendGet(endpoint, beforeRequest, afterRequest) {
-    return this.fetchWithMethod('get', endpoint, beforeRequest, afterRequest, null)
+    return this.fetchWithMethod('get', endpoint, false, beforeRequest, afterRequest, null)
+  }
+
+  sendURLGet(endpoint, beforeRequest, afterRequest) {
+    return this.fetchWithMethod('get', endpoint, true, beforeRequest, afterRequest, null)
   }
 }
 

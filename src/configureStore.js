@@ -10,7 +10,8 @@ const preloadedState = {
   topics: {
     loaded: false,
     isFetching: false,
-    items: {}
+    items: [],
+    nextPage: ""
   }
 }
 

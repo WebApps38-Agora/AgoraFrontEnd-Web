@@ -33,6 +33,7 @@ p {
 #topic-index {
   max-width: 1000px;
   min-width: 300px;
+  margin: 0 auto;
 }
 
 #topic-page {
@@ -115,6 +116,10 @@ p {
 .grid-tile {
   padding: 0;
   height: 100%;
+}
+
+.topic-index-bottom {
+  height: 40vh;
 }
 
 a, a:hover, a:visited, a:focus {

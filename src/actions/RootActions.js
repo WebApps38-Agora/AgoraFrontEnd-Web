@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie'
+import Globals from '../globals'
 import ActionsHelper from './ActionsHelper'
 
 export const RECEIVE_LOGIN = 'RECEIVE_LOGIN'
@@ -25,9 +26,9 @@ export function receiveTopics(json) {
   }
 }
 
-export function fetchTopics() {
+export function fetchTopics(url) {
   return (dispatch, getState) => {
-    return ActionsHelper.sendGet('/topics/', (dispatch) => {
+    return ActionsHelper.sendURLGet(url, (dispatch) => {
       dispatch(requestTopics())
     }, (dispatch, getState, response) => {
       dispatch(receiveTopics(response))
@@ -38,8 +39,14 @@ export function fetchTopics() {
 export function fetchTopicsIfNeeded() {
   return (dispatch, getState) => {
     if (!getState().topics.loaded) {
-      dispatch(fetchTopics())
+      dispatch(fetchTopics(Globals.BACKEND_URL + '/topics'))
     }
+  }
+}
+
+export function fetchMoreTopics() {
+  return (dispatch, getState) => {
+    dispatch(fetchTopics(getState().topics.nextPage))
   }
 }
 

@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { fetchTopicsIfNeeded } from '../actions/RootActions'
-import { Loader, Dimmer } from 'semantic-ui-react'
+import { fetchTopicsIfNeeded, fetchMoreTopics } from '../actions/RootActions'
+import { Loader, Dimmer, Visibility } from 'semantic-ui-react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import TopicIndexTile from './TopicIndexTile'
+import Missing from './Missing'
 
 class TopicIndex extends Component {
 
+  constructor(props) {
+    super(props);
+    this.handleScrollBottom = this.handleScrollBottom.bind(this);
+  }
+
   componentWillMount() {
     this.props.dispatch(fetchTopicsIfNeeded())
+  }
+
+  handleScrollBottom() {
+    this.props.dispatch(fetchMoreTopics());
   }
 
   render() {
@@ -44,7 +54,13 @@ class TopicIndex extends Component {
           </Row>);
       }
 
-      return <Grid className="app-shell" id="topic-index">{rows}</Grid>;
+      return <div >
+        <Grid className="app-shell" id="topic-index">{rows}</Grid>
+        <Visibility className="topic-index-bottom" onOnScreen={this.handleScrollBottom} once={false}>
+          <Missing icon="newspaper" icon_size="massive"
+                   header="Loading more topics..." />
+        </Visibility>
+      </div>;
     } else {
       return <Dimmer active><Loader>Loading the latest topics</Loader></Dimmer>
     }
