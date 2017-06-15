@@ -13,7 +13,7 @@
 }
 
 .section {
-  --fact-section-fact-form-size: 60px;
+  --section-form-size: 60px;
   min-height: 200px;
   height: 100%;
 }
