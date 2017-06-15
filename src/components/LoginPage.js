@@ -2,7 +2,7 @@ import React, { Component} from 'react';
 import { Segment, Button, Divider } from 'semantic-ui-react'
 import { Icon, Form, Message } from 'semantic-ui-react'
 import FacebookProvider, { Login } from 'react-facebook';
-import { sendLogin } from '../actions/TopicIndex'
+import { sendLogin } from '../actions/RootActions'
 import { connect } from 'react-redux'
 import Cookies from 'js-cookie'
 import Globals from '../globals'

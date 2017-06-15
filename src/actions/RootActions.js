@@ -9,14 +9,6 @@ export function receiveLogin(key) {
   }
 }
 
-export const SELECT_TOPIC = 'SELECT_TOPIC'
-export function selectTopic(topic) {
-  return {
-    type: SELECT_TOPIC,
-    topic
-  }
-}
-
 export const REQUEST_TOPICS = 'REQUEST_TOPICS'
 export function requestTopics() {
   return {

@@ -1,16 +1,16 @@
 import update from 'immutability-helper'
 import {
-  SELECT_TOPIC, REQUEST_TOPICS, RECEIVE_TOPICS, RECEIVE_LOGIN
-} from '../actions/TopicIndex'
+  REQUEST_TOPICS, RECEIVE_TOPICS, RECEIVE_LOGIN
+} from '../actions/RootActions'
 import {
   RECEIVE_FACTS, ADD_FACT_RESPONSE
-} from '../actions/FactSection'
+} from '../actions/FactActions'
 import {
   ADD_COMMENT_RESPONSE, SHOW_REPLY_INPUT
-} from '../actions/CommentSection'
+} from '../actions/CommentActions'
 import {
-  REQUEST_TOPIC, RECEIVE_TOPIC
-} from '../actions/TopicPage'
+  SELECT_TOPIC, REQUEST_TOPIC, RECEIVE_TOPIC
+} from '../actions/TopicActions'
 
 import Globals from '../globals'
 

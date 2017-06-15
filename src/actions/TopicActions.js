@@ -1,5 +1,13 @@
 import ActionsHelper from './ActionsHelper'
 
+export const SELECT_TOPIC = 'SELECT_TOPIC'
+export function selectTopic(topic) {
+  return {
+    type: SELECT_TOPIC,
+    topic
+  }
+}
+
 export const REQUEST_TOPIC = 'REQUEST_TOPIC'
 export function requestTopic(topic) {
   return {
@@ -17,7 +25,6 @@ export function receiveTopic(json) {
 }
 
 export function fetchTopic(topic) {
-  console.log("Fetching tpic")
   return ActionsHelper.sendGet(`/topics/${topic}/`, (dispatch) => {
     dispatch(requestTopic(topic))
   }, (dispatch, getState, response) => {

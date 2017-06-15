@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form, Segment } from 'semantic-ui-react'
 
-import * as actions from '../actions/FactSection';
+import * as actions from '../actions/FactActions';
 import '../style/Views.css'
 
 class FactSection extends Component {

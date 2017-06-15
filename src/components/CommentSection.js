@@ -4,7 +4,7 @@ import { Segment, Button, Comment, Form, Input } from 'semantic-ui-react'
 import Textarea from 'react-textarea-autosize';
 import '../style/Views.css';
 import '../style/CommentSection.css';
-import * as actions from '../actions/CommentSection'
+import * as actions from '../actions/CommentActions'
 
 function arraysEqual(arr1, arr2) {
     if (!arr1 || !arr2) return false
