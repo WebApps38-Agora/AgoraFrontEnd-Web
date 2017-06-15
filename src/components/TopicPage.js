@@ -49,7 +49,7 @@ class TopicPage extends Component {
       )
 
       return (
-        <Grid id="topic-page">
+        <Grid className="app-shell" id="topic-page">
           {/* <Row> */}
             <MediaQuery minWidth={768}>
               <Col id="topic-headlines" xs={12} sm={4} smPush={8} md={3} mdPush={9}>

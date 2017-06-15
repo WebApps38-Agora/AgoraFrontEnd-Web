@@ -107,6 +107,7 @@ textarea {
 
   #fact-section .button {
     margin: 0.5rem;
+    width: 100%;
   }
 
   .button {
