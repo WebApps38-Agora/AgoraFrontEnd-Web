@@ -34,8 +34,9 @@
 }
 
 #facts {
-  min-height: calc(100% - var(--fact-section-fact-form-size));
-  height: calc(100% - var(--fact-section-fact-form-size));
+  /*min-height: calc(100% - var(--fact-section-fact-form-size));
+  height: calc(100% - var(--fact-section-fact-form-size));*/
+  height: 100%;
 }
 
 #fact-section .button {

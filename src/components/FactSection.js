@@ -5,11 +5,15 @@ import { Button, Form, Segment } from 'semantic-ui-react'
 import * as actions from '../actions/FactSection';
 import '../style/Views.css'
 
+import Infinite from 'react-infinite'
+import ReactHeight from 'react-height'
+
 class FactSection extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      fact_content: ''
+      fact_content: '',
+      factListHeight: 0
     }
   }
 
@@ -23,16 +27,35 @@ class FactSection extends Component {
     return this.state.fact_content === "";
   }
 
+  componentDidMount() {
+
+  }
+
+  getFactList(facts) {
+    if (this.state.factListHeight) {
+      console.log(this.state.factListHeight);
+      return (<Infinite displayBottomUpwards containerHeight={this.state.factListHeight} elementHeight={51}>
+                {facts}
+              </Infinite>);
+    }
+    // console.log(this.state.factListHeight);
+    return <div></div>;
+  }
+
   render() {
-      const facts = this.props.topic.fact_set.map((fact, index) =>
+      let facts = this.props.topic.fact_set.map((fact, index) =>
           <Segment key={index}>{fact.content}</Segment>
       );
 
+      let fact_list = this.getFactList(facts);
+
       return (
         <div className="section" id="fact-section">
-          <Segment.Group className="section-content" id="facts">
-            {facts}
-          </Segment.Group>
+          <ReactHeight style={{height: "calc(100% - 60px)"}} onHeightReady={ height => this.setState({factListHeight: height}) }>
+            <Segment.Group className="section-content" id="facts">
+              {fact_list}
+            </Segment.Group>
+          </ReactHeight>
           <Segment vertical>
             <Form success={false}>
               <Form.Group className="section-form">
