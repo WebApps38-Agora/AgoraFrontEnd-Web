@@ -31,7 +31,7 @@ export function sendAddCommentRequest(topic, content) {
   return ActionsHelper.sendPost('/comments/', (dispatch) => {
     dispatch(addCommentRequest())
   }, (dispatch, getState, response) => {
-    dispatch(addCommentResponse())
+    dispatch(addCommentResponse(topic, response))
   }, {
     topic: topic,
     content: content,

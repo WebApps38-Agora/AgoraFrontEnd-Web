@@ -121,23 +121,23 @@ class CommentSection extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    const comment_set = ownProps.topic.comment_set
+  const comment_set = ownProps.topic.isFetching ? [] : ownProps.topic.comment_set
 
-    let comment_hierarchy = {...comment_set}
-    Object.keys(comment_set).forEach((id) => {
-      comment_hierarchy[id] = {
-        ...comment_set[id],
-        comments: {}
-      }
-    })
+  let comment_hierarchy = {...comment_set}
+  Object.keys(comment_set).forEach((id) => {
+    comment_hierarchy[id] = {
+      ...comment_set[id],
+      comments: {}
+    }
+  })
 
-    Object.keys(comment_set).forEach((id) => {
-      const parent = comment_hierarchy[id].parent_comment
-      if (parent != null) {
-        comment_hierarchy[parent].comments[id] = comment_hierarchy[id]
-        delete comment_hierarchy[id]
-      }
-    })
+  Object.keys(comment_set).forEach((id) => {
+    const parent = comment_hierarchy[id].parent_comment
+    if (parent != null) {
+      comment_hierarchy[parent].comments[id] = comment_hierarchy[id]
+      delete comment_hierarchy[id]
+    }
+  })
 
   return {
     comment_hierarchy: comment_hierarchy

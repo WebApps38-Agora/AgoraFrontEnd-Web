@@ -46,7 +46,7 @@ const createTopic = (topic, deep) => {
     }
   } else {
     extra = {
-      comment_set: [],
+      comment_set: {},
       fact_set: [],
       article_set: [],
     }
@@ -123,7 +123,9 @@ export function topics(state = {}, action) {
         items: {
           [action.topic]: {
             comment_set: {
-              $push: [action.comment]
+              $merge: {
+                [action.comment.id]: action.comment
+              }
             }
           }
         }
