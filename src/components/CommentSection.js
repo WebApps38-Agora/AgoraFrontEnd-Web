@@ -5,6 +5,7 @@ import Textarea from 'react-textarea-autosize';
 import '../style/Views.css';
 import '../style/CommentSection.css';
 import * as actions from '../actions/CommentActions'
+import Missing from './Missing'
 
 function arraysEqual(arr1, arr2) {
     if (!arr1 || !arr2) return false
@@ -92,13 +93,9 @@ class CommentSection extends Component {
     })
 
     if (!comments.length) {
-      comments = (<div className="missing">
-                <div className="missing-inner">
-                  <Icon name="comments" size="massive" />
-                  <h1>No comments on this topic!</h1>
-                  <p>Start the discussion on this topic by writing a comment below.</p>
-                </div>
-               </div>);
+      comments = (<Missing icon="comments" icon_size="massive"
+                           header="No comments on this topic!"
+                           description="Start the discussion on this topic by writing a comment below." />);
     }
 
     return (

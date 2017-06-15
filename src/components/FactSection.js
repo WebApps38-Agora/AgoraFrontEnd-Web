@@ -7,6 +7,7 @@ import '../style/Views.css'
 
 import Infinite from 'react-infinite'
 import ReactHeight from 'react-height'
+import Missing from './Missing'
 
 class FactSection extends Component {
   constructor(props) {
@@ -30,13 +31,10 @@ class FactSection extends Component {
   getFactList(facts) {
     if (this.state.factListHeight) {
       if (!facts.length) {
-        return (<div className="missing" style={{height: this.state.factListHeight + 'px' }}>
-                  <div className="missing-inner">
-                    <Icon name="inbox" size="massive" />
-                    <h1>No facts on this topic!</h1>
-                    <p>Be the first person to add an unbiased fact to this topic.</p>
-                  </div>
-                </div>);
+        return (<Missing icon="inbox"
+                         icon_size="massive"
+                         header="No facts on this topic!"
+                         description="Be the first person to add an unbiased fact to this topic." />)
       }
       return (<Infinite className="inf-list" containerHeight={this.state.factListHeight} elementHeight={51}>
                 <Segment.Group style={{padding:0}}>
