@@ -45,7 +45,7 @@ class TopicPage extends Component {
     if (!cards.length) {
       return (<div className="missing">
                 <div className="missing-inner">
-                  <Icon name="media:newspaper" size="big" />
+                  <Icon name="newspaper" size="big" />
                   <h1>No headlines on this topic!</h1>
                 </div>
               </div>);

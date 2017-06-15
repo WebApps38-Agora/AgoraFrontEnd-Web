@@ -127,3 +127,7 @@ textarea {
   }
 
 }
+
+.tabular > .active {
+  border-bottom: 5px solid var(--app-snd-color) !important;
+}

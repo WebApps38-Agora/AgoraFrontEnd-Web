@@ -127,10 +127,6 @@ a, a:hover, a:visited, a:focus {
   to { transform: rotate(360deg); }
 }
 
-#login-logo i {
-
-}
-
 #profile-logo {
   padding-top: 0.928571em;
   padding-bottom: 0.928571em;
