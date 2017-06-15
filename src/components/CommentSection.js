@@ -74,6 +74,7 @@ class CommentSection extends Component {
   handleSubmit = e => {
     e.preventDefault()
     this.props.dispatch(actions.sendAddCommentRequest(this.props.topic.id, this.state.comment_content))
+    this.setState({fact_content: ''});
   }
 
   checkInputEmpty() {

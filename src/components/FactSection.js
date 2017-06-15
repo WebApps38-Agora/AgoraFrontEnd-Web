@@ -20,6 +20,7 @@ class FactSection extends Component {
   handleSubmit = e => {
     e.preventDefault()
     this.props.dispatch(actions.sendAddFactRequest(this.props.topic.id, this.state.fact_content))
+    this.setState({fact_content: ''});
   }
 
   checkInputEmpty() {
