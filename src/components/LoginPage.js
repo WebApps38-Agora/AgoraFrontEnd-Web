@@ -5,7 +5,6 @@ import FacebookProvider, { Login } from 'react-facebook';
 import { sendLogin } from '../actions/RootActions'
 import { connect } from 'react-redux'
 import ProfilePage from './ProfilePage'
-import Cookies from 'js-cookie'
 import Globals from '../globals'
 
 class LoginPage extends Component {
@@ -46,6 +45,7 @@ class LoginPage extends Component {
   }
 
   handleError = (error) => {
+    console.log("error")
     console.log(error)
     this.setState({ error });
   }

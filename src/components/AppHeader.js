@@ -17,7 +17,6 @@ export default class AppHeader extends Component {
                    icon="user outline"
                    onClick={this.openLogin}
                    position="right" />
-          <Icon name="alarm" />
         <Menu.Item style={{display: 'none'}}
                    as={Link}
                    id="profile-logo"
@@ -25,6 +24,7 @@ export default class AppHeader extends Component {
                    position="right">
           <Image src='#' shape='circular' bordered/>
         </Menu.Item>
+        <Icon name="alarm" />
       </Menu>
     )
   }
