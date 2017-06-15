@@ -29,6 +29,7 @@ class ActionsHelper {
 
       return fetch(trueURL, config)
       .then(response => {
+        console.log(response);
         return response.json()
       })
       .then(json => {
@@ -46,6 +47,10 @@ class ActionsHelper {
 
   sendPost(endpoint, beforeRequest, afterRequest, postBody, errorHandler = this.defErrorHandler) {
     return this.fetchWithMethod('post', endpoint, false, beforeRequest, afterRequest, errorHandler, postBody)
+  }
+
+  sendPut(endpoint, beforeRequest, afterRequest, postBody, errorHandler = this.defErrorHandler) {
+    return this.fetchWithMethod('put', endpoint, false, beforeRequest, afterRequest, errorHandler, postBody)
   }
 
   sendGet(endpoint, beforeRequest, afterRequest, errorHandler = this.defErrorHandler) {

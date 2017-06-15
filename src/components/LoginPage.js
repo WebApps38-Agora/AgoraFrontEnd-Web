@@ -3,7 +3,7 @@ import { Segment, Button, Divider } from 'semantic-ui-react'
 import { Icon, Form, Message } from 'semantic-ui-react'
 import FacebookProvider, { Login } from 'react-facebook';
 import { sendLogin } from '../actions/RootActions'
-import { fetchProfile } from '../actions/ProfileActions'
+import { fetchProfile, updateProfile } from '../actions/ProfileActions'
 import { connect } from 'react-redux'
 import Cookies from 'js-cookie'
 import Globals from '../globals'
@@ -48,13 +48,14 @@ class LoginPage extends Component {
       profileLogo.style.display = 'block';
   	});
 
+    this.props.dispatch(updateProfile(data))
     this.props.dispatch(sendLogin(data.tokenDetail.accessToken))
     this.props.dispatch(fetchProfile())
   }
 
 
   handleError = (error) => {
-    console.log(error)
+    console.error(error)
     this.setState({ error });
   }
 

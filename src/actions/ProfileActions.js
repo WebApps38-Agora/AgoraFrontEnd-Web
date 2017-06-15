@@ -1,20 +1,17 @@
 import ActionsHelper from './ActionsHelper'
 
-export const ADD_FACT_REQUEST = 'ADD_FACT_REQUEST'
-export function addFactRequest(topic, content) {
+export const ADD_PROFILE_REQUEST = 'ADD_FACT_REQUEST'
+export function addProfileRequest(profile) {
   return {
-    type: ADD_FACT_REQUEST,
-    topic,
-    content
+    type: ADD_PROFILE_REQUEST
   }
 }
 
-export const ADD_FACT_RESPONSE = 'ADD_FACT_RESPONSE'
-export function addFactResponse(topic, json) {
+export const ADD_PROFILE_RESPONSE = 'ADD_PROFILE_RESPONSE'
+export function addProfileResponse(profile_id, response) {
   return {
-    type: ADD_FACT_RESPONSE,
-    topic: topic,
-    fact: json
+    type: ADD_PROFILE_RESPONSE,
+    profile: response
   }
 }
 
@@ -38,5 +35,20 @@ export function fetchProfile() {
     dispatch(requestProfile())
   }, (dispatch, getState, response) => {
     dispatch(receiveProfile(response))
+  })
+}
+
+export function updateProfile(data) {
+  let profile_picture = 'https://graph.facebook.com/' + data.profile.id + '/picture'
+  return ActionsHelper.sendPut('/profiles', (dispatch) => {
+    dispatch(addProfileRequest(data.profile.id))
+  }, (dispatch, getState, response) => {
+    dispatch(addProfileResponse(data.profile.id, response))
+  }, {
+    profile_picture: profile_picture,
+    country: data.profile.locale,
+    gender: data.profile.gender,
+    first_name: data.profile.first_name,
+    last_name: data.profile.last_name
   })
 }
