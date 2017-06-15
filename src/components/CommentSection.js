@@ -96,7 +96,7 @@ class CommentSection extends Component {
   }
 
   checkInputEmpty() {
-    return this.state.comment_content == "";
+    return this.state.comment_content === "";
   }
 
   updateTextAreaSize(height) {

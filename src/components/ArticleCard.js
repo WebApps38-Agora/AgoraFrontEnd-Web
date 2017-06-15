@@ -4,7 +4,6 @@ import { Card, Image } from 'semantic-ui-react';
 import '../style/Article.css';
 
 var moment = require('moment');
-var MediaQuery = require('react-responsive');
 
 class ArticleCard extends Component {
   constructor(props) {
@@ -43,9 +42,9 @@ class ArticleCard extends Component {
     } else {
       var style;
       if (this.state.center) {
-        var style = { textAlign: "center" };
+        style = { textAlign: "center" };
       } else {
-        var style = {
+        style = {
           display: "block",
           padding: 2 +"rem"
         };
