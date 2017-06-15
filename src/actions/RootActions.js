@@ -26,12 +26,22 @@ export function receiveTopics(json) {
   }
 }
 
+export const HANDLE_TOPICS_ERROR = 'HANDLE_TOPICS_ERROR'
+export function handleTopicsError(error) {
+  return {
+    type: HANDLE_TOPICS_ERROR,
+    error
+  }
+}
+
 export function fetchTopics(url) {
   return (dispatch, getState) => {
     return ActionsHelper.sendURLGet(url, (dispatch) => {
       dispatch(requestTopics())
     }, (dispatch, getState, response) => {
       dispatch(receiveTopics(response))
+    }, (dispatch, getState, error) => {
+      dispatch(handleTopicsError(error))
     })(dispatch, getState)
   }
 }

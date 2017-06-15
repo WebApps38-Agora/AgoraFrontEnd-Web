@@ -2,7 +2,7 @@ import Globals from '../globals'
 import fetch from 'isomorphic-fetch'
 
 class ActionsHelper {
-  fetchWithMethod(method, endpoint, isEntireURL, beforeRequest, afterRequest, postBody) {
+  fetchWithMethod(method, endpoint, isEntireURL, beforeRequest, afterRequest, errorHandler, postBody) {
     console.log('Sending ' + method + ' to ' + endpoint + ' with body:')
     console.log(postBody)
 
@@ -29,28 +29,31 @@ class ActionsHelper {
 
       return fetch(trueURL, config)
       .then(response => {
-        console.log(response);
         return response.json()
       })
       .then(json => {
         afterRequest(dispatch, getState, json)
       })
       .catch(error => {
-        console.error(error.message)
+        errorHandler(dispatch, getState, error)
       })
     }
   }
 
-  sendPost(endpoint, beforeRequest, afterRequest, postBody) {
-    return this.fetchWithMethod('post', endpoint, false, beforeRequest, afterRequest, postBody)
+  defErrorHandler(d, g, error) {
+    console.error(error.message);
   }
 
-  sendGet(endpoint, beforeRequest, afterRequest) {
-    return this.fetchWithMethod('get', endpoint, false, beforeRequest, afterRequest, null)
+  sendPost(endpoint, beforeRequest, afterRequest, postBody, errorHandler = this.defErrorHandler) {
+    return this.fetchWithMethod('post', endpoint, false, beforeRequest, afterRequest, errorHandler, postBody)
   }
 
-  sendURLGet(endpoint, beforeRequest, afterRequest) {
-    return this.fetchWithMethod('get', endpoint, true, beforeRequest, afterRequest, null)
+  sendGet(endpoint, beforeRequest, afterRequest, errorHandler = this.defErrorHandler) {
+    return this.fetchWithMethod('get', endpoint, false, beforeRequest, afterRequest, errorHandler, null)
+  }
+
+  sendURLGet(endpoint, beforeRequest, afterRequest, errorHandler = this.defErrorHandler) {
+    return this.fetchWithMethod('get', endpoint, true, beforeRequest, afterRequest, errorHandler, null)
   }
 }
 

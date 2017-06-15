@@ -1,6 +1,6 @@
 import update from 'immutability-helper'
 import {
-  REQUEST_TOPICS, RECEIVE_TOPICS, RECEIVE_LOGIN
+  REQUEST_TOPICS, RECEIVE_TOPICS, RECEIVE_LOGIN, HANDLE_TOPICS_ERROR
 } from '../actions/RootActions'
 import {
   RECEIVE_FACTS, ADD_FACT_RESPONSE
@@ -79,6 +79,12 @@ export function topics(state = {}, action) {
         loaded: {$set: true},
         items: {$set: topics},
         nextPage: {$set: action.nextPage}
+      })
+
+    case HANDLE_TOPICS_ERROR:
+      return update(state, {
+        isFetching: {$set: false},
+        noMoreTopics: {$set: true}
       })
 
     case RECEIVE_FACTS:
