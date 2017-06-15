@@ -14,6 +14,10 @@ export default class AppHeader extends Component {
                    icon="user outline"
                    onClick={this.openLogin}
                    position="right" />
+        <Menu.Item as={Link} to='/login'
+                   icon="alarm"
+                   onClick={this.openLogin}
+                   position="right" />
       </Menu>
     )
   }

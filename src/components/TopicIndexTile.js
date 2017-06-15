@@ -11,15 +11,14 @@ const TopicIndexTile = (props) => (
   <VisibilitySensor>
     <Link to={props.to}>
       <Motion defaultStyle={{
-                opacity: {val: 0}
+                o: 0
               }}
               style={{
-                opacity: {val: 1, config: [15, 5]}
+                o: spring(1)
               }}>
-                {(style) => {
-                  const { opacity } = style
-                  const val = opacity.val
-        return <div className="topic-card" style={{opacity: val, backgroundImage: 'url(' + props.src + ')'}}>
+                {style => {
+                  const { o } = style
+        return <div className="topic-card" style={{opacity: o, backgroundImage: 'url(' + props.src + ')'}}>
           <div className='topic-card-title'>
             <h3>{props.title}</h3>
             <span className='topic-card-date'>

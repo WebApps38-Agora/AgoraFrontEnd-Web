@@ -1,4 +1,5 @@
 import React, { Component} from 'react';
+import { Segment } from 'semantic-ui-react'
 import ChartTile from './ChartTile'
 
 let grid = []
@@ -7,8 +8,8 @@ export default class PoliticalChart extends Component {
   componentWillMount() {
     const makeRow = (c1, c2, y) => {
       let rows = []
-      for (var x = 0; x < 20; x++) {
-        let c = x < 10 ? c1 : c2
+      for (var x = 0; x < 16; x++) {
+        let c = x < 8 ? c1 : c2
         let _x = x
         rows.push(<ChartTile x={_x} y={y} c={c}/>)
       }
@@ -24,23 +25,32 @@ export default class PoliticalChart extends Component {
     }
   }
 
-  componentDidMount() {
-  }
-
-  componentDidUpdate() {
-  }
-
-  getChartState() {
-  }
-
-  componentWillUnmount() {
-  }
-
   render() {
 
     return (
-      <div>
-        { grid }
+      <div className="political-chart-container">
+        <div className="political-chart-column">
+          <div className="full-height">
+            Authoritarian
+          </div>
+          <div className="display-bottom-text">
+            Libertarian
+          </div>
+        </div>
+        <div className="full-width">
+          { grid }
+          <div className="flex-no-wrap">
+            <div className="full-width-center">
+              Left
+            </div>
+            <div className="full-width-center">
+              Center
+            </div>
+            <div className="full-width-center">
+              Right
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

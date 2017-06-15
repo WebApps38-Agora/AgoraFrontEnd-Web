@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Segment, Button, Divider } from 'semantic-ui-react'
-import { Image, Item, Icon, Form, Message } from 'semantic-ui-react'
+import { Image, Item, Icon, Statistic } from 'semantic-ui-react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import { sendLogin } from '../actions/TopicIndex'
 import { connect } from 'react-redux'
@@ -58,64 +58,58 @@ class ProfilePage extends Component {
     // const numTopics = Object.keys(topics).length
 
     const commentedOn = commented.map((id, index) =>
-      <Divider>
       <Row className="show-grid tall-row" key={index}>
         <Col className="grid-tile" xs={12}>  {makeTile(topics, id)} </Col>
       </Row>
-    </Divider>
     )
-
-    const makeRow = (c1, c2, y) => {
-      let rows = []
-      for (var x = 0; x < 20; x++) {
-        let c = x < 10 ? c1 : c2
-        let _x = x
-        rows.push(<div key={`$(x)`+`$(y)`}
-                       onClick={(e) => this.handleclick(e,_x,y)}
-                       style={{width: '100%', height: '20px', backgroundColor: c, border: 'solid black'}}></div>)
-      }
-      return <div style={{display: 'flex', flexWrap: 'nowrap'}}>
-              {rows}
-             </div>
-    }
-
-    let grid = []
-    for (var y = 0; y < 10; y++) {
-      let c1 = y < 5 ? '#4286f4' : '#9af441'
-      let c2 = y < 5 ? '#f44162' : '#f441d6'
-      grid.push(<div key={y + 'row'}>makeRow(c1, c2, y)</div>)
-    }
 
     return (
 
       <div>
-        <PoliticalChart />
         <Motion defaultStyle={{ opacity: 0 }} style={{ opacity: spring(1, {stiffness:5, damping: 15}) }}>
           { (style) => <h1 style={style}>Profile Page</h1> }
         </Motion>
-        <Segment loading>
-          <Image src='/assets/images/wireframe/image.png' size='small' />
-        </Segment>
-        <Message icon>
-          <Icon name='circle notched' loading />
-          <Message.Content>
-            <Message.Header>Just one second</Message.Header>
-            We are fetching that content for you.
-          </Message.Content>
-        </Message>
-        <Item.Group items={items} />
-        <Divider horizontal>Recent Activity</Divider>
+        <Grid>
+          <Col xs={12} sm={6}>
+            <Item.Group items={items} />
+          </Col>
+          <Col xs={12} sm={6}>
+            <PoliticalChart />
+          </Col>
+        </Grid>
+        <Divider horizontal></Divider>
         <Grid>
           <Col className="grid-tile" xs={12} sm={4}>
-              <h3> Viewed </h3>
+            <Statistic.Group widths={1}>
+              <Statistic>
+                <Statistic.Value>
+                  <Icon name='eye' />
+                </Statistic.Value>
+                <Statistic.Label>0 Comments</Statistic.Label>
+              </Statistic>
+            </Statistic.Group>
               {commentedOn}
           </Col>
           <Col className="grid-tile" xs={12} sm={4}>
-              <h3> Commented </h3>
+            <Statistic.Group widths={1}>
+              <Statistic>
+                <Statistic.Value>
+                  <Icon name='comments outline' />
+                </Statistic.Value>
+                <Statistic.Label>0 Comments</Statistic.Label>
+              </Statistic>
+            </Statistic.Group>
               {commentedOn}
           </Col>
           <Col className="grid-tile" xs={12} sm={4}>
-              <h3> Proposed Facts </h3>
+            <Statistic.Group widths={1}>
+              <Statistic>
+                <Statistic.Value>
+                  <Icon name='checkmark box'/>
+                </Statistic.Value>
+                <Statistic.Label>0 Comments</Statistic.Label>
+              </Statistic>
+            </Statistic.Group>
               {commentedOn}
           </Col>
         </Grid>

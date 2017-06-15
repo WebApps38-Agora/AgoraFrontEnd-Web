@@ -1,26 +1,33 @@
 import React, { Component} from 'react';
-import { Spring } from 'react-motion'
+import { Motion, spring } from 'react-motion'
 
 export default class ChartTile extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      height: '20px',
+      backgroundColor: props.c,
+      border: '1px solid black',
+      transition: 'all .1s ease-in-out'
+    }
+  }
+
+  handleClick = (e, x, y) => {
+    console.log(x, y)
+    this.setState({
+      transform: 'scale(2)',
+      border: '2px solid white'
+    })
+  }
+
   render() {
+    let chart = this
     return (
-        <div>
-          {/* <Spring defaultValue={0} endValue={360}>
-                  {val =>{
-                    let style = {
-                      width: '100%',
-                      height: '20px',
-                      backgroundColor: this.props.c,
-                      border: '1px solid black',
-                      transform: `rotate(${val}deg)`
-                    }
-                    return <div key={this.props.x}
-                               onClick={(e) => this.handleclick(e, this.props.x, this.props.y)}
-                               style={style}>
-                               {val}
-                           </div>
-                    }}                  }
-          </Spring> */}
+        <div style={{width: '100%'}}>
+          <div className="chart-tile" key={this.props.x}
+               onClick={(e) => chart.handleClick(e, this.props.x, this.props.y)}
+               style={{...this.state}}>
+          </div>
         </div>
     )
   }
