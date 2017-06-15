@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Form, Segment, Card } from 'semantic-ui-react'
+import { Button, Form, Segment } from 'semantic-ui-react'
 
 import * as actions from '../actions/FactSection';
 import '../style/Views.css'
@@ -25,14 +25,14 @@ class FactSection extends Component {
 
   render() {
       const facts = this.props.topic.fact_set.map((fact, index) =>
-          <Card key={index} header={fact.content} fluid />
+          <Segment key={index}>{fact.content}</Segment>
       );
 
       return (
         <div className="section" id="fact-section">
-          <Segment vertical className="section-content" id="facts">
+          <Segment.Group className="section-content" id="facts">
             {facts}
-          </Segment>
+          </Segment.Group>
           <Segment vertical>
             <Form success={false}>
               <Form.Group className="section-form">

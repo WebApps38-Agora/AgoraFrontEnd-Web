@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Segment, Button, Comment, Form, Header } from 'semantic-ui-react'
+import { Segment, Button, Comment, Form, Input } from 'semantic-ui-react'
 import Textarea from 'react-textarea-autosize';
-import ReactHeight from 'react-height'
 import '../style/Views.css';
 import '../style/CommentSection.css';
 import * as actions from '../actions/CommentSection'
@@ -39,11 +38,31 @@ class CommentSection extends Component {
       return this.makeComment(child, [...parents, comment])
     })
 
-    console.log("parents")
-    console.log(this.props.topic.reply_to_comment)
-    console.log([...Object.keys(parents), comment.id])
+    // console.log("parents")
+    // console.log(this.props.topic.reply_to_comment)
+    // console.log([...Object.keys(parents), comment.id])
     const replyInput = arraysEqual(this.props.topic.reply_to_comment, [...Object.keys(parents), comment.id]) ?
-      "replying"
+        <Comment>
+          <Comment.Avatar key="reply" src='http://www.ruralagriventures.com/wp-content/uploads/2017/05/man-team.jpg' />
+            <Comment.Content>
+            <Form>
+              <Form.Group>
+                <Input
+                  value={this.state.comment_content}
+                  onChange={ (e) => this.setState({comment_content: e.target.value}) }
+                  onHeightChange={ (height, instance) => this.updateTextAreaSize(height)}
+                  placeholder='Write a reply or a new comment on the topic...' />
+                <Button onClick={this.handleSubmit}
+                        disabled={this.checkInputEmpty()}
+                        content='Comment'
+                        labelPosition='left' icon='edit' primary />
+                <Comment.Actions>
+                  <Comment.Action onClick={(e) => this.handleClickReply(e, comment, parents)}>Reply</Comment.Action>
+                </Comment.Actions>
+              </Form.Group>
+            </Form>
+          </Comment.Content>
+        </Comment>
     : null
 
     return (
