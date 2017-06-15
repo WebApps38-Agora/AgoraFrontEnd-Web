@@ -13,6 +13,7 @@
 }
 
 .section {
+  --fact-section-fact-form-size: 60px;
   min-height: 200px;
   height: 100%;
 }
@@ -25,6 +26,10 @@
 .section-form {
   width: 100%;
   margin: 0;
+}
+
+.section-height {
+  height: calc(100% - var(--section-form-size));
 }
 
 .missing {
@@ -45,10 +50,6 @@
 }
 
 /* FACTS */
-
-#fact-section {
-  --fact-section-fact-form-size: 60px;
-}
 
 #facts {
   padding: 0;
@@ -79,10 +80,6 @@
   /*width: 100%;*/
 }
 
-#comment-section {
-  --comment-section-fact-form-size: 120px;
-}
-
 #comments {
   height: 100%;
   width: 100%;
@@ -107,23 +104,32 @@ textarea {
 }
 
 @media screen and (max-width: 768px) {
-  #fact-section {
-    --fact-section-fact-form-size: 100px;
+  .section {
+    --section-form-size: 100px;
   }
 
-  .field {
+  #fact-section .field, #comment-section .field {
+    width: 100%;
+    padding: 0;
+  }
+
+  #fact-section .button, #comment-section .button {
+    margin-top: 0.5rem;
     width: 100%;
   }
 
-  #fact-section .button {
-    margin: 0.5rem;
-    width: 100%;
+  #comment-section .button {
+    margin-left: 0;
   }
 
   .button {
     width: 100%;
     margin: 1rem;
     margin-right: 0;
+  }
+
+  .section-height {
+    /*height: calc(100% - 100px);*/
   }
 
 }

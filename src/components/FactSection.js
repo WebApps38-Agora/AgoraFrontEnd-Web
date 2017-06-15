@@ -54,7 +54,7 @@ class FactSection extends Component {
 
       return (
         <div className="section" id="fact-section">
-          <ReactHeight style={{height: "calc(100% - 60px)"}} onHeightReady={ height => this.setState({factListHeight: height}) }>
+          <ReactHeight className="section-height" onHeightReady={ height => this.setState({factListHeight: height}) }>
             <Segment vertical className="section-content" id="facts">
               {fact_list}
             </Segment>
