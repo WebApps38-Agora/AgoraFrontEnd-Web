@@ -1,6 +1,6 @@
 import update from 'immutability-helper'
 import {
-  REQUEST_TOPICS, RECEIVE_TOPICS, RECEIVE_LOGIN
+  REQUEST_TOPICS, RECEIVE_TOPICS, RECEIVE_LOGIN, HANDLE_TOPICS_ERROR
 } from '../actions/RootActions'
 import {
   RECEIVE_FACTS, ADD_FACT_RESPONSE
@@ -11,6 +11,9 @@ import {
 import {
   SELECT_TOPIC, REQUEST_TOPIC, RECEIVE_TOPIC
 } from '../actions/TopicActions'
+import {
+  RECEIVE_PROFILE
+} from '../actions/ProfileActions'
 
 import Globals from '../globals'
 
@@ -68,17 +71,23 @@ export function topics(state = {}, action) {
       })
 
     case RECEIVE_TOPICS:
-      let topics = {}
+      let topics = state.items
       action.topics.forEach((topic) => {
-          topics[topic.id] = createTopic(topic, false)
+          topics.push(createTopic(topic, false))
         }
       )
 
       return update(state, {
         isFetching: {$set: false},
         loaded: {$set: true},
-        items: {$merge: topics},
+        items: {$set: topics},
         nextPage: {$set: action.nextPage}
+      })
+
+    case HANDLE_TOPICS_ERROR:
+      return update(state, {
+        isFetching: {$set: false},
+        noMoreTopics: {$set: true}
       })
 
     case RECEIVE_FACTS:
@@ -141,6 +150,23 @@ export function topics(state = {}, action) {
         }
       })
 
+    default:
+      return state
+  }
+}
+
+export function myProfile(state = 0, action) {
+  switch (action.type) {
+    case RECEIVE_PROFILE:
+      console.log(action);
+      return action.profile
+    default:
+      return state
+  }
+}
+
+export function profiles(state = [], action) {
+  switch (action.type) {
     default:
       return state
   }

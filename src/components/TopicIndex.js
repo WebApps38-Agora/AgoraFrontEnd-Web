@@ -1,18 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { fetchTopicsIfNeeded } from '../actions/RootActions'
-import { Menu, Button, Segment, Icon, Sidebar, Loader, Dimmer } from 'semantic-ui-react'
+import { Visibility, Menu, Button, Segment, Icon, Sidebar, Loader, Dimmer } from 'semantic-ui-react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import { makeTile } from './MakeTile'
 import SearchTags from './SearchTags'
+import Missing from './Missing'
 
 class TopicIndex extends Component {
+
+  constructor(props) {
+    super(props);
+    this.handleScrollBottom = this.handleScrollBottom.bind(this);
+  }
 
   componentWillMount() {
     this.props.dispatch(fetchTopicsIfNeeded())
   }
 
+  handleScrollBottom() {
+    this.props.dispatch(fetchMoreTopics());
+  }
+
   render() {
+    let grid = <span display="none"></span>;
+    let footer = <Missing full icon="newspaper" icon_size="massive"
+                    header="No topics left!" />
+
     if (this.props.loaded) {
       const topics = this.props.topics.items
       const numTopics = Object.keys(topics).length
@@ -24,6 +38,7 @@ class TopicIndex extends Component {
             <Col className="grid-tile" xs={12} sm={8}> {makeTile(topics, i)} </Col>
             <Col className="grid-tile" xs={12} sm={4}>  {makeTile(topics, i + 1)} </Col>
           </Row>);
+<<<<<<< HEAD
         rows.push(
           <Row className="show-grid" key={i + 1}>
             <Col className="grid-tile" xs={12} sm={4}> {makeTile(topics, i + 2)} </Col>
@@ -38,7 +53,29 @@ class TopicIndex extends Component {
              </div>
     } else {
       return <Dimmer active><Loader>Loading the latest topics</Loader></Dimmer>
+=======
+        if (i + 2 < numTopics) {
+          rows.push(
+            <Row className="show-grid" key={i + 1}>
+              <Col className="grid-tile" xs={12} sm={4}> {makeTile(i + 2)} </Col>
+              <Col className="grid-tile" xs={12} sm={4}> {makeTile(i + 3)} </Col>
+              <Col className="grid-tile" xs={12} sm={4}> {makeTile(i + 4)} </Col>
+            </Row>);
+        }
+      }
+
+      grid = <Grid className="app-shell" id="topic-index">{rows}</Grid>;
+      footer = <Missing icon="newspaper" icon_size="massive"
+               header="Loading more topics..." />;
+>>>>>>> 4a5ceeeb2e4012380232a3565733cd24ab4cbd8a
     }
+
+    return (<div>
+      {grid}
+      <Visibility className="topic-index-bottom" onOnScreen={this.handleScrollBottom} once={false}>
+        {footer}
+      </Visibility>
+    </div>);
   }
 }
 
@@ -46,7 +83,8 @@ const mapStateToProps = (state) => {
   return {
     loaded: state.topics.loaded,
     topics: state.topics || [],
-    nextPage: state.topics.nextPage
+    nextPage: state.topics.nextPage,
+    noMoreTopics: state.noMoreTopics
   }
 }
 
