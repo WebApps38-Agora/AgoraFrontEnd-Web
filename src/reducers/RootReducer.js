@@ -11,6 +11,9 @@ import {
 import {
   SELECT_TOPIC, REQUEST_TOPIC, RECEIVE_TOPIC
 } from '../actions/TopicActions'
+import {
+  RECEIVE_PROFILE
+} from '../actions/ProfileActions'
 
 import Globals from '../globals'
 
@@ -147,6 +150,23 @@ export function topics(state = {}, action) {
         }
       })
 
+    default:
+      return state
+  }
+}
+
+export function myProfile(state = 0, action) {
+  switch (action.type) {
+    case RECEIVE_PROFILE:
+      console.log(action);
+      return action.profile
+    default:
+      return state
+  }
+}
+
+export function profiles(state = [], action) {
+  switch (action.type) {
     default:
       return state
   }
