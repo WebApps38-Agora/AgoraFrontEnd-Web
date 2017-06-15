@@ -48,8 +48,9 @@ class LoginPage extends Component {
       profileLogo.style.display = 'block';
   	});
 
-    this.props.dispatch(updateProfile(data))
+
     this.props.dispatch(sendLogin(data.tokenDetail.accessToken))
+    this.props.dispatch(updateProfile(data, this.props.myProfile.id))
     this.props.dispatch(fetchProfile())
   }
 
@@ -91,4 +92,10 @@ class LoginPage extends Component {
   }
 }
 
-export default connect()(LoginPage)
+const mapStateToProps = (state) => {
+  return {
+    myProfile: state.myProfile,
+  }
+}
+
+export default connect(mapStateToProps)(LoginPage)

@@ -30,25 +30,44 @@ export function receiveProfile(profile) {
   }
 }
 
+export const HANDLE_PROFILE_ERROR = 'HANDLE_PROFILE_ERROR'
+export function handleProfileError(error) {
+  return {
+    type: HANDLE_PROFILE_ERROR,
+    error
+  }
+}
+
 export function fetchProfile() {
   return ActionsHelper.sendGet('/profiles', (dispatch) => {
     dispatch(requestProfile())
   }, (dispatch, getState, response) => {
     dispatch(receiveProfile(response))
+  }, (dispatch, getState, error) => {
+    dispatch(handleProfileError(error))
   })
 }
 
-export function updateProfile(data) {
+export function fetchProfileIfLoggedIn() {
+  return (dispatch, getState) => {
+    if (getState().loginKey) {
+      dispatch(fetchProfile())
+    }
+  }
+}
+
+export function updateProfile(data, myProfileId) {
   let profile_picture = 'https://graph.facebook.com/' + data.profile.id + '/picture'
-  return ActionsHelper.sendPut('/profiles', (dispatch) => {
-    dispatch(addProfileRequest(data.profile.id))
+  return ActionsHelper.sendPut('/profiles/update_own_profile/',
+     (dispatch, getState) => {
+    dispatch(addProfileRequest(myProfileId))
   }, (dispatch, getState, response) => {
-    dispatch(addProfileResponse(data.profile.id, response))
+    dispatch(addProfileResponse(myProfileId, response))
   }, {
     profile_picture: profile_picture,
     country: data.profile.locale,
     gender: data.profile.gender,
     first_name: data.profile.first_name,
-    last_name: data.profile.last_name
+    last_name: data.profile.last_name,
   })
 }

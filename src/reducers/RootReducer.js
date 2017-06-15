@@ -12,7 +12,7 @@ import {
   SELECT_TOPIC, REQUEST_TOPIC, RECEIVE_TOPIC
 } from '../actions/TopicActions'
 import {
-  RECEIVE_PROFILE
+  RECEIVE_PROFILE, ADD_PROFILE_RESPONSE, HANDLE_PROFILE_ERROR
 } from '../actions/ProfileActions'
 
 import Globals from '../globals'
@@ -158,8 +158,13 @@ export function topics(state = {}, action) {
 export function myProfile(state = 0, action) {
   switch (action.type) {
     case RECEIVE_PROFILE:
-      console.log(action);
       return action.profile
+
+    case ADD_PROFILE_RESPONSE:
+      return action.profile
+
+    case HANDLE_PROFILE_ERROR:
+      return action
     default:
       return state
   }

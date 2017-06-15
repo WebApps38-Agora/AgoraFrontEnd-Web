@@ -1,7 +1,7 @@
 import thunkMiddleware from 'redux-thunk'
 import { createStore, applyMiddleware, compose, combineReducers} from 'redux'
 import { loginKey, selectedTopic, topics, myProfile, profiles } from './reducers/RootReducer'
-import { fetchProfile } from './actions/ProfileActions'
+import { fetchProfileIfLoggedIn } from './actions/ProfileActions'
 import Cookies from 'js-cookie'
 
 const login_key = Cookies.get('login_key') || false
@@ -39,8 +39,8 @@ let store = createStore(
   )
 );
 
-store.dispatch(fetchProfile())
+store.dispatch(fetchProfileIfLoggedIn())
 
 export default function configureStore() {
-  return store
+  return store;
 }

@@ -25,7 +25,6 @@ class ActionsHelper {
       }
 
       let trueURL = ((isEntireURL) ? "" : Globals.BACKEND_URL) + endpoint;
-      console.log(endpoint);
 
       return fetch(trueURL, config)
       .then(response => {
