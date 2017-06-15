@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { fetchTopicsIfNeeded } from '../actions/RootActions'
-import { Loader, Dimmer } from 'semantic-ui-react'
+import { Menu, Button, Segment, Icon, Sidebar, Loader, Dimmer } from 'semantic-ui-react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import { makeTile } from './MakeTile'
+import SearchTags from './SearchTags'
 
 class TopicIndex extends Component {
   componentWillMount() {
@@ -30,7 +31,10 @@ class TopicIndex extends Component {
           </Row>);
       }
 
-      return <Grid className="app-shell" id="topic-index">{rows}</Grid>;
+      return <div>
+               <SearchTags />
+               <Grid className="app-shell" id="topic-index">{rows}</Grid>;
+             </div>
     } else {
       return <Dimmer active><Loader>Loading the latest topics</Loader></Dimmer>
     }

@@ -85,7 +85,7 @@ class ProfilePage extends Component {
                 <Statistic.Value>
                   <Icon name='eye' />
                 </Statistic.Value>
-                <Statistic.Label>0 Comments</Statistic.Label>
+                <Statistic.Label>0 Views</Statistic.Label>
               </Statistic>
             </Statistic.Group>
               {commentedOn}
@@ -107,7 +107,7 @@ class ProfilePage extends Component {
                 <Statistic.Value>
                   <Icon name='checkmark box'/>
                 </Statistic.Value>
-                <Statistic.Label>0 Comments</Statistic.Label>
+                <Statistic.Label>0 Facts</Statistic.Label>
               </Statistic>
             </Statistic.Group>
               {commentedOn}
