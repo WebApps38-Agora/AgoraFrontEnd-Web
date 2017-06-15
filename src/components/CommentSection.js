@@ -5,7 +5,7 @@ import Textarea from 'react-textarea-autosize';
 import ReactHeight from 'react-height'
 import '../style/Views.css';
 import '../style/CommentSection.css';
-import * as actions from '../actions/CommentSection'
+import * as actions from '../actions/CommentActions'
 
 function arraysEqual(arr1, arr2) {
     if (!arr1 || !arr2) return false

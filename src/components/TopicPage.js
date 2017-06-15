@@ -7,8 +7,8 @@ import { Grid, Col } from 'react-bootstrap'
 import TopicViews from './TopicViews'
 import ArticleCard from './ArticleCard'
 
-import { selectTopic } from '../actions/TopicIndex'
-import { fetchTopic } from '../actions/TopicPage'
+import { selectTopic } from '../actions/TopicActions'
+import { fetchTopic } from '../actions/TopicActions'
 
 import ReactHeight from 'react-height'
 import Infinite from 'react-infinite'

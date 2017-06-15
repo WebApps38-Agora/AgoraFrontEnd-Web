@@ -1,6 +1,6 @@
 import thunkMiddleware from 'redux-thunk'
 import { createStore, applyMiddleware, compose, combineReducers} from 'redux'
-import { loginKey, selectedTopic, topics } from './reducers/TopicIndex'
+import { loginKey, selectedTopic, topics } from './reducers/RootReducer'
 import Cookies from 'js-cookie'
 
 const login_key = Cookies.get('login_key') || false
