@@ -1,5 +1,5 @@
-.title-card {
-  margin-bottom: 1rem;
+.title-card > .raised {
+  margin-bottom: 1rem !important;
 }
 
 .card img {
@@ -12,6 +12,15 @@
     width: 100px;
     height: 100px;
   }
+}
+
+.list {
+  border: none;
+}
+
+.article {
+  width: calc(100% - 0.5rem) !important;
+  margin-left: 0.25rem !important;
 }
 
 .card .content {

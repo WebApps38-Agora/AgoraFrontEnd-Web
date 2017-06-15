@@ -35,12 +35,16 @@ class LoginPage extends Component {
       isLoggedIn: true
     })
 
-    fetch('https://graph.facebook.com/'+data.profile.id+'/picture')
+    fetch('https://graph.facebook.com/' + data.profile.id + '/picture')
   	.then(function(response) {
   	  return response.blob();
   	})
   	.then(function(imageBlob) {
-  	  document.querySelector('img').src = URL.createObjectURL(imageBlob);
+      var loginLogo = document.getElementById('login-logo');
+      var profileLogo = document.getElementById('profile-logo');
+      loginLogo.style.display = 'none';
+      profileLogo.querySelector('img').src = URL.createObjectURL(imageBlob);
+      profileLogo.style.display = 'block';
   	});
 
     this.props.dispatch(sendLogin(data.tokenDetail.accessToken))
@@ -54,37 +58,31 @@ class LoginPage extends Component {
 
   render() {
     return (
-      <div style={{ marginTop: 6 + "rem", padding: "0 1rem" }}>
-        <Message
-              success
-              header={'Welcome '}
-              content="You're all signed in!"
-            />
-        <Segment padded>
-          <FacebookProvider appId={Globals.FACEBOOK_APP_ID}>
-            <Login
-              scope="email"
-              onResponse={this.handleResponse}
-              onError={this.handleError}
-            >
-              <Button color='facebook' fluid><Icon name='facebook' />Login via Facebook</Button>
-            </Login>
-          </FacebookProvider>
-          <Divider horizontal>Or</Divider>
-          <Form success={false}>
-            <Message
-              header='Login'
-            />
-            <Form.Input label='Email' placeholder='agora@gmail.com' />
-            <Form.Input label='Password' placeholder='Password' type='Password' />
-            <Message
-              error
-              header='Oh no!'
-              content="There seems to be an error with that email."
-            />
-            <Button>Submit</Button>
-          </Form>
-        </Segment>
+      <div className="app-shell" style={{display: "table", width: "100%", height: "100%"}}>
+        <div style={{display: "table-cell", verticalAlign: "middle"}}>
+          <Segment padded style={{maxWidth: 400 + "px", margin: "1rem auto", }}>
+            <FacebookProvider appId={Globals.FACEBOOK_APP_ID}>
+              <Login
+                scope="email"
+                onResponse={this.handleResponse}
+                onError={this.handleError}
+              >
+                <Button color='facebook' fluid><Icon name='facebook' />Login via Facebook</Button>
+              </Login>
+            </FacebookProvider>
+            <Divider horizontal>Or</Divider>
+            <Form success={false}>
+              <Form.Input label='Email' placeholder='agora@gmail.com' />
+              <Form.Input label='Password' placeholder='Password' type='Password' />
+              <Message
+                error
+                header='Oh no!'
+                content="There seems to be an error with that email."
+              />
+              <Button primary style={{width: 100 + "%"}}>Submit</Button>
+            </Form>
+          </Segment>
+        </div>
       </div>
     );
   }
