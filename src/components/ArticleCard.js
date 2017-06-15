@@ -42,15 +42,19 @@ class ArticleCard extends Component {
     } else {
       var style;
       if (this.state.center) {
-        style = { textAlign: "center" };
+        style = {
+          textAlign: "center",
+          borderBottom: "5px solid var(--app-snd-color)"
+          };
       } else {
         style = {
           display: "block",
-          padding: 2 +"rem"
+          padding: 2 +"rem",
+          borderBottom: "5px solid var(--app-snd-color)"
         };
       }
       return (
-      <Card id={-1} raised fluid>
+      <Card id={-1} raised fluid >
         <Card.Content style={style}>
           <Card.Header className="non-article">
             {this.state.title}
