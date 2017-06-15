@@ -20,7 +20,8 @@ export const RECEIVE_TOPICS = 'RECEIVE_TOPICS'
 export function receiveTopics(json) {
   return {
     type: RECEIVE_TOPICS,
-    topics: json.results
+    topics: json.results,
+    nextPage: json.next
   }
 }
 

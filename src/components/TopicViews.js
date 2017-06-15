@@ -17,7 +17,7 @@ class TopicViews extends Component {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render() {
-    const { activeItem} = this.state;
+    const { activeItem } = this.state;
 
     let realHeight = this.props.titleHeight + 20;
 
@@ -51,7 +51,7 @@ class TopicViews extends Component {
           </Menu.Item>
 
           <Menu.Item name='stats' active={activeItem === 'stats'} onClick={this.handleItemClick}>
-            Stats
+            Statistics
           </Menu.Item>
         </Menu>
       </div>

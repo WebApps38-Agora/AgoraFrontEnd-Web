@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Form, Segment } from 'semantic-ui-react'
+import { Button, Form, Segment, Card, Icon } from 'semantic-ui-react'
 
 import * as actions from '../actions/FactActions';
 import '../style/Views.css'
+
+import Infinite from 'react-infinite'
+import ReactHeight from 'react-height'
 
 class FactSection extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      fact_content: ''
+      fact_content: '',
+      factListHeight: 0
     }
   }
 
@@ -19,20 +23,42 @@ class FactSection extends Component {
   }
 
   checkInputEmpty() {
-    console.log(this.state.fact_content);
     return this.state.fact_content === "";
   }
 
+  getFactList(facts) {
+    if (this.state.factListHeight) {
+      if (!facts.length) {
+        return (<div className="missing" style={{height: this.state.factListHeight + 'px' }}>
+                  <div className="missing-inner">
+                    <Icon name="inbox" size="massive" />
+                    <h1>No facts on this topic!</h1>
+                    <p>Be the first person to add an unbiased fact to this topic.</p>
+                  </div>
+                </div>);
+      }
+      return (<Infinite className="inf-list" containerHeight={this.state.factListHeight} elementHeight={51}>
+                <Segment.Group style={{padding:0}}>
+                  {facts}
+                </Segment.Group>
+              </Infinite>);
+    }
+  }
+
   render() {
-      const facts = this.props.topic.fact_set.map((fact, index) =>
+      let facts = this.props.topic.fact_set.map((fact, index) =>
           <Segment key={index}>{fact.content}</Segment>
       );
 
+      let fact_list = this.getFactList(facts);
+
       return (
         <div className="section" id="fact-section">
-          <Segment.Group className="section-content" id="facts">
-            {facts}
-          </Segment.Group>
+          <ReactHeight style={{height: "calc(100% - 60px)"}} onHeightReady={ height => this.setState({factListHeight: height}) }>
+            <Segment vertical className="section-content" id="facts">
+              {fact_list}
+            </Segment>
+          </ReactHeight>
           <Segment vertical>
             <Form success={false}>
               <Form.Group className="section-form">
@@ -54,8 +80,7 @@ class FactSection extends Component {
           </Segment>
         </div>
       )
-  }
+    }
 }
 
-export default connect(
-)(FactSection)
+export default connect()(FactSection)

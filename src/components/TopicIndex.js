@@ -7,6 +7,7 @@ import { makeTile } from './MakeTile'
 import SearchTags from './SearchTags'
 
 class TopicIndex extends Component {
+
   componentWillMount() {
     this.props.dispatch(fetchTopicsIfNeeded())
   }
@@ -44,7 +45,8 @@ class TopicIndex extends Component {
 const mapStateToProps = (state) => {
   return {
     loaded: state.topics.loaded,
-    topics: state.topics || []
+    topics: state.topics || [],
+    nextPage: state.topics.nextPage
   }
 }
 

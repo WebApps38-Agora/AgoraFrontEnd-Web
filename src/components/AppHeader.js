@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { Label, Menu, Icon } from 'semantic-ui-react'
+import { Menu, Icon } from 'semantic-ui-react'
+import { Image } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
 
 export default class AppHeader extends Component {
@@ -10,15 +11,19 @@ export default class AppHeader extends Component {
         <Menu.Item as={Link} to="/">
           <img src={require("../images/agora_logo.png")} alt="logo" />
         </Menu.Item>
-        <Menu.Item as={Link} to='/login'
-          icon="user outline"
-          onClick={this.openLogin}
-          position="right" />
-        <Menu.Item as={Link} to='/login'
-          onClick={this.openLogin}
-          position="right">
+        <Menu.Item as={Link}
+                   id="login-logo"
+                   to='/login'
+                   icon="user outline"
+                   onClick={this.openLogin}
+                   position="right" />
           <Icon name="alarm" />
-          <Label color='red' floating>22</Label>
+        <Menu.Item style={{display: 'none'}}
+                   as={Link}
+                   id="profile-logo"
+                   to='/profile'
+                   position="right">
+          <Image src='#' shape='circular' bordered/>
         </Menu.Item>
       </Menu>
     )

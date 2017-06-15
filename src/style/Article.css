@@ -1,5 +1,5 @@
-.title-card {
-  margin-bottom: 1rem;
+.title-card > .raised {
+  margin-bottom: 1rem !important;
 }
 
 .card img {
@@ -14,6 +14,15 @@
   }
 }
 
+.list {
+  border: none;
+}
+
+.article {
+  width: calc(100% - 0.5rem) !important;
+  margin-left: 0.25rem !important;
+}
+
 .card .content {
   display: inline-flex;
 }
@@ -25,6 +34,9 @@
 .non-article {
   width: 100%;
   font-size: 1.5rem !important;
+}
+
+.content {
 }
 
 .card .header .meta {
