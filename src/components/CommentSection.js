@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Segment, Button, Comment, Form, Icon, Header } from 'semantic-ui-react'
+import { Segment, Button, Comment, Form, Icon } from 'semantic-ui-react'
 import Textarea from 'react-textarea-autosize';
-import ReactHeight from 'react-height'
 import '../style/Views.css';
 import '../style/CommentSection.css';
 import * as actions from '../actions/CommentActions'
@@ -78,7 +77,7 @@ class CommentSection extends Component {
   }
 
   checkInputEmpty() {
-    return this.state.comment_content == "";
+    return this.state.comment_content === "";
   }
 
   updateTextAreaSize(height) {

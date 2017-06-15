@@ -14,7 +14,6 @@ import ReactHeight from 'react-height'
 import Infinite from 'react-infinite'
 
 var moment = require('moment');
-var MediaQuery = require('react-responsive');
 
 class TopicPage extends Component {
   constructor(props) {
