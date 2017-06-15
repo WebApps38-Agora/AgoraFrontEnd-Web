@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Form, Segment, Card } from 'semantic-ui-react'
+import { Button, Form, Segment } from 'semantic-ui-react'
 
-import * as actions from '../actions/FactSection';
-import '../style/FactSection.css'
+import * as actions from '../actions/FactActions';
+import '../style/Views.css'
 
 class FactSection extends Component {
   constructor(props) {
@@ -18,28 +18,33 @@ class FactSection extends Component {
     this.props.dispatch(actions.sendAddFactRequest(this.props.topic.id, this.state.fact_content))
   }
 
+  checkInputEmpty() {
+    console.log(this.state.fact_content);
+    return this.state.fact_content === "";
+  }
+
   render() {
-    const { isFetching, topic } = this.props
-    if (!isFetching) {
-      const facts = topic.fact_set.map((fact, index) =>
-          <Card key={index} header={fact.content} fluid />
+      const facts = this.props.topic.fact_set.map((fact, index) =>
+          <Segment key={index}>{fact.content}</Segment>
       );
 
       return (
-        <div id="fact-section">
-          <Segment vertical id="facts">
+        <div className="section" id="fact-section">
+          <Segment.Group className="section-content" id="facts">
             {facts}
-          </Segment>
+          </Segment.Group>
           <Segment vertical>
             <Form success={false}>
-              <Form.Group>
-                <Form.Input value={this.state.fact_content}
+              <Form.Group className="section-form">
+                <Form.Input style={{width: 100 + "%"}}
+                            id="fact-input"
+                            value={this.state.fact_content}
                             onChange={(e, {name, value}) => this.setState({fact_content: value})}
-                            width={12}
-                            placeholder='Write an unbiased, objective fact about this news topic' />
+                            placeholder='Write an unbiased, objective fact about this news topic...' />
 
-                <Button onClick={this.handleSubmit}
-                        width={4}
+                <Button id="fact-button"
+                        onClick={this.handleSubmit}
+                        disabled={this.checkInputEmpty()}
                         content='Add Fact'
                         labelPosition='left'
                         icon='edit'
@@ -49,19 +54,8 @@ class FactSection extends Component {
           </Segment>
         </div>
       )
-    } else {
-      return <div></div>
-    }
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    isFetching:    Object.keys(state.topics.items).length === 0
-                || !(state.selectedTopic in state.topics.items)
-                || state.topics.items[state.selectedTopic].isFetching,
-    topic: state.topics.items[state.selectedTopic] || [],
-  }
-}
-
-export default connect( mapStateToProps )(FactSection)
+export default connect(
+)(FactSection)

@@ -17,15 +17,17 @@ class TopicViews extends Component {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render() {
-    const { activeItem } = this.state
+    const { activeItem} = this.state;
+
+    let realHeight = this.props.titleHeight + 20;
 
     let content;
     switch (this.state.activeItem) {
       case 'facts':
-        content = <FactSection facts={this.props.facts}/>
+        content = <FactSection isFetching={this.props.isFetching} topic={this.props.topic}/>
         break;
       case 'discussion':
-        content = <CommentSection topic_id={this.props}/>
+        content = <CommentSection isFetching={this.props.isFetching} topic={this.props.topic}/>
         break;
       case 'stats':
       default:
@@ -34,7 +36,7 @@ class TopicViews extends Component {
     }
 
     return (
-      <div>
+      <div style={{height: "calc(100% - " + realHeight + "px)"}}>
         <Segment attached='top' id="content">
           {content}
         </Segment>
@@ -45,7 +47,7 @@ class TopicViews extends Component {
           </Menu.Item>
 
           <Menu.Item name='discussion' active={activeItem === 'discussion'} onClick={this.handleItemClick}>
-            Comments
+            Discussion
           </Menu.Item>
 
           <Menu.Item name='stats' active={activeItem === 'stats'} onClick={this.handleItemClick}>

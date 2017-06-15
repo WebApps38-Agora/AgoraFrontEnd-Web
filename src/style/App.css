@@ -15,14 +15,14 @@ body {
 
 main {
   margin: 0;
-  font-family: 'Montserrat',  sans-serif;
+  font-family: Lato, 'Helvetica Neue', Helvetica,  sans-serif;
   line-height: 1.5;
   /*height: 80vh;*/
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Neuton', serif;
-  letter-spacing: 0.025rem;
+  font-family: 'Spectral', serif;
+  /*letter-spacing: 0.025rem;*/
   margin: 0;
 }
 
@@ -30,11 +30,36 @@ p {
   font-family: 'Raleway', sans-serif;
 }
 
-.app-shell {
+#topic-index {
   max-width: 1000px;
   min-width: 300px;
+}
+
+#topic-page {
+  height: 100%;
+  padding: 0;
+}
+
+#topic-views {
+  height: 100%;
+}
+
+#topic-headlines {
+  min-height: 100px;
+}
+
+@media screen and (max-width: 768px) {
+  #topic-headlines {
+    margin-bottom: 1rem;
+  }
+}
+
+.app-wrapper {
+  height: calc(100vh - 6rem);
+  max-height: calc(100vh - 6rem);
   margin: 6rem auto;
-  padding: 0 1rem;
+  margin-bottom: 0;
+  /*padding: 0 1rem;*/
 }
 
 .App-logo {

@@ -1,5 +1,12 @@
-import fetch from 'isomorphic-fetch'
-import Globals from '../globals'
+import ActionsHelper from './ActionsHelper'
+
+export const SELECT_TOPIC = 'SELECT_TOPIC'
+export function selectTopic(topic) {
+  return {
+    type: SELECT_TOPIC,
+    topic
+  }
+}
 
 export const REQUEST_TOPIC = 'REQUEST_TOPIC'
 export function requestTopic(topic) {
@@ -18,14 +25,9 @@ export function receiveTopic(json) {
 }
 
 export function fetchTopic(topic) {
-
-  return function (dispatch, getState) {
+  return ActionsHelper.sendGet(`/topics/${topic}/`, (dispatch) => {
     dispatch(requestTopic(topic))
-    
-    return fetch(`${Globals.BACKEND_URL}/topics/${topic}/`)
-      .then(response => response.json())
-      .then(json => {
-        dispatch(receiveTopic(json))
-      })
-  }
+  }, (dispatch, getState, response) => {
+    dispatch(receiveTopic(response))
+  })
 }

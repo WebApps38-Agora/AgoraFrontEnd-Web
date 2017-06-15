@@ -1,4 +1,105 @@
+#views {
+  /*height: calc(100% - 60px);*/
+}
+
 #content {
   min-height: 300px;
-  height: calc(100vh - 7rem - 50px);
+  height: 100%;
+  height: calc(100% - 50px);
+}
+
+.field {
+  width: calc(100% - 10%);
+}
+
+.section {
+  min-height: 200px;
+  height: 100%;
+}
+
+.button {
+  min-width: 135px;
+  width: 10%;
+}
+
+.section-form {
+  width: 100%;
+  margin: 0;
+}
+
+/* FACTS */
+
+#fact-section {
+  --fact-section-fact-form-size: 60px;
+}
+
+#facts {
+  min-height: calc(100% - var(--fact-section-fact-form-size));
+  height: calc(100% - var(--fact-section-fact-form-size));
+}
+
+#fact-section .button {
+  width: 15%;
+  margin-right: 0;
+}
+
+#fact-section .section-form {
+  margin: 0;
+}
+
+#fact-section .field {
+  margin-left: 0;
+}
+
+/* COMMENTS */
+
+#comment-section .button {
+  margin: 0.5rem;
+  margin-right: 0;
+  float: right;
+  height: 38px;
+  /*width: 100%;*/
+}
+
+#comment-section {
+  --comment-section-fact-form-size: 120px;
+}
+
+#comments {
+  height: 100%;
+  width: 100%;
+}
+
+.comments {
+  max-width: 100%;
+}
+
+.field, .field > textarea {
+  width: 100% !important;
+}
+
+textarea {
+  min-height: 0 !important;
+  max-height: initial !important;
+}
+
+@media screen and (max-width: 768px) {
+  #fact-section {
+    --fact-section-fact-form-size: 100px;
+  }
+
+  .field {
+    width: 100%;
+  }
+
+  #fact-section .button {
+    margin: 0.5rem;
+  }
+
+  .button {
+    width: 100%;
+    margin: 1rem;
+    margin-right: 0;
+  }
+
 }

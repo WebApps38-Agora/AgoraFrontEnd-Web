@@ -1,13 +1,16 @@
 import update from 'immutability-helper'
 import {
-  SELECT_TOPIC, REQUEST_TOPICS, RECEIVE_TOPICS, RECEIVE_LOGIN
-} from '../actions/TopicIndex'
+  REQUEST_TOPICS, RECEIVE_TOPICS, RECEIVE_LOGIN
+} from '../actions/RootActions'
 import {
   RECEIVE_FACTS, ADD_FACT_RESPONSE
-} from '../actions/FactSection'
+} from '../actions/FactActions'
 import {
-  REQUEST_TOPIC, RECEIVE_TOPIC
-} from '../actions/TopicPage'
+  ADD_COMMENT_RESPONSE, SHOW_REPLY_INPUT
+} from '../actions/CommentActions'
+import {
+  SELECT_TOPIC, REQUEST_TOPIC, RECEIVE_TOPIC
+} from '../actions/TopicActions'
 
 import Globals from '../globals'
 
@@ -29,6 +32,34 @@ export function loginKey(state = false, action) {
   }
 }
 
+const createTopic = (topic, deep) => {
+  let new_comment_set = {}
+
+  let extra = {}
+  if (deep) {
+    topic.comment_set.forEach((comment) => {
+      new_comment_set[comment.id] = comment
+    })
+
+    extra = {
+      comment_set: new_comment_set,
+    }
+  } else {
+    extra = {
+      comment_set: {},
+      fact_set: [],
+      article_set: [],
+    }
+  }
+
+  return {
+    ...topic,
+    ...extra,
+    isFetching: false,
+    url: `${Globals.BACKEND_URL}/topics/${topic.id}/`,
+  }
+}
+
 export function topics(state = {}, action) {
   switch (action.type) {
     case REQUEST_TOPICS:
@@ -39,13 +70,7 @@ export function topics(state = {}, action) {
     case RECEIVE_TOPICS:
       let topics = {}
       action.topics.forEach((topic) => {
-          topics[topic.id] = {
-            ...topic,
-            article_set: [],
-            fact_set: [],
-            isFetching: false,
-            url: `${Globals.BACKEND_URL}/topics/${topic.id}/`,
-          }
+          topics[topic.id] = createTopic(topic, false)
         }
       )
 
@@ -78,11 +103,7 @@ export function topics(state = {}, action) {
     case RECEIVE_TOPIC:
       return update(state, {
         items: {
-          $merge: {[action.topic.id]: {
-            ...action.topic,
-            isFetching: false,
-            url: `${Globals.BACKEND_URL}/topics/${action.topic.id}/`,
-          }}
+          $merge: {[action.topic.id]: createTopic(action.topic, true)}
         }
       })
 
@@ -96,6 +117,29 @@ export function topics(state = {}, action) {
           }
         }
       })
+
+    case ADD_COMMENT_RESPONSE:
+      return update(state, {
+        items: {
+          [action.topic]: {
+            comment_set: {
+              $merge: {
+                [action.comment.id]: action.comment
+              }
+            }
+          }
+        }
+      })
+
+    case SHOW_REPLY_INPUT:
+      return update(state, {
+        items: {
+          [action.topic]: {
+            reply_to_comment: {$set: action.chain}
+          }
+        }
+      })
+
     default:
       return state
   }

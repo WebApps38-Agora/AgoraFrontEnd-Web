@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { fetchTopicsIfNeeded } from '../actions/TopicIndex'
+import { fetchTopicsIfNeeded } from '../actions/RootActions'
 import { Loader, Dimmer } from 'semantic-ui-react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import { makeTile } from './MakeTile'
@@ -30,7 +30,7 @@ class TopicIndex extends Component {
           </Row>);
       }
 
-      return <Grid className="app-shell">{rows}</Grid>;
+      return <Grid className="app-shell" id="topic-index">{rows}</Grid>;
     } else {
       return <Dimmer active><Loader>Loading the latest topics</Loader></Dimmer>
     }

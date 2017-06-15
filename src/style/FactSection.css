@@ -1,9 +1,0 @@
-#fact-section {
-  min-height: 200px;
-  height: 100%;
-}
-
-#facts {
-  min-height: calc(100% - 60px);
-  height: calc(100% - 60px);
-}
