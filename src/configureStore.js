@@ -1,6 +1,6 @@
 import thunkMiddleware from 'redux-thunk'
 import { createStore, applyMiddleware, compose, combineReducers} from 'redux'
-import { loginKey, selectedTopic, topics, myProfile, profiles } from './reducers/RootReducer'
+import { loginKey, selectedTopic, topics, myProfile, profiles, tags } from './reducers/RootReducer'
 import { fetchProfileIfLoggedIn } from './actions/ProfileActions'
 import Cookies from 'js-cookie'
 
@@ -16,7 +16,12 @@ const preloadedState = {
     nextPage: ""
   },
   myProfile: 0,
-  profiles: []
+  profiles: [],
+  tags: {
+    isFetching: false,
+    filterByTag: false,
+    items: []
+  }
 }
 
 const rootReducer = combineReducers({
@@ -24,7 +29,8 @@ const rootReducer = combineReducers({
   selectedTopic,
   topics,
   myProfile,
-  profiles
+  profiles,
+  tags
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

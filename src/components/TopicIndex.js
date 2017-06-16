@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { fetchTopicsIfNeeded, fetchMoreTopics } from '../actions/RootActions'
-import { Visibility, Sidebar, Icon, Segment, Label, Menu } from 'semantic-ui-react'
+import { fetchTags, filterByTag } from '../actions/TagActions'
+import { Visibility, Sidebar, Segment, Label, Menu } from 'semantic-ui-react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import TopicIndexTile from './TopicIndexTile'
 import Missing from './Missing'
@@ -15,10 +16,15 @@ class TopicIndex extends Component {
 
   componentWillMount() {
     this.props.dispatch(fetchTopicsIfNeeded())
+    this.props.dispatch(fetchTags())
   }
 
   handleScrollBottom() {
     this.props.dispatch(fetchMoreTopics());
+  }
+
+  handleTagClick(e, tag) {
+    this.props.dispatch(filterByTag(tag))
   }
 
   render() {
@@ -27,7 +33,21 @@ class TopicIndex extends Component {
                     header="No topics left!" />
 
     if (this.props.loaded) {
-      const topics = this.props.topics.items
+      let topics = {}
+
+      if (this.props.tags.currentFilter) {
+        this.props.topics.items.forEach((topic, index) => {
+          console.log("topics in current tag")
+          console.log(topic.id)
+          console.log(this.props.tags.items[this.props.tags.currentFilter].topics)
+          if (this.props.tags.items[this.props.tags.currentFilter].topics.includes(topic.id)) {
+            topics[topic.id] = topic
+          }
+        })
+      } else {
+        topics = this.props.topics.items
+      }
+
       const numTopics = Object.keys(topics).length
 
 
@@ -65,11 +85,19 @@ class TopicIndex extends Component {
                header="Loading more topics..." />;
     }
 
+    let tags = null
+    if (!this.props.tags.isFetching) {
+      tags = this.props.tags.items.map((tag, index) =>
+        <a>
+          <Label onClick={(e) => this.handleTagClick(e, tag.id)} key={index}>{tag.name}</Label>
+        </a>
+      )
+    }
+
     return (<div>
       <Sidebar.Pushable as={Segment}>
           <Sidebar as={Menu} animation='push' width='thin' visible icon='labeled' vertical>
-            <Label>Donald Trump</Label>
-            <Label>Another tag</Label>
+            {tags}
           </Sidebar>
           <Sidebar.Pusher>
       {grid}
@@ -87,7 +115,8 @@ const mapStateToProps = (state) => {
     loaded: state.topics.loaded,
     topics: state.topics || [],
     nextPage: state.topics.nextPage,
-    noMoreTopics: state.noMoreTopics
+    noMoreTopics: state.noMoreTopics,
+    tags: state.tags || [],
   }
 }
 
