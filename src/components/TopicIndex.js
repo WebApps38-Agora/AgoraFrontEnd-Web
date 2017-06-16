@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { fetchTopicsIfNeeded, fetchMoreTopics } from '../actions/RootActions'
 import { fetchTags, filterByTag, fetchTopicsForTag } from '../actions/TagActions'
-import { Visibility, Menu, Button, Segment, List, Sidebar, Loader, Dimmer } from 'semantic-ui-react'
+import { Visibility, Menu, Button, Segment, List, Sidebar } from 'semantic-ui-react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import { makeTile } from './MakeTile'
-import SearchTags from './SearchTags'
 import Missing from './Missing'
 
 class TopicIndex extends Component {
@@ -25,8 +24,12 @@ class TopicIndex extends Component {
   }
 
   handleTagClick(e, tag) {
-    this.props.dispatch(fetchTopicsForTag(tag))
-    this.props.dispatch(filterByTag(tag))
+    if (this.props.tags.currentFilter !== tag) {
+      this.props.dispatch(fetchTopicsForTag(tag))
+      this.props.dispatch(filterByTag(tag))
+    } else {
+      this.props.dispatch(filterByTag(false))
+    }
   }
 
   render() {
@@ -72,9 +75,9 @@ class TopicIndex extends Component {
     let tags = null
     if (!this.props.tags.isFetching) {
       tags = this.props.tags.items.map((tag, index) =>
-        <List.Item>
+        <List.Item key={index}>
           <List.Content>
-            <Button onClick={(e) => this.handleTagClick(e, tag.id)} key={index}>{tag.name}</Button>
+            <Button onClick={(e) => this.handleTagClick(e, tag.id)}>{tag.name}</Button>
           </List.Content>
         </List.Item>
       )

@@ -1,5 +1,4 @@
 import React, { Component} from 'react';
-import { Motion, spring } from 'react-motion'
 import '../style/Chart.css'
 
 export default class ChartTile extends Component {

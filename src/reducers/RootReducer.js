@@ -53,7 +53,7 @@ export function tags(state = {}, action) {
       return update(state, {
         isFetching: {$set: false},
         items: {
-          $push: action.tags
+          $merge: action.tags
         }
       })
     }

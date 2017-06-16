@@ -1,5 +1,4 @@
 import React, { Component} from 'react';
-import { Segment } from 'semantic-ui-react'
 import ChartTile from './ChartTile'
 
 let grid = []

@@ -76,11 +76,9 @@ class TopicPage extends Component {
     if (!this.props.isFetching) {
       let cards = this.props.topic.article_set.map((article, index) => {
           // TODO: REMOVE BELOW
-          if (index < 10) {
-            return (<List.Item key={index}>
+            return (index < 10 ? <List.Item key={index}>
               <ArticleCard topic={this.props.topic} id={index} article={article} handleStepClick={this.handleStepClick}/>
-            </List.Item>);
-          }
+            </List.Item> : null);
         }
       )
 
