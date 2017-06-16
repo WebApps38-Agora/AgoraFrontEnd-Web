@@ -44,7 +44,7 @@ class ArticleCard extends Component {
         </Card>
       </a>)
     } else {
-      var style = this.props.style;
+      var style = this.props.style || {};
       if (this.state.center) {
         style.textAlign= "center"
         style.borderBottom = "5px solid var(--app-snd-color)"
