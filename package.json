@@ -41,7 +41,7 @@
     "react-scripts-runtime-webpack-config-editor": "^1.0.0"
   },
   "scripts": {
-    "install": "react-scripts-runtime-webpack-config-editor my-webpack-transformer.js",
+    "install": "react-scripts-runtime-webpack-config-editor ./src/my-webpack-transformer.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

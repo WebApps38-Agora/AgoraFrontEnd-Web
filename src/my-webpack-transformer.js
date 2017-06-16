@@ -10,7 +10,7 @@ module.exports = function editWebpackConfig (webpackConfig) {
             alias,
             {'mapbox-gl$': resolve('./node_modules/mapbox-gl/dist/mapbox-gl.js')})
   }
-  let r = { resolve: Object.assign(res, a)}
+  let r = { resolve: Object.assign(res, a) }
   let newResolve = Object.assign(
         webpackConfig,
         r

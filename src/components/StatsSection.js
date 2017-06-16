@@ -3,6 +3,7 @@ import { Statistic, Segment, Header, Icon } from 'semantic-ui-react'
 import { Grid, Col } from 'react-bootstrap'
 import MapApp from '../map/MapApp'
 
+var width = ReactDOM.findDOMNode(this).offsetWidth;
 const StatsSection = ({ props }) => {
 return (
   <div>

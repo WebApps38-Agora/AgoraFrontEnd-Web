@@ -1,10 +1,11 @@
 /* global window,document */
-import React, {Component} from 'react';
+import React, { Component} from 'react';
+import ReactDOM from 'react-dom'
 import MapGL from 'react-map-gl';
 import DeckGLOverlay from './deckgl-overlay.js';
 
 // Set your mapbox token here
-const MAPBOX_TOKEN = process.env.MAPBOX_ACCESS_TOKEN; // eslint-disable-line
+const MAPBOX_TOKEN = "pk.eyJ1IjoiY2hhd2ttIiwiYSI6ImNqM3o3emRzbzAwY28zMW41NnJkcnlyc3oifQ.M_UwGN_kUOOScXtqTs6vSA"; // eslint-disable-line
 
 const data = [
  [-0.056608, 51.530791],
@@ -67,18 +68,21 @@ export default class MapApp extends Component {
     this.state = {
       viewport: {
         ...DeckGLOverlay.defaultViewport,
-        width: 500,
-        height: 500
+        width: 300,
+        height: 300
       },
       data: null
     };
 
+  }
+
+  componentWillMount() {
     this.setState({data});
   }
 
   componentDidMount() {
     window.addEventListener('resize', this._resize.bind(this));
-    this._resize();
+    // this._resize();
   }
 
   _resize() {
