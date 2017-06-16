@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { fetchTopicsIfNeeded } from '../actions/RootActions'
+import { fetchMoreTopics, fetchTopicsIfNeeded } from '../actions/RootActions'
 import { Visibility, Menu, Button, Segment, Icon, Sidebar, Loader, Dimmer } from 'semantic-ui-react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import { makeTile } from './MakeTile'
@@ -38,28 +38,12 @@ class TopicIndex extends Component {
             <Col className="grid-tile" xs={12} sm={8}> {makeTile(topics, i)} </Col>
             <Col className="grid-tile" xs={12} sm={4}>  {makeTile(topics, i + 1)} </Col>
           </Row>);
-<<<<<<< HEAD
-        rows.push(
-          <Row className="show-grid" key={i + 1}>
-            <Col className="grid-tile" xs={12} sm={4}> {makeTile(topics, i + 2)} </Col>
-            <Col className="grid-tile" xs={12} sm={4}> {makeTile(topics, i + 3)} </Col>
-            <Col className="grid-tile" xs={12} sm={4}> {makeTile(topics, i + 4)} </Col>
-          </Row>);
-      }
-
-      return <div>
-               <SearchTags />
-               <Grid className="app-shell" id="topic-index">{rows}</Grid>;
-             </div>
-    } else {
-      return <Dimmer active><Loader>Loading the latest topics</Loader></Dimmer>
-=======
         if (i + 2 < numTopics) {
           rows.push(
             <Row className="show-grid" key={i + 1}>
-              <Col className="grid-tile" xs={12} sm={4}> {makeTile(i + 2)} </Col>
-              <Col className="grid-tile" xs={12} sm={4}> {makeTile(i + 3)} </Col>
-              <Col className="grid-tile" xs={12} sm={4}> {makeTile(i + 4)} </Col>
+              <Col className="grid-tile" xs={12} sm={4}> {makeTile(topics, i + 2)} </Col>
+              <Col className="grid-tile" xs={12} sm={4}> {makeTile(topics, i + 3)} </Col>
+              <Col className="grid-tile" xs={12} sm={4}> {makeTile(topics, i + 4)} </Col>
             </Row>);
         }
       }
@@ -67,7 +51,6 @@ class TopicIndex extends Component {
       grid = <Grid className="app-shell" id="topic-index">{rows}</Grid>;
       footer = <Missing icon="newspaper" icon_size="massive"
                header="Loading more topics..." />;
->>>>>>> 4a5ceeeb2e4012380232a3565733cd24ab4cbd8a
     }
 
     return (<div>

@@ -3,7 +3,7 @@ import { Segment, Button, Divider } from 'semantic-ui-react'
 import { Icon, Form, Message } from 'semantic-ui-react'
 import FacebookProvider, { Login } from 'react-facebook';
 import { sendLogin } from '../actions/RootActions'
-import { fetchProfile } from '../actions/ProfileActions'
+import { fetchProfile, removeProfileWarning } from '../actions/ProfileActions'
 import { connect } from 'react-redux'
 import ProfilePage from './ProfilePage'
 import Globals from '../globals'
@@ -11,6 +11,10 @@ import Globals from '../globals'
 class LoginPage extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentWillUnmount = () => {
+    this.props.dispatch(removeProfileWarning())
   }
 
   handleResponse = (data) => {
@@ -55,6 +59,12 @@ class LoginPage extends Component {
   render() {
     return (
       <div className="app-shell">
+        { this.props.profileWarnings &&
+          <Message
+            warning
+            header='You must login before you can visit your profile!'
+          />
+        }
         { this.props.loginKey &&
           <ProfilePage />
           }
@@ -92,7 +102,8 @@ class LoginPage extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    loginKey: state.loginKey
+    loginKey: state.loginKey,
+    profileWarnings: state.profileWarnings
   }
 }
 export default connect(mapStateToProps)(LoginPage)

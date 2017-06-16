@@ -9,6 +9,20 @@ export function addFactRequest(topic, content) {
   }
 }
 
+export const ADD_PROFILE_WARNING = 'ADD_PROFILE_WARNING'
+export function addProfileWarning() {
+  return {
+    type: ADD_PROFILE_WARNING
+  }
+}
+
+export const REMOVE_PROFILE_WARNING = 'REMOVE_PROFILE_WARNING'
+export function removeProfileWarning(topic, content) {
+  return {
+    type: REMOVE_PROFILE_WARNING
+  }
+}
+
 export const ADD_FACT_RESPONSE = 'ADD_FACT_RESPONSE'
 export function addFactResponse(topic, json) {
   return {

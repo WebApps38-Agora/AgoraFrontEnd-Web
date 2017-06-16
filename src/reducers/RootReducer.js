@@ -12,7 +12,7 @@ import {
   SELECT_TOPIC, REQUEST_TOPIC, RECEIVE_TOPIC
 } from '../actions/TopicActions'
 import {
-  RECEIVE_PROFILE
+  RECEIVE_PROFILE, ADD_PROFILE_WARNING, REMOVE_PROFILE_WARNING
 } from '../actions/ProfileActions'
 
 import Globals from '../globals'
@@ -30,6 +30,17 @@ export function loginKey(state = false, action) {
   switch (action.type) {
     case RECEIVE_LOGIN:
       return action.key
+    default:
+      return state
+  }
+}
+
+export function profileWarnings(state = false, action) {
+  switch (action.type) {
+    case ADD_PROFILE_WARNING:
+      return true
+    case REMOVE_PROFILE_WARNING:
+      return false
     default:
       return state
   }
@@ -69,7 +80,6 @@ export function topics(state = {}, action) {
       return update(state, {
         isFetching: {$set: true}
       })
-
     case RECEIVE_TOPICS:
       let topics = state.items
       action.topics.forEach((topic) => {

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Segment, Button, Divider } from 'semantic-ui-react'
 import { Image, Item, Icon, Statistic } from 'semantic-ui-react'
+import { Redirect } from 'react-router-dom'
 import { Grid, Row, Col } from 'react-bootstrap'
-import { sendLogin } from '../actions/TopicIndex'
+import { sendLogin, fetchTopicsIfNeeded } from '../actions/TopicIndex'
 import { connect } from 'react-redux'
-import { fetchTopicsIfNeeded } from '../actions/TopicIndex'
 import { makeTile } from './MakeTile'
 import { Motion, spring } from 'react-motion'
+import { addProfileWarning } from '../actions/ProfileActions'
 import PoliticalChart from './PoliticalChart'
 
 const commented = [
@@ -25,7 +26,9 @@ const items = [
 
 class ProfilePage extends Component {
   componentWillMount() {
-    this.props.dispatch(fetchTopicsIfNeeded())
+    if (this.props.loginKey) {
+      this.props.dispatch(fetchTopicsIfNeeded())
+    }
   }
 
   handleResponse = (data) => {
@@ -54,6 +57,11 @@ class ProfilePage extends Component {
   }
 
   render() {
+    if(!this.props.loginKey) {
+      this.props.dispatch(addProfileWarning())
+      return <Redirect to='/login' />
+    }
+
     const topics = this.props.topics.items
     // const numTopics = Object.keys(topics).length
 
@@ -113,7 +121,6 @@ class ProfilePage extends Component {
               {commentedOn}
           </Col>
         </Grid>
-
     </div>
   )}
 }
@@ -123,6 +130,7 @@ const mapStateToProps = (state, ownProps) => {
     loaded: state.topics.loaded,
     loginKey: state.loginKey,
     id: state.facebookId,
+    profileWarnings: state.profileWarnings,
     topics: state.topics || []
   }
 }
