@@ -62,7 +62,9 @@ class TopicPage extends Component {
     }
 
     if (this.state.height) {
-      return (<Infinite className="inf-list" containerHeight={this.state.height} elementHeight={51}>
+      return (<Infinite className="inf-list" timeScrollStateLastsForAfterUserScrolls={200}
+                        containerHeight={this.state.height}
+                        elementHeight={51}>
                 <List relaxed >
                   {cards}
                 </List>
@@ -72,17 +74,14 @@ class TopicPage extends Component {
 
   render() {
     if (!this.props.isFetching) {
-      console.log("AAAAAAAAAAAAAAAAAAAAAAAAA")
-      console.log(this.props.topic.article_set)
-      let cards = this.props.topic.article_set.map((article, index) =>
-        <List.Item key={index}>
-          <ArticleCard
-            topic={this.props.topic}
-            id={index}
-            article={article}
-            handleStepClick={this.handleStepClick}
-          />
-        </List.Item>
+      let cards = this.props.topic.article_set.map((article, index) => {
+          // TODO: REMOVE BELOW
+          if (index < 10) {
+            return (<List.Item key={index}>
+              <ArticleCard topic={this.props.topic} id={index} article={article} handleStepClick={this.handleStepClick}/>
+            </List.Item>);
+          }
+        }
       )
 
       let card_list = this.getCardList(cards);

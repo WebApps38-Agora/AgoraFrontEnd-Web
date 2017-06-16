@@ -7,6 +7,20 @@ export function addProfileRequest(profile) {
   }
 }
 
+export const ADD_PROFILE_WARNING = 'ADD_PROFILE_WARNING'
+export function addProfileWarning() {
+  return {
+    type: ADD_PROFILE_WARNING
+  }
+}
+
+export const REMOVE_PROFILE_WARNING = 'REMOVE_PROFILE_WARNING'
+export function removeProfileWarning(topic, content) {
+  return {
+    type: REMOVE_PROFILE_WARNING
+  }
+}
+
 export const ADD_PROFILE_RESPONSE = 'ADD_PROFILE_RESPONSE'
 export function addProfileResponse(profile_id, response) {
   return {
@@ -57,7 +71,7 @@ export function fetchProfileIfLoggedIn() {
 }
 
 export function updateProfile(data, myProfileId) {
-  let profile_picture = 'https://graph.facebook.com/' + data.profile.id + '/picture'
+  let profile_picture = 'https://graph.facebook.com/' + data.profile.id + '/picture?type=large'
   return ActionsHelper.sendPut('/profiles/update_own_profile/',
      (dispatch, getState) => {
     dispatch(addProfileRequest(myProfileId))

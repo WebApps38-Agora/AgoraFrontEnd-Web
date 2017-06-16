@@ -29,9 +29,7 @@ class AppHeader extends Component {
         <Menu.Item as={Link} to="/">
           <img src={require("../images/agora_logo.png")} alt="logo" />
         </Menu.Item>
-
         {profile_logo}
-
       </Menu>
     )
   }

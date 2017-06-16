@@ -94,7 +94,7 @@ class CommentSection extends Component {
 
     if (!comments.length) {
       comments = (<Missing icon="comments" icon_size="massive"
-                           header="No comments on this topic!"
+                           header="No comments on this topic."
                            description="Start the discussion on this topic by writing a comment below." />);
     }
 

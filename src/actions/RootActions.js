@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie'
 import Globals from '../globals'
 import ActionsHelper from './ActionsHelper'
+import { fetchProfile, updateProfile } from './ProfileActions'
 
 export const RECEIVE_LOGIN = 'RECEIVE_LOGIN'
 export function receiveLogin(key) {
@@ -60,12 +61,14 @@ export function fetchMoreTopics() {
   }
 }
 
-export function sendLogin(accessToken) {
+export function sendLogin(data) {
   return ActionsHelper.sendPost('/rest_auth/facebook/', (dispatch, getState) => {
   }, (dispatch, getState, response) => {
     dispatch(receiveLogin(response.key))
     Cookies.set('login_key', response.key ,{expires : 7})
+    dispatch(updateProfile(data, getState().myProfile.id))
+    dispatch(fetchProfile())
   }, {
-    access_token: accessToken
+    access_token: data.tokenDetail.accessToken
   })
 }

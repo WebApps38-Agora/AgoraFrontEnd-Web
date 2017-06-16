@@ -1,0 +1,16 @@
+.chart-tile:before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+.chart-tile {
+  position: relative;
+  width: 50%;
+  border: 1px solid var(--app-main-color);
+}
+
+.chart-tile:hover {
+  cursor: crosshair;
+  transform: scale(1.2);
+}

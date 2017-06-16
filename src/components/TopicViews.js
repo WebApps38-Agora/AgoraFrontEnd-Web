@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Menu, Segment } from 'semantic-ui-react'
 
 import CommentSection from './CommentSection'
+import StatsSection from './StatsSection'
 import FactSection from './FactSection'
 import '../style/Views.css'
 
@@ -31,7 +32,7 @@ class TopicViews extends Component {
         break;
       case 'stats':
       default:
-        content = <h2>Stats</h2>
+        content = <StatsSection topic={this.props.topic}/>
         break;
     }
 
