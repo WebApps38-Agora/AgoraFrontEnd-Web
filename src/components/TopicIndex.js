@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { fetchTopicsIfNeeded, fetchMoreTopics } from '../actions/RootActions'
-import { Visibility } from 'semantic-ui-react'
+import { Visibility, Sidebar, Icon, Segment, Label, Menu } from 'semantic-ui-react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import TopicIndexTile from './TopicIndexTile'
 import Missing from './Missing'
@@ -66,10 +66,18 @@ class TopicIndex extends Component {
     }
 
     return (<div>
+      <Sidebar.Pushable as={Segment}>
+          <Sidebar as={Menu} animation='push' width='thin' visible icon='labeled' vertical>
+            <Label>Donald Trump</Label>
+            <Label>Another tag</Label>
+          </Sidebar>
+          <Sidebar.Pusher>
       {grid}
       <Visibility className="topic-index-bottom" onOnScreen={this.handleScrollBottom} once={false}>
         {footer}
       </Visibility>
+          </Sidebar.Pusher>
+        </Sidebar.Pushable>
     </div>);
   }
 }
