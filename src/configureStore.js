@@ -6,7 +6,6 @@ import Cookies from 'js-cookie'
 
 const login_key = Cookies.get('login_key') || false
 const preloadedState = {
-  visitedProfileBeforeLogin: false,
   loginKey: login_key,
   selectedTopic: 0,
   topics: {

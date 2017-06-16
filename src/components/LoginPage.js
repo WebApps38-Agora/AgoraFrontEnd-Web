@@ -72,7 +72,7 @@ class LoginPage extends Component {
         <Segment padded>
           <FacebookProvider appId={Globals.FACEBOOK_APP_ID}>
             <Login
-              scope="email"
+              scope="user_location"
               onResponse={this.handleResponse}
               onError={this.handleError}
             >

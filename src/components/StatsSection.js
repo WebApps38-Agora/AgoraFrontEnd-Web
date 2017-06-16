@@ -1,8 +1,7 @@
 import React from 'react';
 import { Statistic, Segment, Header, Icon } from 'semantic-ui-react'
 import { Grid, Col } from 'react-bootstrap'
-
-const square = { width: 175, height: 175 }
+import MapApp from '../map/MapApp'
 
 const StatsSection = ({ props }) => {
 return (
@@ -13,7 +12,7 @@ return (
             <Statistic.Group widths={1}>
               <Statistic>
                 <Statistic.Value>
-                  <Icon name='eye outline' />
+                  <Icon name='eye' />
                 </Statistic.Value>
                 <Statistic.Label>0 Views</Statistic.Label>
               </Statistic>
@@ -40,6 +39,7 @@ return (
             </Statistic.Group>
           </Col>
         </Grid>
+        <MapApp />
   </div>
 );
 }
