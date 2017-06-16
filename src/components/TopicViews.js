@@ -5,6 +5,7 @@ import { Menu, Segment } from 'semantic-ui-react'
 import CommentSection from './CommentSection'
 import StatsSection from './StatsSection'
 import FactSection from './FactSection'
+import { Redirect } from 'react-router-dom'
 import '../style/Views.css'
 
 class TopicViews extends Component {
@@ -32,7 +33,7 @@ class TopicViews extends Component {
         break;
       case 'stats':
       default:
-        content = <StatsSection topic={this.props.topic}/>
+        content = <Redirect to='stats/map' />
         break;
     }
 

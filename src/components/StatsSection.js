@@ -6,8 +6,7 @@ import MapApp from '../map/MapApp'
 const StatsSection = ({ props }) => {
 return (
   <div>
-
-          <Grid>
+    <Grid>
           <Col className="grid-tile" xs={12} sm={4}>
             <Statistic.Group widths={1}>
               <Statistic>
@@ -39,7 +38,7 @@ return (
             </Statistic.Group>
           </Col>
         </Grid>
-        <MapApp />
+        <MapApp width='100%' height='100%'  />
   </div>
 );
 }
