@@ -3,7 +3,7 @@ import { Segment, Button, Divider } from 'semantic-ui-react'
 import { Icon, Form, Message } from 'semantic-ui-react'
 import FacebookProvider, { Login } from 'react-facebook';
 import { sendLogin } from '../actions/RootActions'
-import { fetchProfile, removeProfileWarning } from '../actions/ProfileActions'
+import { fetchProfile, updateProfile , removeProfileWarning } from '../actions/ProfileActions'
 import { connect } from 'react-redux'
 import ProfilePage from './ProfilePage'
 import Globals from '../globals'
@@ -46,13 +46,13 @@ class LoginPage extends Component {
       profileLogo.style.display = 'block';
   	});
 
+
     this.props.dispatch(sendLogin(data.tokenDetail.accessToken))
+    this.props.dispatch(updateProfile(data, this.props.myProfile.id))
     this.props.dispatch(fetchProfile())
   }
 
   handleError = (error) => {
-    console.log("error")
-    console.log(error)
     this.setState({ error });
   }
 
@@ -103,7 +103,9 @@ class LoginPage extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     loginKey: state.loginKey,
-    profileWarnings: state.profileWarnings
+    profileWarnings: state.profileWarnings,
+    myProfile: state.myProfile,
   }
 }
+
 export default connect(mapStateToProps)(LoginPage)
