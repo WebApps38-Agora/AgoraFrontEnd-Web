@@ -71,7 +71,7 @@ export function fetchProfileIfLoggedIn() {
 }
 
 export function updateProfile(data, myProfileId) {
-  let profile_picture = 'https://graph.facebook.com/' + data.profile.id + '/picture'
+  let profile_picture = 'https://graph.facebook.com/' + data.profile.id + '/picture?type=large'
   return ActionsHelper.sendPut('/profiles/update_own_profile/',
      (dispatch, getState) => {
     dispatch(addProfileRequest(myProfileId))

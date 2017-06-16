@@ -46,7 +46,7 @@ export default class PoliticalChart extends Component {
   render() {
 
     return (
-      <div className="full-width political-chart-container">
+      <div className="political-chart-container">
         <div className="political-text political-top">
           Authoritarian
         </div>
