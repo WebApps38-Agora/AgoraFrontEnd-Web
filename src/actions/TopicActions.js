@@ -27,8 +27,6 @@ export function receiveTopic(json) {
 
 export function fetchMetricsForTopic(topic) {
   return (dispatch, getState) => {
-
-
     getState().topics.items[topic].article_set.forEach((article) => {
       dispatch(fetchMetrics(topic, article.id))
     })

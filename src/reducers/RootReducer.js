@@ -17,6 +17,9 @@ import {
 import {
   RECEIVE_PROFILE, ADD_PROFILE_RESPONSE, ADD_PROFILE_WARNING, REMOVE_PROFILE_WARNING, HANDLE_PROFILE_ERROR
 } from '../actions/ProfileActions'
+import {
+  REQUEST_TAGS, RECEIVE_TAGS, FILTER_BY_TAG
+} from '../actions/TagActions'
 
 import Globals from '../globals'
 
@@ -35,6 +38,35 @@ export function loginKey(state = false, action) {
       return action.key
     default:
       return state
+  }
+}
+
+export function tags(state = {}, action) {
+  switch (action.type) {
+    case REQUEST_TAGS: {
+      return update(state, {
+        isFetching: {$set: true}
+      })
+    }
+
+    case RECEIVE_TAGS: {
+      return update(state, {
+        isFetching: {$set: false},
+        items: {
+          $push: action.tags
+        }
+      })
+    }
+
+    case FILTER_BY_TAG: {
+      return update(state, {
+        currentFilter: {$set: action.tag}
+      })
+    }
+
+    default: {
+      return state
+    }
   }
 }
 

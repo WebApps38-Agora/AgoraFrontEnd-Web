@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { fetchMoreTopics, fetchTopicsIfNeeded } from '../actions/RootActions'
-import { Visibility, Menu, Button, Segment, Icon, Sidebar, Loader, Dimmer } from 'semantic-ui-react'
+import { Visibility, Menu, Button, Label, Segment, Icon, Sidebar, Loader, Dimmer } from 'semantic-ui-react'
+import { fetchTags, filterByTag } from '../actions/TagActions'
 import { Grid, Row, Col } from 'react-bootstrap'
 import { makeTile } from './MakeTile'
 import SearchTags from './SearchTags'
@@ -16,10 +17,15 @@ class TopicIndex extends Component {
 
   componentWillMount() {
     this.props.dispatch(fetchTopicsIfNeeded())
+    // this.props.dispatch(fetchTags())
   }
 
   handleScrollBottom() {
     this.props.dispatch(fetchMoreTopics());
+  }
+
+  handleTagClick(e, tag) {
+    // this.props.dispatch(filterByTag(tag))
   }
 
   render() {
@@ -28,7 +34,21 @@ class TopicIndex extends Component {
                     header="No topics left!" />
 
     if (this.props.loaded) {
-      const topics = this.props.topics.items
+      let topics = {}
+
+      if (this.props.tags.currentFilter) {
+        this.props.topics.items.forEach((topic, index) => {
+          console.log("topics in current tag")
+          console.log(topic.id)
+          console.log(this.props.tags.items[this.props.tags.currentFilter].topics)
+          if (this.props.tags.items[this.props.tags.currentFilter].topics.includes(topic.id)) {
+            topics[topic.id] = topic
+          }
+        })
+      } else {
+        topics = this.props.topics.items
+      }
+
       const numTopics = Object.keys(topics).length
 
       let rows = [];
@@ -50,12 +70,28 @@ class TopicIndex extends Component {
       footer = <Missing icon="newspaper" icon_size="massive"
                header="Loading more topics..." />;
     }
+    //
+    // let tags = null
+    // if (!this.props.tags.isFetching) {
+    //   tags = this.props.tags.items.map((tag, index) =>
+    //     <a>
+    //       <Label onClick={(e) => this.handleTagClick(e, tag.id)} key={index}>{tag.name}</Label>
+    //     </a>
+    //   )
+    // }
 
     return (<div>
+      {/* <Sidebar.Pushable as={Segment}>
+          <Sidebar as={Menu} animation='push' width='thin' visible icon='labeled' vertical>
+            {tags}
+          </Sidebar>
+          <Sidebar.Pusher> */}
       {grid}
       <Visibility className="topic-index-bottom" onOnScreen={this.handleScrollBottom} once={false}>
         {footer}
       </Visibility>
+          {/* </Sidebar.Pusher> */}
+        {/* </Sidebar.Pushable> */}
     </div>);
   }
 }
@@ -65,7 +101,8 @@ const mapStateToProps = (state) => {
     loaded: state.topics.loaded,
     topics: state.topics || [],
     nextPage: state.topics.nextPage,
-    noMoreTopics: state.noMoreTopics
+    noMoreTopics: state.noMoreTopics,
+    tags: state.tags || [],
   }
 }
 

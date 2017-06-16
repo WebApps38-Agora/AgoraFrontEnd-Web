@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Menu, Icon, Image } from 'semantic-ui-react'
-import { connect } from 'react-redux'
 import 'semantic-ui-css/semantic.min.css';
 
 class AppHeader extends Component {

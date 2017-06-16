@@ -7,6 +7,7 @@ class ActionsHelper {
     console.log(postBody)
 
     return (dispatch, getState) => {
+      console.log("doing action")
       beforeRequest(dispatch, getState)
 
       let config = {
@@ -28,13 +29,13 @@ class ActionsHelper {
 
       let trueURL = ((isEntireURL) ? "" : Globals.BACKEND_URL) + endpoint;
 
+      console.log("about to fech to " + trueURL)
       return fetch(trueURL, config)
       .then(response => {
         console.log(response);
         return response.json()
       })
       .then(json => {
-
         afterRequest(dispatch, getState, json)
       })
       .catch(error => {

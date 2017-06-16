@@ -41,6 +41,7 @@ export function fetchMetrics(topic, article) {
 }
 
 export function sendRateBiasRequest(article, bias) {
+  return {type: 'RESPONSE'};
   return ActionsHelper.sendPost('/metrics/', (dispatch) => {
     dispatch(rateBiasRequest(article))
   }, (dispatch, getState, response) => {
