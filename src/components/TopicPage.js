@@ -21,9 +21,14 @@ class TopicPage extends Component {
     this.state = {
       id: props.match.params.id,
       height: 0,
-      titleHeight: 0
+      titleHeight: 112
     };
     this.getTitleHeight = this.getTitleHeight.bind(this);
+    this.updateTitleHeight = this.updateTitleHeight.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener("resize", this.updateTitleHeight);
   }
 
   componentWillMount() {
@@ -31,12 +36,19 @@ class TopicPage extends Component {
     this.props.dispatch(fetchTopic(this.state.id))
   }
 
-  setTitleHeight(titleHeight) {
-    this.setState({titleHeight: titleHeight});
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateTitleHeight);
   }
 
   getTitleHeight() {
     return this.state.titleHeight;
+  }
+
+  updateTitleHeight() {
+    if (this.title !== null) {
+      console.log(this.title.clientHeight);
+      this.setState({titleHeight: this.title.clientHeight})
+    }
   }
 
   getCardList(cards) {
@@ -77,12 +89,13 @@ class TopicPage extends Component {
         <Grid className="app-shell" id="topic-page">
           {/* <Row> */}
             <Col id="topic-views" xs={12} sm={8} mdOffset={1} md={7}>
-                <ReactHeight className="title-card" onHeightReady={ height => this.setState({ titleHeight: height}) }>
-                  <ArticleCard id="title-card-card"
-                             article={null} title={this.props.topic.title}
+              <div className="title-card" ref={(e)=> this.title = e}>
+                <ReactHeight onHeightReady={ height => this.setState({ titleHeight: height }) }>
+                  <ArticleCard id="title-card-card" article={null} title={this.props.topic.title}
                              right_subtitle={moment(this.props.topic.published_at).format("dddd, MMMM Do YYYY")}
                              left_subtitle={moment(this.props.topic.published_at).fromNow()} />
                 </ReactHeight>
+              </div>
               <TopicViews isFetching={this.props.isFetching} topic={this.props.topic} titleHeight={this.state.titleHeight} />
             </Col>
 

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Segment, Button, Comment, Form, Icon, Header } from 'semantic-ui-react'
+import { Segment, Button, Comment, Form } from 'semantic-ui-react'
 import Textarea from 'react-textarea-autosize';
-import ReactHeight from 'react-height'
 import '../style/Views.css';
 import '../style/CommentSection.css';
 import * as actions from '../actions/CommentActions'
+import Missing from './Missing'
 
 function arraysEqual(arr1, arr2) {
     if (!arr1 || !arr2) return false
@@ -39,9 +39,9 @@ class CommentSection extends Component {
       return this.makeComment(child, [...parents, comment])
     })
 
-    
-    
-    
+
+
+
     const replyInput = arraysEqual(this.props.topic.reply_to_comment, [...Object.keys(parents), comment.id]) ?
       "replying"
     : null
@@ -74,15 +74,16 @@ class CommentSection extends Component {
   handleSubmit = e => {
     e.preventDefault()
     this.props.dispatch(actions.sendAddCommentRequest(this.props.topic.id, this.state.comment_content))
+    this.setState({fact_content: ''});
   }
 
   checkInputEmpty() {
-    return this.state.comment_content == "";
+    return this.state.comment_content === "";
   }
 
   updateTextAreaSize(height) {
-    
-    this.setState({textAreaHeight: height + 20});
+    console.log(height);
+    this.setState({ textAreaHeight: height - 38});
   }
 
   render() {
@@ -92,40 +93,38 @@ class CommentSection extends Component {
     })
 
     if (!comments.length) {
-      comments = (<div className="missing">
-                <div className="missing-inner">
-                  <Icon name="comments" size="massive" />
-                  <h1>No comments on this topic!</h1>
-                  <p>Start the discussion on this topic by writing a comment below.</p>
-                </div>
-               </div>);
+      comments = (<Missing icon="comments" icon_size="massive"
+                           header="No comments on this topic!"
+                           description="Start the discussion on this topic by writing a comment below." />);
     }
 
     return (
       <div className="section" id="comment-section">
-        <Comment.Group minimal style={{height: "calc(100% - " + this.state.textAreaHeight + "px)",
-                                      maxWidth: "none"}}>
-          <Segment vertical className="section-content" id="comments">
-            {comments}
-          </Segment>
-          <Segment vertical>
-            <Form reply id="comment-form">
-              <Form.Group>
-                <Textarea
-                  minRows={1}
-                  maxRows={3}
-                  value={this.state.comment_content}
-                  onChange={ (e) => this.setState({comment_content: e.target.value}) }
-                  onHeightChange={ (height, instance) => this.updateTextAreaSize(height)}
-                  placeholder='Write a reply or a new comment on the topic...' />
-                <Button onClick={this.handleSubmit}
-                        disabled={this.checkInputEmpty()}
-                        content='Comment'
-                        labelPosition='left' icon='edit' primary />
-              </Form.Group>
-            </Form>
-          </Segment>
-        </Comment.Group>
+        <div className="section-height">
+          <Comment.Group minimal style={{height: "calc(100% - " + this.state.textAreaHeight + "px)",
+                                        maxWidth: "none"}}>
+            <Segment vertical className="section-content" id="comments">
+              {comments}
+            </Segment>
+            <Segment vertical>
+              <Form reply id="comment-form">
+                <Form.Group>
+                  <Textarea
+                    minRows={1}
+                    maxRows={3}
+                    value={this.state.comment_content}
+                    onChange={ (e) => this.setState({comment_content: e.target.value}) }
+                    onHeightChange={ (height, instance) => this.updateTextAreaSize(height)}
+                    placeholder='Write a reply or a new comment on the topic...' />
+                  <Button onClick={this.handleSubmit}
+                          disabled={this.checkInputEmpty()}
+                          content='Comment'
+                          labelPosition='left' icon='edit' primary />
+                </Form.Group>
+              </Form>
+            </Segment>
+          </Comment.Group>
+        </div>
       </div>
     )
   }

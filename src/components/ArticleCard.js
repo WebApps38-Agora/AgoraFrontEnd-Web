@@ -25,17 +25,21 @@ class ArticleCard extends Component {
       let article = this.props.article;
       let source  = this.props.article.source;
 
+      let article_time = <div></div>
+
+      if (article.published_at !== null) {
+        article_time = (<Card.Meta>
+                        {moment(article.published_at).fromNow()}
+                      </Card.Meta>);
+      }
+
       return (
         <Card id={this.props.id} className="article" raised link fluid >
             <Card.Content href={article.url} rel="noopener noreferrer" target="_blank" >
               <Image floated='left' src={source.url_logo} />
               <Card.Header>
-                {/* <MediaQuery minWidth={768}> */}
                   {article.headline}
-                  <Card.Meta>
-                    {moment(article.published_at).fromNow()}
-                  </Card.Meta>
-                {/* </MediaQuery> */}
+                  {article_time}
               </Card.Header>
             </Card.Content>
           {!article.metrics.isFetching &&

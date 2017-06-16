@@ -3,6 +3,7 @@ import { Segment, Button, Divider } from 'semantic-ui-react'
 import { Icon, Form, Message } from 'semantic-ui-react'
 import FacebookProvider, { Login } from 'react-facebook';
 import { sendLogin } from '../actions/RootActions'
+import { fetchProfile, updateProfile } from '../actions/ProfileActions'
 import { connect } from 'react-redux'
 import Cookies from 'js-cookie'
 import Globals from '../globals'
@@ -14,11 +15,11 @@ class LoginPage extends Component {
       isLoggedIn: false
     };
     Cookies.set('name', 'value', {expires : 365})
-    
+
   }
 
   handleResponse = (data) => {
-    
+
     this.setState({
       first_name: data.profile.first_name,
       gender: data.profile.gender,
@@ -47,12 +48,14 @@ class LoginPage extends Component {
       profileLogo.style.display = 'block';
   	});
 
+
     this.props.dispatch(sendLogin(data.tokenDetail.accessToken))
+    this.props.dispatch(updateProfile(data, this.props.myProfile.id))
+    this.props.dispatch(fetchProfile())
   }
 
 
   handleError = (error) => {
-    
     this.setState({ error });
   }
 
@@ -88,4 +91,10 @@ class LoginPage extends Component {
   }
 }
 
-export default connect()(LoginPage)
+const mapStateToProps = (state) => {
+  return {
+    myProfile: state.myProfile,
+  }
+}
+
+export default connect(mapStateToProps)(LoginPage)
