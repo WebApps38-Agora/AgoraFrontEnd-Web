@@ -35,6 +35,7 @@ class BiasMeter extends Component {
 
   handleClick(e) {
     this.props.dispatch(sendRateBiasRequest(this.props.article.id, this.state.bias))
+    this.props.article.metrics.bias = this.state.bias
   }
 
   render() {

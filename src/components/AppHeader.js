@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { Menu, Image } from 'semantic-ui-react'
+import { Menu, Icon, Image } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import 'semantic-ui-css/semantic.min.css';
 
@@ -29,9 +29,7 @@ class AppHeader extends Component {
         <Menu.Item as={Link} to="/">
           <img src={require("../images/agora_logo.png")} alt="logo" />
         </Menu.Item>
-
         {profile_logo}
-
       </Menu>
     )
   }

@@ -33,7 +33,7 @@ class FactSection extends Component {
       if (!facts.length) {
         return (<Missing icon="inbox"
                          icon_size="massive"
-                         header="No facts on this topic!"
+                         header="No facts on this topic."
                          description="Be the first person to add an unbiased fact to this topic." />)
       }
       return (<Infinite className="inf-list" containerHeight={this.state.factListHeight} elementHeight={51}>

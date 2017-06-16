@@ -1,12 +1,15 @@
 
 
-
 .bias-container {
   padding: 0
 }
 
 .bias-text {
   margin-right: -80px
+}
+
+.bias-meter:hover {
+  cursor: e-resize;
 }
 
 .container div.bias-meter {

@@ -15,7 +15,7 @@ import {
   REQUEST_METRICS, RECEIVE_METRICS, RATE_BIAS_RECEIVE
 } from '../actions/MetricsActions'
 import {
-  RECEIVE_PROFILE, ADD_PROFILE_RESPONSE, HANDLE_PROFILE_ERROR
+  RECEIVE_PROFILE, ADD_PROFILE_RESPONSE, ADD_PROFILE_WARNING, REMOVE_PROFILE_WARNING, HANDLE_PROFILE_ERROR
 } from '../actions/ProfileActions'
 
 import Globals from '../globals'
@@ -47,6 +47,17 @@ const findArticleIndex = (article_set, article_id) => {
     }
   })
   return found_index
+}
+
+export function profileWarnings(state = false, action) {
+  switch (action.type) {
+    case ADD_PROFILE_WARNING:
+      return true
+    case REMOVE_PROFILE_WARNING:
+      return false
+    default:
+      return state
+  }
 }
 
 const createTopic = (topic, deep) => {
@@ -86,7 +97,6 @@ export function topics(state = {}, action) {
       return update(state, {
         isFetching: {$set: true}
       })
-
     case RECEIVE_TOPICS:
       let topics = state.items
       action.topics.forEach((topic) => {

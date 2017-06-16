@@ -34,7 +34,7 @@ class ArticleCard extends Component {
       }
 
       return (
-        <Card id={this.props.id} className="article" raised link fluid >
+        <Card id={this.props.id} className="article" raised fluid >
             <Card.Content href={article.url} rel="noopener noreferrer" target="_blank" >
               <Image floated='left' src={source.url_logo} />
               <Card.Header>
@@ -48,24 +48,21 @@ class ArticleCard extends Component {
           </Card.Content>}
         </Card>)
     } else {
-      var style;
+      var style = this.props.style || {};
       if (this.state.center) {
-        style = {
-          textAlign: "center",
-          borderBottom: "5px solid var(--app-snd-color)"
-          };
+        style.textAlign= "center"
+        style.borderBottom = "5px solid var(--app-snd-color)"
       } else {
-        style = {
-          display: "block",
-          padding: 2 +"rem",
-          borderBottom: "5px solid var(--app-snd-color)"
-        };
+        style.display = "block"
+        style.padding = 2 + "rem"
+        style.borderBottom = "5px solid var(--app-snd-color)"
       }
+
       return (
-      <Card id={-1} raised fluid >
+      <Card id={-1} raised fluid>
         <Card.Content style={style}>
           <Card.Header className="non-article">
-            {this.state.title}
+            {this.props.title}
           </Card.Header>
           <Card.Description>
             {/* <div style={{float: "left"}}>
@@ -74,6 +71,8 @@ class ArticleCard extends Component {
             <div>
               <Label style={{}} as='a' color='orange' ribbon="right">{this.state.left_subtitle}</Label>
             </div> */}
+            <div style={{float: "right"}}>{this.props.right_subtitle}</div>
+            {this.props.left_subtitle}
           </Card.Description>
         </Card.Content>
       </Card>)

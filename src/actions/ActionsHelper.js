@@ -20,6 +20,8 @@ class ActionsHelper {
         config.body = JSON.stringify(postBody)
       }
 
+      console.log(getState());
+
       if (getState().loginKey) {
         config.headers.append('Authorization', 'Token ' + getState().loginKey)
       }

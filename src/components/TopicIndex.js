@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { fetchTopicsIfNeeded, fetchMoreTopics } from '../actions/RootActions'
-import { Visibility } from 'semantic-ui-react'
+import { fetchMoreTopics, fetchTopicsIfNeeded } from '../actions/RootActions'
+import { Visibility, Menu, Button, Segment, Icon, Sidebar, Loader, Dimmer } from 'semantic-ui-react'
 import { Grid, Row, Col } from 'react-bootstrap'
-import TopicIndexTile from './TopicIndexTile'
+import { makeTile } from './MakeTile'
+import SearchTags from './SearchTags'
 import Missing from './Missing'
 
 class TopicIndex extends Component {
@@ -30,34 +31,19 @@ class TopicIndex extends Component {
       const topics = this.props.topics.items
       const numTopics = Object.keys(topics).length
 
-
-      const makeTile = (index) => {
-        const topic = topics[Object.keys(topics)[index]]
-        return topic &&
-          <TopicIndexTile
-            to={"/topic/" + topic.id}
-            src={topic.images[0]}
-            title={topic.title}
-            published_at={topic.published_at}
-            views={topic.views}
-          />
-      }
-
       let rows = [];
       for (var i = 0; i < numTopics; i += 5) {
         rows.push(
           <Row className="show-grid tall-row" key={i}>
-            <Col className="grid-tile" xs={12} sm={8}> {makeTile(i)} </Col>
-            <Col className="grid-tile" xs={12} sm={4}>  {makeTile(i + 1)} </Col>
+            <Col className="grid-tile" xs={12} sm={8}> {makeTile(topics, i)} </Col>
+            <Col className="grid-tile" xs={12} sm={4}>  {makeTile(topics, i + 1)} </Col>
           </Row>);
-        if (i + 2 < numTopics) {
-          rows.push(
-            <Row className="show-grid" key={i + 1}>
-              <Col className="grid-tile" xs={12} sm={4}> {makeTile(i + 2)} </Col>
-              <Col className="grid-tile" xs={12} sm={4}> {makeTile(i + 3)} </Col>
-              <Col className="grid-tile" xs={12} sm={4}> {makeTile(i + 4)} </Col>
-            </Row>);
-        }
+        rows.push(
+          <Row className="show-grid" key={i + 1}>
+            <Col className="grid-tile" xs={12} sm={4}> {makeTile(topics, i + 2)} </Col>
+            <Col className="grid-tile" xs={12} sm={4}> {makeTile(topics, i + 3)} </Col>
+            <Col className="grid-tile" xs={12} sm={4}> {makeTile(topics, i + 4)} </Col>
+          </Row>);
       }
 
       grid = <Grid className="app-shell" id="topic-index">{rows}</Grid>;
