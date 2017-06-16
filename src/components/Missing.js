@@ -17,7 +17,7 @@ class Missing extends Component {
   }
 
   render() {
-    let style = this.props.style
+    // let style = this.props.style
     if (this.state.full) {
       // style.height = "100%";
       // style.width = "100%";

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Form, Segment, Icon } from 'semantic-ui-react'
+import { Button, Form, Segment } from 'semantic-ui-react'
 
 import * as actions from '../actions/FactActions';
 import '../style/Views.css'

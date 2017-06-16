@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { fetchTopicsIfNeeded, fetchMoreTopics } from '../actions/RootActions'
-import { Loader, Dimmer, Visibility } from 'semantic-ui-react'
+import { Visibility } from 'semantic-ui-react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import TopicIndexTile from './TopicIndexTile'
 import Missing from './Missing'
