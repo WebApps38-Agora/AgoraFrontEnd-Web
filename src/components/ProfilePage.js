@@ -7,7 +7,7 @@ import { sendLogin, fetchTopicsIfNeeded } from '../actions/TopicIndex'
 import { connect } from 'react-redux'
 import { makeTile } from './MakeTile'
 import { Motion, spring } from 'react-motion'
-import { addProfileWarning } from '../actions/ProfileActions'
+import { addProfileWarning, fetchProfile } from '../actions/ProfileActions'
 import PoliticalChart from './PoliticalChart'
 
 const commented = [
@@ -27,22 +27,9 @@ const items = [
 class ProfilePage extends Component {
   componentWillMount() {
     if (this.props.loginKey) {
-      this.props.dispatch(fetchTopicsIfNeeded())
+      // this.props.dispatch(fetchTopicsIfNeeded())
+      this.props.dispatch(fetchProfile())
     }
-  }
-
-  handleResponse = (data) => {
-    console.log(data);
-
-    fetch('https://graph.facebook.com/'+data.profile.id+'/picture')
-  	.then(function(response) {
-  	  return response.blob();
-  	})
-  	.then(function(imageBlob) {
-  	  document.querySelector('img').src = URL.createObjectURL(imageBlob);
-  	});
-
-    this.props.dispatch(sendLogin(data.tokenDetail.accessToken))
   }
 
 
@@ -131,7 +118,8 @@ const mapStateToProps = (state, ownProps) => {
     loginKey: state.loginKey,
     id: state.facebookId,
     profileWarnings: state.profileWarnings,
-    topics: state.topics || []
+    topics: state.topics || [],
+    myProfile: state.myProfile
   }
 }
 export default connect(mapStateToProps)(ProfilePage)

@@ -38,14 +38,12 @@ class TopicIndex extends Component {
             <Col className="grid-tile" xs={12} sm={8}> {makeTile(topics, i)} </Col>
             <Col className="grid-tile" xs={12} sm={4}>  {makeTile(topics, i + 1)} </Col>
           </Row>);
-        if (i + 2 < numTopics) {
-          rows.push(
-            <Row className="show-grid" key={i + 1}>
-              <Col className="grid-tile" xs={12} sm={4}> {makeTile(topics, i + 2)} </Col>
-              <Col className="grid-tile" xs={12} sm={4}> {makeTile(topics, i + 3)} </Col>
-              <Col className="grid-tile" xs={12} sm={4}> {makeTile(topics, i + 4)} </Col>
-            </Row>);
-        }
+        rows.push(
+          <Row className="show-grid" key={i + 1}>
+            <Col className="grid-tile" xs={12} sm={4}> {makeTile(topics, i + 2)} </Col>
+            <Col className="grid-tile" xs={12} sm={4}> {makeTile(topics, i + 3)} </Col>
+            <Col className="grid-tile" xs={12} sm={4}> {makeTile(topics, i + 4)} </Col>
+          </Row>);
       }
 
       grid = <Grid className="app-shell" id="topic-index">{rows}</Grid>;
