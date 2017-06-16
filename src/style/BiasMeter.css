@@ -2,12 +2,18 @@
 
 
 .bias-container {
-  padding: 0
+  padding: 0;
+}
+
+.bias-container:hover {
+  cursor: e-resize;
 }
 
 .bias-text {
-  margin-right: -80px
+  margin-right: -105px;
 }
 
+/* Change this to change the height of the meter bias */
 .container div.bias-meter {
+  font-size: 1.4em;
 }

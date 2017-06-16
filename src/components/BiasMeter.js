@@ -11,8 +11,6 @@ class BiasMeter extends Component {
 
   constructor(props) {
 
-
-
     super(props)
     this.state = {
       bias: this.props.article.metrics.bias
@@ -21,9 +19,11 @@ class BiasMeter extends Component {
   }
 
   handleMove(e) {
+    const BIAS_LIMIT = 75
+
     const rect = ReactDOM.findDOMNode(this).getBoundingClientRect()
     this.setState({
-      bias: ((e.nativeEvent.clientX - rect.left) / rect.width) * 100
+      bias: Math.min(BIAS_LIMIT, ((e.nativeEvent.clientX - rect.left) / rect.width) * 100)
     })
   }
 
@@ -44,6 +44,7 @@ class BiasMeter extends Component {
       float: "left",
       marginRight: "10px",
       textAlign: "right",
+      transition: "0.15s",
     }
 
     return (

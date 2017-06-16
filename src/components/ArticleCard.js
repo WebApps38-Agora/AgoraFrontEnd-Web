@@ -34,7 +34,7 @@ class ArticleCard extends Component {
       }
 
       return (
-        <Card id={this.props.id} className="article" raised link fluid >
+        <Card id={this.props.id} className="article" raised fluid >
             <Card.Content href={article.url} rel="noopener noreferrer" target="_blank" >
               <Image floated='left' src={source.url_logo} />
               <Card.Header>
