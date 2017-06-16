@@ -18,7 +18,7 @@ import {
   RECEIVE_PROFILE, ADD_PROFILE_RESPONSE, HANDLE_PROFILE_ERROR
 } from '../actions/ProfileActions'
 import {
-  REQUEST_TAGS, RECEIVE_TAGS, FILTER_BY_TAG
+  REQUEST_TAGS, RECEIVE_TAGS, FILTER_BY_TAG, RECEIVE_TOPICS_FOR_TAG
 } from '../actions/TagActions'
 
 import Globals from '../globals'
@@ -119,17 +119,20 @@ export function topics(state = {}, action) {
         isFetching: {$set: true}
       })
 
+    case RECEIVE_TOPICS_FOR_TAG:
     case RECEIVE_TOPICS:
       let topics = state.items
       action.topics.forEach((topic) => {
-          topics.push(createTopic(topic, false))
+          console.log("pushing topic")
+          console.log(createTopic(topic, false))
+          topics[topic.id] = createTopic(topic, false)
         }
       )
 
       return update(state, {
         isFetching: {$set: false},
         loaded: {$set: true},
-        items: {$set: topics},
+        items: {$merge: topics},
         nextPage: {$set: action.nextPage}
       })
 
@@ -200,6 +203,9 @@ export function topics(state = {}, action) {
       })
 
     case REQUEST_METRICS: {
+      console.log("in reducer 2")
+      console.log(action)
+      console.log(state.items[action.topic])
       return update(state, {
         items: {
           [action.topic]: {
@@ -219,6 +225,7 @@ export function topics(state = {}, action) {
 
       console.log("in reducer")
       console.log(action)
+      console.log(state.items[action.topic])
       return update(state, {
         items: {
           [action.topic]: {

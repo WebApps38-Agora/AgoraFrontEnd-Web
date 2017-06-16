@@ -44,7 +44,7 @@ class ArticleCard extends Component {
             </Card.Content>
           {!article.metrics.isFetching &&
           <Card.Content extra style={{padding: 0}}>
-            <BiasMeter article={article} />
+            <BiasMeter topic={this.props.topic} article={article} />
           </Card.Content>}
         </Card>)
     } else {

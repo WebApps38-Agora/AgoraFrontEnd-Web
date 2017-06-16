@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { fetchTopicsIfNeeded, fetchMoreTopics } from '../actions/RootActions'
-import { fetchTags, filterByTag } from '../actions/TagActions'
-import { Visibility, Sidebar, Segment, Label, Menu } from 'semantic-ui-react'
+import { fetchTags, filterByTag, fetchTopicsForTag } from '../actions/TagActions'
+import { Visibility, Sidebar, Segment, Label, Menu, List, Button } from 'semantic-ui-react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import TopicIndexTile from './TopicIndexTile'
 import Missing from './Missing'
@@ -24,6 +24,7 @@ class TopicIndex extends Component {
   }
 
   handleTagClick(e, tag) {
+    this.props.dispatch(fetchTopicsForTag(tag))
     this.props.dispatch(filterByTag(tag))
   }
 
@@ -37,10 +38,7 @@ class TopicIndex extends Component {
 
       if (this.props.tags.currentFilter) {
         this.props.topics.items.forEach((topic, index) => {
-          console.log("topics in current tag")
-          console.log(topic.id)
-          console.log(this.props.tags.items[this.props.tags.currentFilter].topics)
-          if (this.props.tags.items[this.props.tags.currentFilter].topics.includes(topic.id)) {
+          if (topic.tag_set.includes(this.props.tags.currentFilter)) {
             topics[topic.id] = topic
           }
         })
@@ -88,22 +86,26 @@ class TopicIndex extends Component {
     let tags = null
     if (!this.props.tags.isFetching) {
       tags = this.props.tags.items.map((tag, index) =>
-        <a>
-          <Label onClick={(e) => this.handleTagClick(e, tag.id)} key={index}>{tag.name}</Label>
-        </a>
+        <List.Item>
+          <List.Content>
+            <Button onClick={(e) => this.handleTagClick(e, tag.id)} key={index}>{tag.name}</Button>
+          </List.Content>
+        </List.Item>
       )
     }
 
     return (<div>
       <Sidebar.Pushable as={Segment}>
           <Sidebar as={Menu} animation='push' width='thin' visible icon='labeled' vertical>
-            {tags}
+            <List>
+              {tags}
+            </List>
           </Sidebar>
           <Sidebar.Pusher>
-      {grid}
-      <Visibility className="topic-index-bottom" onOnScreen={this.handleScrollBottom} once={false}>
-        {footer}
-      </Visibility>
+            {grid}
+            <Visibility className="topic-index-bottom" onOnScreen={this.handleScrollBottom} once={false}>
+              {footer}
+            </Visibility>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
     </div>);

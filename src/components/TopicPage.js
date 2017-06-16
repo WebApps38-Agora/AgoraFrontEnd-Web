@@ -72,6 +72,8 @@ class TopicPage extends Component {
 
   render() {
     if (!this.props.isFetching) {
+      console.log("AAAAAAAAAAAAAAAAAAAAAAAAA")
+      console.log(this.props.topic.article_set)
       let cards = this.props.topic.article_set.map((article, index) =>
         <List.Item key={index}>
           <ArticleCard

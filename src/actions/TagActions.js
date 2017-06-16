@@ -16,6 +16,23 @@ export function receiveTags(json) {
   }
 }
 
+export const REQUEST_TOPICS_FOR_TAG = 'REQUEST_TOPICS_FOR_TAG'
+export function requestTopicsForTag(tag) {
+  return {
+    type: REQUEST_TOPICS_FOR_TAG,
+    tag,
+  }
+}
+
+export const RECEIVE_TOPICS_FOR_TAG = 'RECEIVE_TOPICS_FOR_TAG'
+export function receiveTopicsForTag(json) {
+  return {
+    type: RECEIVE_TOPICS_FOR_TAG,
+    topics: json.topics,
+    nextPage: json.next,
+  }
+}
+
 export const FILTER_BY_TAG = 'FILTER_BY_TAG'
 export function filterByTag(tag) {
   return {
@@ -29,5 +46,13 @@ export function fetchTags() {
     dispatch(requestTags())
   }, (dispatch, getState, response) => {
     dispatch(receiveTags(response))
+  })
+}
+
+export function fetchTopicsForTag(tag) {
+  return ActionsHelper.sendGet('/tags/' + tag + '/', (dispatch) => {
+    dispatch(requestTopicsForTag())
+  }, (dispatch, getState, response) => {
+    dispatch(receiveTopicsForTag(response))
   })
 }
