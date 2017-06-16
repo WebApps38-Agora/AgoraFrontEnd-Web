@@ -39,9 +39,9 @@ class CommentSection extends Component {
       return this.makeComment(child, [...parents, comment])
     })
 
-    console.log("parents")
-    console.log(this.props.topic.reply_to_comment)
-    console.log([...Object.keys(parents), comment.id])
+    
+    
+    
     const replyInput = arraysEqual(this.props.topic.reply_to_comment, [...Object.keys(parents), comment.id]) ?
       "replying"
     : null
@@ -81,7 +81,7 @@ class CommentSection extends Component {
   }
 
   updateTextAreaSize(height) {
-    console.log(height);
+    
     this.setState({textAreaHeight: height + 20});
   }
 

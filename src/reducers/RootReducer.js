@@ -11,6 +11,9 @@ import {
 import {
   SELECT_TOPIC, REQUEST_TOPIC, RECEIVE_TOPIC
 } from '../actions/TopicActions'
+import {
+  REQUEST_METRICS, RECEIVE_METRICS, RATE_BIAS_RECEIVE
+} from '../actions/MetricsActions'
 
 import Globals from '../globals'
 
@@ -30,6 +33,17 @@ export function loginKey(state = false, action) {
     default:
       return state
   }
+}
+
+const findArticleIndex = (article_set, article_id) => {
+  let found_index = -1;
+  article_set.forEach((article, index) => {
+    if (article.id === article_id) {
+
+      found_index = index
+    }
+  })
+  return found_index
 }
 
 const createTopic = (topic, deep) => {
@@ -57,6 +71,9 @@ const createTopic = (topic, deep) => {
     ...extra,
     isFetching: false,
     url: `${Globals.BACKEND_URL}/topics/${topic.id}/`,
+    metrics: {
+      isFetching: false
+    }
   }
 }
 
@@ -140,6 +157,49 @@ export function topics(state = {}, action) {
           }
         }
       })
+
+    case REQUEST_METRICS: {
+      return update(state, {
+        items: {
+          [action.topic]: {
+            article_set: {
+              [findArticleIndex(state.items[action.topic].article_set, action.article)]: {
+                metrics: {
+                  isFetching: {$set: true}
+                }
+              }
+            }
+          }
+        }
+      })
+    }
+
+    case RECEIVE_METRICS: {
+
+      console.log("in reducer")
+      console.log(action)
+      return update(state, {
+        items: {
+          [action.topic]: {
+            article_set: {
+              [findArticleIndex(state.items[action.topic].article_set, action.article)]: {
+                metrics: {$set: action.metrics}
+              }
+            }
+          }
+        }
+      })
+    }
+
+    case RATE_BIAS_RECEIVE: {
+      return update(state, {
+        items: {
+          [action.topic]: {
+            metrics: {$set: action.metrics}
+          }
+        }
+      })
+    }
 
     default:
       return state

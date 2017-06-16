@@ -14,7 +14,6 @@ import ReactHeight from 'react-height'
 import Infinite from 'react-infinite'
 
 var moment = require('moment');
-var MediaQuery = require('react-responsive');
 
 class TopicPage extends Component {
   constructor(props) {
@@ -33,7 +32,6 @@ class TopicPage extends Component {
   }
 
   setTitleHeight(titleHeight) {
-    console.log(titleHeight);
     this.setState({titleHeight: titleHeight});
   }
 
@@ -62,10 +60,14 @@ class TopicPage extends Component {
 
   render() {
     if (!this.props.isFetching) {
-      console.log(this.props.topic)
       let cards = this.props.topic.article_set.map((article, index) =>
         <List.Item key={index}>
-          <ArticleCard id={index} article={article} handleStepClick={this.handleStepClick}/>
+          <ArticleCard
+            topic={this.props.topic}
+            id={index}
+            article={article}
+            handleStepClick={this.handleStepClick}
+          />
         </List.Item>
       )
 

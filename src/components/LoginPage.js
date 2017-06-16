@@ -14,11 +14,11 @@ class LoginPage extends Component {
       isLoggedIn: false
     };
     Cookies.set('name', 'value', {expires : 365})
-    console.log(Cookies.get('name'))
+    
   }
 
   handleResponse = (data) => {
-    console.log(data);
+    
     this.setState({
       first_name: data.profile.first_name,
       gender: data.profile.gender,
@@ -52,7 +52,7 @@ class LoginPage extends Component {
 
 
   handleError = (error) => {
-    console.log(error)
+    
     this.setState({ error });
   }
 

@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
+import {connect} from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Menu, Image } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
 
-export default class AppHeader extends Component {
+class AppHeader extends Component {
   render() {
     return (
-      <Menu id="app-header" fixed="top" size="massive" borderless={true} inverted>
+      <Menu id="app-header" fixed="top" size="massive" borderless={true} inverted >
         <Menu.Item as={Link} to="/">
           <img src={require("../images/agora_logo.png")} alt="logo" />
         </Menu.Item>
@@ -27,3 +28,11 @@ export default class AppHeader extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    topic: state.topics.items[state.selectedTopic] || {}
+  }
+}
+
+export default connect(mapStateToProps)(AppHeader)

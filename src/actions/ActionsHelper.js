@@ -3,8 +3,8 @@ import fetch from 'isomorphic-fetch'
 
 class ActionsHelper {
   fetchWithMethod(method, endpoint, beforeRequest, afterRequest, postBody) {
-    console.log('Sending ' + method + ' to ' + endpoint + ' with body:')
-    console.log(postBody)
+
+
 
     return (dispatch, getState) => {
       beforeRequest(dispatch, getState)
@@ -30,9 +30,11 @@ class ActionsHelper {
         //   console.error('POST ERROR: Received status ' + response.status + ' from ' + endpoint + ' with body:')
         //   console.error(response.json())
         // }
+
         return response.json()
       })
       .then(json => {
+
         afterRequest(dispatch, getState, json)
       })
       .catch(error => {
