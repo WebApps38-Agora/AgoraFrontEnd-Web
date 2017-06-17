@@ -1,7 +1,7 @@
 import thunkMiddleware from 'redux-thunk'
 import { createStore, applyMiddleware, compose, combineReducers} from 'redux'
-import { profileWarnings, loginKey, selectedTopic, topics, myProfile, profiles } from './reducers/RootReducer'
-import { fetchProfile } from './actions/ProfileActions'
+import { loginKey, selectedTopic, topics, myProfile, profiles, tags, profileWarnings } from './reducers/RootReducer'
+import { fetchProfileIfLoggedIn } from './actions/ProfileActions'
 import Cookies from 'js-cookie'
 
 const login_key = Cookies.get('login_key') || false
@@ -16,7 +16,12 @@ const preloadedState = {
     nextPage: ""
   },
   myProfile: 0,
-  profiles: []
+  profiles: [],
+  tags: {
+    isFetching: false,
+    filterByTag: false,
+    items: []
+  }
 }
 
 const rootReducer = combineReducers({
@@ -25,7 +30,8 @@ const rootReducer = combineReducers({
   selectedTopic,
   topics,
   myProfile,
-  profiles
+  profiles,
+  tags
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
@@ -40,8 +46,8 @@ let store = createStore(
   )
 );
 
-store.dispatch(fetchProfile())
+store.dispatch(fetchProfileIfLoggedIn())
 
 export default function configureStore() {
-  return store
+  return store;
 }

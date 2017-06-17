@@ -3,6 +3,7 @@ import React, { Component} from 'react';
 import ReactDOM from 'react-dom'
 import MapGL from 'react-map-gl';
 import DeckGLOverlay from './deckgl-overlay.js';
+import Dimensions from 'react-dimensions'
 
 // Set your mapbox token here
 const MAPBOX_TOKEN = "pk.eyJ1IjoiY2hhd2ttIiwiYSI6ImNqM3o3emRzbzAwY28zMW41NnJkcnlyc3oifQ.M_UwGN_kUOOScXtqTs6vSA"; // eslint-disable-line
@@ -61,15 +62,13 @@ const data = [
  [-0.061827, 51.526741],
  [-0.023300, 51.527537]]
 
-export default class MapApp extends Component {
+class MapApp extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       viewport: {
-        ...DeckGLOverlay.defaultViewport,
-        width: 300,
-        height: 300
+        ...DeckGLOverlay.defaultViewport
       },
       data: null
     };
@@ -77,19 +76,19 @@ export default class MapApp extends Component {
   }
 
   componentWillMount() {
-    this.setState({data});
+    // this.setState({data});
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this._resize.bind(this));
+    // window.addEventListener('resize', this._resize.bind(this));
     // this._resize();
   }
 
   _resize() {
-    this._onChangeViewport({
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
+    // this._onChangeViewport({
+    //   width: window.innerWidth,
+    //   height: window.innerHeight
+    // });
   }
 
   _onChangeViewport(viewport) {
@@ -99,20 +98,30 @@ export default class MapApp extends Component {
   }
 
   render() {
-    const {viewport, data} = this.state;
+    // todo above but in parent which is statssection
+    console.log(this.props.containerHeight);
+    console.log(data);
+    const viewport =  {
+      ...this.state.viewport,
+      width: this.props.containerWidth,
+      height: this.props.containerHeight
+    }
 
     return (
-      <MapGL
-        {...viewport}
-        mapStyle="mapbox://styles/mapbox/dark-v9"
-        perspectiveEnabled={true}
-        onChangeViewport={this._onChangeViewport.bind(this)}
-        mapboxApiAccessToken={MAPBOX_TOKEN}>
-        <DeckGLOverlay
-          viewport={viewport}
-          data={data || []}
-        />
-      </MapGL>
+      <div>
+        <MapGL
+          {...viewport}
+          mapStyle="mapbox://styles/mapbox/dark-v9"
+          perspectiveEnabled={true}
+          onChangeViewport={this._onChangeViewport.bind(this)}
+          mapboxApiAccessToken={MAPBOX_TOKEN}>
+          <DeckGLOverlay
+            viewport={viewport}
+            data={data || []}
+          />
+        </MapGL>
+      </div>
     );
   }
 }
+export default Dimensions()(MapApp)

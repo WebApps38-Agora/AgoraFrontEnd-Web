@@ -1,6 +1,6 @@
 class Globals {
   constructor() {
-    const DEBUG = true
+    const DEBUG = (document.location.hostname === "localhost")
 
     const BACKEND_URL_DEV = 'http://localhost:8000'
     const BACKEND_URL_PROD = 'https://agora-be.herokuapp.com'

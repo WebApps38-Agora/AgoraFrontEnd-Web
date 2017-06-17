@@ -11,7 +11,7 @@ class TopicViews extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeItem: 'facts',
+      activeItem: 'discussion',
     }
   }
 

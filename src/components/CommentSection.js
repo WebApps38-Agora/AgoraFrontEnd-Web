@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Segment, Button, Comment, Form, Icon } from 'semantic-ui-react'
+import { Segment, Button, Comment, Form } from 'semantic-ui-react'
 import Textarea from 'react-textarea-autosize';
 import '../style/Views.css';
 import '../style/CommentSection.css';
@@ -39,9 +39,9 @@ class CommentSection extends Component {
       return this.makeComment(child, [...parents, comment])
     })
 
-    console.log("parents")
-    console.log(this.props.topic.reply_to_comment)
-    console.log([...Object.keys(parents), comment.id])
+
+
+
     const replyInput = arraysEqual(this.props.topic.reply_to_comment, [...Object.keys(parents), comment.id]) ?
       "replying"
     : null
@@ -94,7 +94,7 @@ class CommentSection extends Component {
 
     if (!comments.length) {
       comments = (<Missing icon="comments" icon_size="massive"
-                           header="No comments on this topic!"
+                           header="No comments on this topic."
                            description="Start the discussion on this topic by writing a comment below." />);
     }
 

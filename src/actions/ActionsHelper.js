@@ -7,6 +7,7 @@ class ActionsHelper {
     console.log(postBody)
 
     return (dispatch, getState) => {
+      console.log("doing action")
       beforeRequest(dispatch, getState)
 
       let config = {
@@ -20,15 +21,18 @@ class ActionsHelper {
         config.body = JSON.stringify(postBody)
       }
 
+      console.log(getState());
+
       if (getState().loginKey) {
         config.headers.append('Authorization', 'Token ' + getState().loginKey)
       }
 
       let trueURL = ((isEntireURL) ? "" : Globals.BACKEND_URL) + endpoint;
-      console.log(endpoint);
 
+      console.log("about to fech to " + trueURL)
       return fetch(trueURL, config)
       .then(response => {
+        console.log(response);
         return response.json()
       })
       .then(json => {
@@ -46,6 +50,10 @@ class ActionsHelper {
 
   sendPost(endpoint, beforeRequest, afterRequest, postBody, errorHandler = this.defErrorHandler) {
     return this.fetchWithMethod('post', endpoint, false, beforeRequest, afterRequest, errorHandler, postBody)
+  }
+
+  sendPut(endpoint, beforeRequest, afterRequest, postBody, errorHandler = this.defErrorHandler) {
+    return this.fetchWithMethod('put', endpoint, false, beforeRequest, afterRequest, errorHandler, postBody)
   }
 
   sendGet(endpoint, beforeRequest, afterRequest, errorHandler = this.defErrorHandler) {

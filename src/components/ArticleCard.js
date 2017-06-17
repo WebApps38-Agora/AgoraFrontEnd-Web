@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Card, Image } from 'semantic-ui-react';
+
+import BiasMeter from './BiasMeter'
 import '../style/Article.css';
 
 var moment = require('moment');
@@ -19,7 +21,7 @@ class ArticleCard extends Component {
   }
 
   render() {
-    if (this.props.article && this.state.isLoaded) {
+    if (this.props.article) {
       let article = this.props.article;
       let source  = this.props.article.source;
 
@@ -32,40 +34,45 @@ class ArticleCard extends Component {
       }
 
       return (
-       <a href={article.url} target="_blank" rel="noopener noreferrer">
-        <Card id={this.props.id} className="article" raised link fluid >
-          <Card.Content>
+        <Card id={this.props.id} className="article" raised fluid >
+            <Card.Content href={article.url} rel="noopener noreferrer" target="_blank" >
               <Image floated='left' src={source.url_logo} />
               <Card.Header>
                   {article.headline}
                   {article_time}
               </Card.Header>
-          </Card.Content>
-        </Card>
-      </a>)
+            </Card.Content>
+          {!article.metrics.isFetching &&
+          <Card.Content extra style={{padding: 0}}>
+            <BiasMeter topic={this.props.topic} article={article} />
+          </Card.Content>}
+        </Card>)
     } else {
-      var style;
+      var style = this.props.style || {};
       if (this.state.center) {
-        style = {
-          textAlign: "center",
-          borderBottom: "5px solid var(--app-snd-color)"
-          };
+        style.textAlign= "center"
+        style.borderBottom = "5px solid var(--app-snd-color)"
       } else {
-        style = {
-          display: "block",
-          padding: 2 +"rem",
-          borderBottom: "5px solid var(--app-snd-color)"
-        };
+        style.display = "block"
+        style.padding = 2 + "rem"
+        style.borderBottom = "5px solid var(--app-snd-color)"
       }
+
       return (
-      <Card id={-1} raised fluid >
+      <Card id={-1} raised fluid>
         <Card.Content style={style}>
           <Card.Header className="non-article">
-            {this.state.title}
+            {this.props.title}
           </Card.Header>
           <Card.Description>
-            <div style={{float: "right"}}>{this.state.right_subtitle}</div>
-            {this.state.left_subtitle}
+            {/* <div style={{float: "left"}}>
+              <Label style={{float: "left"}} as='a' color='orange' ribbon="left">{this.state.right_subtitle}</Label>
+            </div>
+            <div>
+              <Label style={{}} as='a' color='orange' ribbon="right">{this.state.left_subtitle}</Label>
+            </div> */}
+            <div style={{float: "right"}}>{this.props.right_subtitle}</div>
+            {this.props.left_subtitle}
           </Card.Description>
         </Card.Content>
       </Card>)

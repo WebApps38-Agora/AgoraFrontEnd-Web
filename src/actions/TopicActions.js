@@ -1,4 +1,5 @@
 import ActionsHelper from './ActionsHelper'
+import { fetchMetrics } from './MetricsActions'
 
 export const SELECT_TOPIC = 'SELECT_TOPIC'
 export function selectTopic(topic) {
@@ -24,10 +25,21 @@ export function receiveTopic(json) {
   }
 }
 
+export function fetchMetricsForTopic(topic) {
+  return (dispatch, getState) => {
+
+
+    getState().topics.items[topic].article_set.forEach((article) => {
+      dispatch(fetchMetrics(topic, article.id))
+    })
+  }
+}
+
 export function fetchTopic(topic) {
   return ActionsHelper.sendGet(`/topics/${topic}/`, (dispatch) => {
     dispatch(requestTopic(topic))
   }, (dispatch, getState, response) => {
     dispatch(receiveTopic(response))
+    dispatch(fetchMetricsForTopic(topic))
   })
 }
