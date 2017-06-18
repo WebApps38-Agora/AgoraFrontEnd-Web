@@ -80,8 +80,7 @@ class TopicIndex extends Component {
       )
     }
 
-    return (<div>
-      <Sidebar.Pushable as={Segment}>
+    return (<Sidebar.Pushable as={Segment}>
           <Sidebar as={Menu} animation='push' width='thin' visible icon='labeled' vertical>
             <List>
               {tags}
@@ -93,8 +92,7 @@ class TopicIndex extends Component {
               {footer}
             </Visibility>
           </Sidebar.Pusher>
-        </Sidebar.Pushable>
-    </div>);
+        </Sidebar.Pushable>);
   }
 }
 

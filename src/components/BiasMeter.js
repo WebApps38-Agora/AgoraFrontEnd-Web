@@ -13,7 +13,7 @@ class BiasMeter extends Component {
 
     super(props)
     this.state = {
-      bias: this.props.article.metrics.bias
+      bias: this.props.article.metrics.bias || 0
     }
 
   }
