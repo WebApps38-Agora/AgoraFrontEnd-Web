@@ -67,7 +67,7 @@ class CommentSection extends Component {
         <Comment.Content>
           <Comment.Author as='a' href='/profile/'>{profile.first_name} {profile.last_name}</Comment.Author>
           <Comment.Metadata>
-            <Label color='green'>Left-wing Liberal</Label>
+            <Label color={profile.political_color}>{profile.political_stance}</Label>
           </Comment.Metadata>
           <Comment.Text>
             <p>{comment.content}</p>
