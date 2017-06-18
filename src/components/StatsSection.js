@@ -17,7 +17,7 @@ class StatsSection extends Component {
       <div style={{width: '100%', height: '100%'}}>
         <Grid>
             <Col className="grid-tile" xs={12} sm={4}>
-              <Statistic.Group  color='teal' widths={1}>
+              <Statistic.Group  color='orange' widths={1}>
                 <Statistic>
                   <Statistic.Value>
                     <Motion defaultStyle={{vs: 0}}
@@ -33,7 +33,7 @@ class StatsSection extends Component {
               </Statistic.Group>
             </Col>
             <Col className="grid-tile" xs={12} sm={4}>
-              <Statistic.Group color='teal' widths={1}>
+              <Statistic.Group color='orange' widths={1}>
                 <Statistic>
                   <Statistic.Value>
                     <Motion defaultStyle={{vs: 0}}
@@ -48,7 +48,7 @@ class StatsSection extends Component {
               </Statistic.Group>
             </Col>
             <Col className="grid-tile" xs={12} sm={4}>
-              <Statistic.Group color='teal' widths={1}>
+              <Statistic.Group color='orange' widths={1}>
                 <Statistic>
                   <Statistic.Value>
                     <Motion defaultStyle={{vs: 0}}
