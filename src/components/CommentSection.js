@@ -6,6 +6,7 @@ import '../style/Views.css';
 import '../style/CommentSection.css';
 import * as actions from '../actions/CommentActions'
 import Missing from './Missing'
+var moment = require('moment')
 
 function arraysEqual(arr1, arr2) {
     if (!arr1 || !arr2) return false
@@ -39,20 +40,19 @@ class CommentSection extends Component {
       return this.makeComment(child, [...parents, comment])
     })
 
-
-
-
     const replyInput = arraysEqual(this.props.topic.reply_to_comment, [...Object.keys(parents), comment.id]) ?
       "replying"
     : null
 
+    const profile = this.props.profiles[comment.owner_profile]
+
     return (
       <Comment key={comment.id}>
-        <Comment.Avatar src='http://www.ruralagriventures.com/wp-content/uploads/2017/05/man-team.jpg' />
+        <Comment.Avatar src={profile.profile_picture} />
         <Comment.Content>
-          <Comment.Author as='a'>Elliot</Comment.Author>
+          <Comment.Author as='a'>{profile.first_name} {profile.last_name}</Comment.Author>
           <Comment.Metadata>
-            <div>{comment.published_at}</div>
+            <div>{moment(comment.published_at).fromNow()}</div>
           </Comment.Metadata>
           <Comment.Text>
             <p>{comment.content}</p>

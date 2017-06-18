@@ -95,7 +95,7 @@ class TopicPage extends Component {
                              left_subtitle={moment(this.props.topic.published_at).fromNow()} />
                 </ReactHeight>
               </div>
-              <TopicViews isFetching={this.props.isFetching} topic={this.props.topic} titleHeight={this.state.titleHeight} />
+              <TopicViews isFetching={this.props.isFetching} topic={this.props.topic} titleHeight={this.state.titleHeight} profiles={this.props.profiles} />
             </Col>
 
             <ReactHeight style={{height: "calc(100% - 51px - 2rem)"}} onHeightReady={ height => this.setState({ height: height }) }>
@@ -119,7 +119,8 @@ const mapStateToProps = (state) => {
                 || !(state.selectedTopic in state.topics.items)
                 || state.topics.items[state.selectedTopic].isFetching,
     topic: state.topics.items[state.selectedTopic] || {},
-    nextPage: state.topics.nextPage
+    nextPage: state.topics.nextPage,
+    profiles: state.profiles
   }
 }
 

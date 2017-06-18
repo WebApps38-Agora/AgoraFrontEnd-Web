@@ -28,7 +28,7 @@ class TopicViews extends Component {
         content = <FactSection isFetching={this.props.isFetching} topic={this.props.topic}/>
         break;
       case 'discussion':
-        content = <CommentSection isFetching={this.props.isFetching} topic={this.props.topic}/>
+        content = <CommentSection profiles={this.props.profiles} isFetching={this.props.isFetching} topic={this.props.topic}/>
         break;
       case 'stats':
       default:
