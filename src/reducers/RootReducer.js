@@ -80,10 +80,6 @@ const findArticleIndex = (article_set, article_id) => {
   return found_index
 }
 
-const getTopicIndexById = (norm, id) => {
-  norm.result.forEach()
-}
-
 export function profileWarnings(state = false, action) {
   switch (action.type) {
     case ADD_PROFILE_WARNING:
@@ -127,6 +123,7 @@ const createTopic = (topic, deep) => {
 }
 
 export function topics(state = {}, action) {
+
   switch (action.type) {
     case REQUEST_TOPICS:
       return update(state, {
@@ -135,24 +132,21 @@ export function topics(state = {}, action) {
 
     case RECEIVE_TOPICS_FOR_TAG:
     case RECEIVE_TOPICS:
-      // denormalize items to get real topic data
       let topics = state.items
+      // set default
       if (!state.items.result) {
-        topics = { result: [], entities: {} }
+        topics = { result: [] }
       }
-      // let topics = denormalize(state.items.result, topicListSchema, state.items.entities) || []
-      // concatinate received topics
+
       action.topics.forEach((topic, index) => {
         // if the topic already exists, don't change its ordering
-        if (!topics.entities[topic.id]) {
+        if (!topics[topic.id]) {
           topics.result.push(topic.id)
         }
-        topics.entities[topic.id] = topic
+        topics[topic.id] = createTopic(topic, false)
       })
-      // console.log("RECEIVE_TOPICS");
-      // console.log(topics);
-      // topics = topics.concat(action.topics)
-      // topics = normalize(topics, topicListSchema)
+
+      console.log(topics);
 
       return update(state, {
         isFetching: {$set: false},
@@ -191,7 +185,7 @@ export function topics(state = {}, action) {
     case RECEIVE_TOPIC:
       return update(state, {
         items: {
-          $merge: {[action.topic.id]: createTopic(action.topic, true)}
+          $merge: { [action.topic.id]: createTopic(action.topic, true) }
         }
       })
 

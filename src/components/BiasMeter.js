@@ -10,12 +10,10 @@ import { sendRateBiasRequest } from '../actions/MetricsActions'
 class BiasMeter extends Component {
 
   constructor(props) {
-
     super(props)
     this.state = {
-      bias: this.props.article.metrics.bias || 0
+      bias: this.props.article.metrics.bias
     }
-
   }
 
   handleMove(e) {

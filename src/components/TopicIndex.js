@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import VisibilitySensor from 'react-visibility-sensor';
 import { fetchTopicsIfNeeded, fetchMoreTopics } from '../actions/RootActions'
 import { fetchTags, filterByTag, fetchTopicsForTag } from '../actions/TagActions'
 import { Visibility, Menu, Button, Segment, List, Sidebar, Loader, Dimmer } from 'semantic-ui-react'
@@ -40,17 +41,15 @@ class TopicIndex extends Component {
 
       if (this.props.tags.currentFilter) {
         this.props.topics.items.result.forEach((topic_id, index) => {
-          let topic = this.props.topics.items.entities[topic_id]
+          let topic = this.props.topics.items[topic_id]
           if (topic.tag_set.includes(this.props.tags.currentFilter)) {
-            topics.entities[topic.id] = topic
+            topics[topic.id] = topic
             topics.result.push(topic.id)
           }
         })
       } else {
         topics = this.props.topics.items
       }
-
-      console.log(topics);
 
       const numTopics = topics.result.length
 
