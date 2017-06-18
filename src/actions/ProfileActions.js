@@ -52,8 +52,18 @@ export function handleProfileError(error) {
   }
 }
 
-export function fetchProfile() {
-  return ActionsHelper.sendGet('/profiles', (dispatch) => {
+export function fetchUserProfile(profile_id) {
+  return ActionsHelper.sendGet(`/profiles/${profile_id}/`, (dispatch) => {
+    dispatch(requestProfile())
+  }, (dispatch, getState, response) => {
+    dispatch(receiveProfile(response))
+  }, (dispatch, getState, error) => {
+    dispatch(handleProfileError(error))
+  })
+}
+
+export function fetchCurrentProfile() {
+  return ActionsHelper.sendGet('/profiles/', (dispatch) => {
     dispatch(requestProfile())
   }, (dispatch, getState, response) => {
     dispatch(receiveProfile(response))
@@ -65,7 +75,7 @@ export function fetchProfile() {
 export function fetchProfileIfLoggedIn() {
   return (dispatch, getState) => {
     if (getState().loginKey) {
-      dispatch(fetchProfile())
+      dispatch(fetchCurrentProfile())
     }
   }
 }

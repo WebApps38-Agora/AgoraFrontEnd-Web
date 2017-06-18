@@ -14,7 +14,7 @@ class AppHeader extends Component {
                              onClick={this.openLogin}
                              position="right" />);
 
-    if (this.props.isLoggedIn) {
+    if (this.props.myProfile) {
       profile_logo = (<Menu.Item as={Link}
                                  id="profile-logo"
                                  to='/profile'
@@ -38,7 +38,7 @@ class AppHeader extends Component {
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.loginKey,
-    myProfile: state.myProfile
+    myProfile: state.profiles[state.myProfile]
   }
 }
 

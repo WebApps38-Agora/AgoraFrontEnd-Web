@@ -71,7 +71,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     loginKey: state.loginKey,
     profileWarnings: state.profileWarnings,
-    myProfile: state.myProfile,
+    myProfile: state.profiles[state.myProfile],
   }
 }
 

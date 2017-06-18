@@ -1,5 +1,6 @@
 import ActionsHelper from './ActionsHelper'
 import { fetchMetrics } from './MetricsActions'
+import { fetchUserProfile } from './ProfileActions'
 
 export const SELECT_TOPIC = 'SELECT_TOPIC'
 export function selectTopic(topic) {
@@ -27,10 +28,16 @@ export function receiveTopic(json) {
 
 export function fetchMetricsForTopic(topic) {
   return (dispatch, getState) => {
-
-
     getState().topics.items[topic].article_set.forEach((article) => {
       dispatch(fetchMetrics(topic, article.id))
+    })
+  }
+}
+
+export function fetchCommentProfilesForTopic(topic) {
+  return (dispatch, getState) => {
+    getState().topics.items[topic].comment_set.forEach((comment) => {
+      dispatch(fetchUserProfile(comment.owner_profile))
     })
   }
 }
@@ -41,5 +48,6 @@ export function fetchTopic(topic) {
   }, (dispatch, getState, response) => {
     dispatch(receiveTopic(response))
     dispatch(fetchMetricsForTopic(topic))
+    dispatch(fetchCommentProfilesForTopic(topic))
   })
 }

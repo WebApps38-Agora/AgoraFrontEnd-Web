@@ -12,11 +12,11 @@ const preloadedState = {
     loaded: false,
     isFetching: false,
     noMoreTopics: false,
-    items: [],
+    items: {},
     nextPage: ""
   },
   myProfile: 0,
-  profiles: [],
+  profiles: {},
   tags: {
     isFetching: false,
     filterByTag: false,

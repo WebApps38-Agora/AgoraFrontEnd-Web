@@ -214,9 +214,6 @@ export function topics(state = {}, action) {
       })
 
     case REQUEST_METRICS: {
-      console.log("in reducer 2")
-      console.log(action)
-      console.log(state.items[action.topic])
       return update(state, {
         items: {
           [action.topic]: {
@@ -233,10 +230,6 @@ export function topics(state = {}, action) {
     }
 
     case RECEIVE_METRICS: {
-
-      console.log("in reducer")
-      console.log(action)
-      console.log(state.items[action.topic])
       return update(state, {
         items: {
           [action.topic]: {
@@ -265,13 +258,10 @@ export function topics(state = {}, action) {
   }
 }
 
-export function myProfile(state = 0, action) {
+export function myProfile(state = -1, action) {
   switch (action.type) {
-    case RECEIVE_PROFILE:
-      return action.profile
-
     case ADD_PROFILE_RESPONSE:
-      return action.profile
+      return action.profile.id
 
     case HANDLE_PROFILE_ERROR:
       return action
@@ -280,8 +270,15 @@ export function myProfile(state = 0, action) {
   }
 }
 
-export function profiles(state = [], action) {
+export function profiles(state = {}, action) {
   switch (action.type) {
+    case RECEIVE_PROFILE:
+      return update(state, {
+        [action.profile.id]: {
+          $set: action.profile
+        }
+      })
+
     default:
       return state
   }
