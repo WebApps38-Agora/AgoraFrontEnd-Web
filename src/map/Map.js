@@ -2,8 +2,8 @@
 import React, {Component} from 'react';
 import MapGL from 'react-map-gl';
 import DeckGLOverlay from './deckgl-overlay.js';
+import Dimensions from 'react-dimensions'
 
-// Set your mapbox token here
 const MAPBOX_TOKEN = "pk.eyJ1IjoiY2hhd2ttIiwiYSI6ImNqM3o3emRzbzAwY28zMW41NnJkcnlyc3oifQ.M_UwGN_kUOOScXtqTs6vSA"; // eslint-disable-line
 
 const data = [
@@ -60,15 +60,15 @@ const data = [
  [-0.061827, 51.626741],
  [-0.023300, 51.627537]]
 
-export default class MapApp extends Component {
+class Map extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       viewport: {
         ...DeckGLOverlay.defaultViewport,
-        width: 300,
-        height: 300
+        width: this.props.containerWidth,
+        height: this.props.containerHeight
       },
       data: null
     };
@@ -83,8 +83,8 @@ export default class MapApp extends Component {
 
   _resize() {
     this._onChangeViewport({
-      width: window.innerWidth,
-      height: window.innerHeight
+      width: this.props.containerWidth,
+      height: this.props.containerHeight
     });
   }
 
@@ -112,3 +112,5 @@ export default class MapApp extends Component {
     );
   }
 }
+
+export default Dimensions()(Map)
