@@ -6,22 +6,34 @@ import 'semantic-ui-css/semantic.min.css';
 
 class AppHeader extends Component {
   render() {
-
-    let profile_logo = (<Menu.Item as={Link}
-                             id="login-logo"
-                             to='/login'
-                             icon="user outline"
-                             onClick={this.openLogin}
-                             position="right" />);
+    let profile_logo =
+      <Menu.Item
+         as={Link}
+         id="login-logo"
+         to='/login'
+         icon="user outline"
+         onClick={this.openLogin}
+         position="right" />
 
     if (this.props.myProfile) {
-      profile_logo = (<Menu.Item as={Link}
-                                 id="profile-logo"
-                                 to='/profile'
-                                 position="right">
-                        <Image src={this.props.myProfile.profile_picture} shape='circular' bordered/>
-                      </Menu.Item>);
+      profile_logo =
+        <Menu.Item
+           as={Link}
+           id="profile-logo"
+           to='/profile'
+           position="right">
+          <Image src={this.props.myProfile.profile_picture} shape='circular' bordered/>
+        </Menu.Item>
     }
+
+    let notifications =
+      <Menu.Item
+         as={Link}
+         id="login-logo"
+         to='/login'
+         icon="alarm outline"
+         onClick={this.openLogin}
+         position="right" />
 
 
     return (
@@ -29,6 +41,7 @@ class AppHeader extends Component {
         <Menu.Item as={Link} to="/">
           <img src={require("../images/agora_logo.png")} alt="logo" />
         </Menu.Item>
+        {notifications}
         {profile_logo}
       </Menu>
     )
