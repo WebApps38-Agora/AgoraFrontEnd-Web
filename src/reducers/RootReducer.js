@@ -119,6 +119,7 @@ const createTopic = (topic, deep) => {
 }
 
 export function topics(state = {}, action) {
+
   switch (action.type) {
     case REQUEST_TOPICS:
       return update(state, {
@@ -128,12 +129,19 @@ export function topics(state = {}, action) {
     case RECEIVE_TOPICS_FOR_TAG:
     case RECEIVE_TOPICS:
       let topics = state.items
-      action.topics.forEach((topic) => {
-          console.log("pushing topic")
-          console.log(createTopic(topic, false))
-          topics[topic.id] = createTopic(topic, false)
+      // set default
+      if (!state.items.result) {
+        topics = { result: [] }
+      }
+      action.topics.forEach((topic, index) => {
+        // if the topic already exists, don't change its ordering
+        if (!topics[topic.id]) {
+          topics.result.push(topic.id)
         }
-      )
+        topics[topic.id] = createTopic(topic, false)
+      })
+
+      console.log(topics);
 
       return update(state, {
         isFetching: {$set: false},
@@ -143,6 +151,7 @@ export function topics(state = {}, action) {
       })
 
     case HANDLE_TOPICS_ERROR:
+      console.error(action);
       return update(state, {
         isFetching: {$set: false},
         noMoreTopics: {$set: true}
@@ -169,9 +178,10 @@ export function topics(state = {}, action) {
       })
 
     case RECEIVE_TOPIC:
+      console.log(action);
       return update(state, {
         items: {
-          $merge: {[action.topic.id]: createTopic(action.topic, true)}
+          $merge: { [action.topic.id]: createTopic(action.topic, true) }
         }
       })
 
@@ -211,7 +221,7 @@ export function topics(state = {}, action) {
     case REQUEST_METRICS: {
       console.log("requesting metrics")
       console.log(action.topic)
-      console.log(action.article)
+      console.log(action)
       return update(state, {
         items: {
           [action.topic]: {

@@ -45,7 +45,7 @@ class TopicPage extends Component {
   }
 
   updateTitleHeight() {
-    if (this.title !== null) {
+    if (this.title.clientHeight !== 0) {
       console.log(this.title.clientHeight);
       this.setState({titleHeight: this.title.clientHeight})
     }

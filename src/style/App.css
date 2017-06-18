@@ -114,7 +114,7 @@ p {
 }
 
 .grid-tile {
-  padding: 0;
+  padding: 0.5rem;
   height: 100%;
 }
 

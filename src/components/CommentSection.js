@@ -62,28 +62,31 @@ class CommentSection extends Component {
     const profile = this.props.profiles[comment.owner_profile]
 
     return (
-      <Comment key={comment.id}>
-        <Comment.Avatar src={profile.profile_picture} />
-        <Comment.Content>
-          <Comment.Author as='a' href='/profile/'>{profile.first_name} {profile.last_name}</Comment.Author>
-          <Comment.Metadata>
-            <Label color={profile.political_color}>{profile.political_stance}</Label>
-          </Comment.Metadata>
-          <Comment.Text>
-            <p>{comment.content}</p>
-          </Comment.Text>
-          <Comment.Actions>
-            <div>{moment(comment.published_at).fromNow()}</div>
-            <Comment.Action onClick={(e) => this.handleClickReply(e, comment, parents)}>Reply</Comment.Action>
-          </Comment.Actions>
-        </Comment.Content>
-        {children.length > 0 || replyInput ?
-          <Comment.Group>
-            {children}
-            {replyInput}
-          </Comment.Group>
-        : null}
-      </Comment>
+      <div>
+        {profile &&
+        <Comment key={comment.id}>
+          <Comment.Avatar src={profile.profile_picture} />
+          <Comment.Content>
+            <Comment.Author as='a' href='/profile/'>{profile.first_name} {profile.last_name}</Comment.Author>
+            <Comment.Metadata>
+              <Label color={profile.political_color}>{profile.political_stance}</Label>
+            </Comment.Metadata>
+            <Comment.Text>
+              <p>{comment.content}</p>
+            </Comment.Text>
+            <Comment.Actions>
+              <div>{moment(comment.published_at).fromNow()}</div>
+              <Comment.Action onClick={(e) => this.handleClickReply(e, comment, parents)}>Reply</Comment.Action>
+            </Comment.Actions>
+          </Comment.Content>
+          {children.length > 0 || replyInput ?
+            <Comment.Group>
+              {children}
+              {replyInput}
+            </Comment.Group>
+          : null}
+        </Comment>}
+      </div>
     )
   }
 
@@ -99,6 +102,7 @@ class CommentSection extends Component {
 
   render() {
     let comments = []
+    console.log(this.props.comment_hierarchy);
     Object.keys(this.props.comment_hierarchy).forEach((id, index) => {
       comments.push(this.makeComment(this.props.comment_hierarchy[id], []))
     })

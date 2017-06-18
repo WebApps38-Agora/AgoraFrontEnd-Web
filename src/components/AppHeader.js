@@ -2,9 +2,22 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Menu, Image } from 'semantic-ui-react'
+import { filterByTag } from '../actions/TagActions'
 import 'semantic-ui-css/semantic.min.css';
 
 class AppHeader extends Component {
+
+  constructor(props) {
+    super(props)
+    this.handleLogoClick = this.handleLogoClick.bind(this)
+  }
+
+  handleLogoClick() {
+    if (this.props.isTagged) {
+      this.props.dispatch(filterByTag(false))
+    }
+  }
+
   render() {
     let profile_logo =
       <Menu.Item
@@ -38,7 +51,7 @@ class AppHeader extends Component {
 
     return (
       <Menu id="app-header" fixed="top" size="massive" borderless={true} inverted >
-        <Menu.Item as={Link} to="/">
+        <Menu.Item as={Link} to='/' onClick={this.handleLogoClick}>
           <img src={require("../images/agora_logo.png")} alt="logo" />
         </Menu.Item>
         {notifications}
@@ -51,7 +64,8 @@ class AppHeader extends Component {
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.loginKey,
-    myProfile: state.profiles[state.myProfile]
+    myProfile: state.profiles[state.myProfile],
+    isTagged: state.tags.filterByTag || false
   }
 }
 

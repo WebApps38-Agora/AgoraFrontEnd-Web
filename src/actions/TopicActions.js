@@ -28,9 +28,8 @@ export function receiveTopic(json) {
 
 export function fetchMetricsForTopic(topic) {
   return (dispatch, getState) => {
-    Object.keys(getState().topics.items[topic].article_set).forEach((id) => {
-      const article = getState().topics.items[topic].article_set[id]
-      dispatch(fetchMetrics(topic, article.id))
+    Object.keys(getState().topics.items[topic].article_set).forEach((article) => {
+      dispatch(fetchMetrics(topic, article))
     })
   }
 }
@@ -49,6 +48,8 @@ export function fetchTopic(topic) {
     dispatch(requestTopic(topic))
   }, (dispatch, getState, response) => {
     dispatch(receiveTopic(response))
+    console.log(topic);
+    console.log(getState().topics.items[topic]);
     dispatch(fetchMetricsForTopic(topic))
     dispatch(fetchCommentProfilesForTopic(topic))
   })

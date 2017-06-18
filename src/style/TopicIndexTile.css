@@ -1,30 +1,33 @@
 .topic-card {
-  height: calc(100% - 1rem);
-  /*max-height: 100%;*/
-  /*width: 100%;*/
-  /*max-width: 100%;*/
-  margin: 0.5rem;
+  height: 100%;
   background-position: center;
   background-size: cover;
-  -webkit-box-shadow:  1px 1px 3px rgba(0,0,0,.8);
-      -moz-box-shadow: 1px 1px 3px rgba(0,0,0,.8);
-           box-shadow: 1px 1px 3px rgba(0,0,0,.8);
-
-  -webkit-transition: all 0.3s ease;
-     -moz-transition: all 0.3s ease;
-       -o-transition: all 0.3s ease;
-      -ms-transition: all 0.3s ease;
-          transition: all 0.3s ease;
 }
 
 .topic-card:hover {
   cursor: pointer;
-  -webkit-box-shadow:  3px 3px 7px rgba(0,0,0,.8);
+  /*-webkit-box-shadow:  3px 3px 7px rgba(0,0,0,.8);
       -moz-box-shadow: 3px 3px 7px rgba(0,0,0,.8);
-           box-shadow: 3px 3px 7px rgba(0,0,0,.8);
+           box-shadow: 3px 3px 7px rgba(0,0,0,.8);*/
 }
 
-.topic-card-title, .topic-card:hover > .topic-card-title {
+.topic-card:after {
+  content: "";
+  position: absolute;
+  top: 0.5rem; bottom: 0.5rem; left: 0.5rem; right: 0.5rem;
+  opacity: 0;
+  -webkit-transition: 0.3s ease-in-out;
+          transition: 0.3s ease-in-out;
+  -webkit-box-shadow:  3px 3px 7px rgba(0,0,0,.6);
+      -moz-box-shadow: 3px 3px 7px rgba(0,0,0,.6);
+           box-shadow: 3px 3px 7px rgba(0,0,0,.6);
+}
+
+.topic-card:hover:after {
+  opacity: 1;
+}
+
+.topic-card-title {
   position: absolute;
   z-index: 6;
   bottom: 0.5rem;
