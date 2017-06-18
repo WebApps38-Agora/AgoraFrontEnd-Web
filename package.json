@@ -8,7 +8,6 @@
     "js-cookie": "^2.1.4",
     "material-ui": "^0.18.3",
     "moment": "^2.18.1",
-    "normalizr": "^3.2.3",
     "react": "^15.5.4",
     "react-bootstrap": "^0.31.0",
     "react-dom": "^15.5.4",

@@ -21,7 +21,8 @@ class TopicIndex extends Component {
   }
 
   handleScrollBottom() {
-    this.props.dispatch(fetchMoreTopics());
+    if (!this.props.tags.currentFilter)
+      this.props.dispatch(fetchMoreTopics());
   }
 
   handleTagClick(e, tag) {
@@ -35,17 +36,21 @@ class TopicIndex extends Component {
                     header="No topics left!" />
 
     if (this.props.loaded) {
-      let topics = {}
+      let topics = {result: [], entities: {}}
 
       if (this.props.tags.currentFilter) {
-        this.props.topics.items.forEach((topic, index) => {
+        this.props.topics.items.result.forEach((topic_id, index) => {
+          let topic = this.props.topics.items.entities[topic_id]
           if (topic.tag_set.includes(this.props.tags.currentFilter)) {
-            topics[topic.id] = topic
+            topics.entities[topic.id] = topic
+            topics.result.push(topic.id)
           }
         })
       } else {
         topics = this.props.topics.items
       }
+
+      console.log(topics);
 
       const numTopics = topics.result.length
 
@@ -72,7 +77,7 @@ class TopicIndex extends Component {
     let tags = null
     if (!this.props.tags.isFetching) {
       tags = this.props.tags.items.map((tag, index) =>
-        <List.Item>
+        <List.Item key={index}>
           <List.Content>
             <Button onClick={(e) => this.handleTagClick(e, tag.id)} key={index}>{tag.name}</Button>
           </List.Content>
@@ -81,19 +86,19 @@ class TopicIndex extends Component {
     }
 
     return (<div>
-        {/* <Sidebar.Pushable as={Segment}>
+        <Sidebar.Pushable>
            <Sidebar as={Menu} animation='push' width='thin' visible icon='labeled' vertical>
              <List>
                {tags}
              </List>
            </Sidebar>
-           <Sidebar.Pusher> */}
+           <Sidebar.Pusher>
             {grid}
             <Visibility className="topic-index-bottom" onOnScreen={this.handleScrollBottom} once={false}>
               {footer}
             </Visibility>
-            {/* </Sidebar.Pusher>
-          </Sidebar.Pushable> */}
+            </Sidebar.Pusher>
+          </Sidebar.Pushable>
           </div>
           );
 

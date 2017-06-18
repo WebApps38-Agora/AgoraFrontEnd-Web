@@ -22,7 +22,6 @@ import {
 } from '../actions/TagActions'
 
 import Globals from '../globals'
-import { denormalize, normalize, schema } from 'normalizr'
 
 export function selectedTopic(state = 0, action) {
   switch (action.type) {
@@ -128,9 +127,6 @@ const createTopic = (topic, deep) => {
 }
 
 export function topics(state = {}, action) {
-  const topicSchema     = new schema.Entity('topic')
-  const topicListSchema = new schema.Array(topicSchema)
-
   switch (action.type) {
     case REQUEST_TOPICS:
       return update(state, {
@@ -140,10 +136,23 @@ export function topics(state = {}, action) {
     case RECEIVE_TOPICS_FOR_TAG:
     case RECEIVE_TOPICS:
       // denormalize items to get real topic data
-      let topics = denormalize(state.items.result, topicListSchema, state.items.entities) || []
+      let topics = state.items
+      if (!state.items.result) {
+        topics = { result: [], entities: {} }
+      }
+      // let topics = denormalize(state.items.result, topicListSchema, state.items.entities) || []
       // concatinate received topics
-      topics = topics.concat(action.topics)
-      topics = normalize(topics, topicListSchema)
+      action.topics.forEach((topic, index) => {
+        // if the topic already exists, don't change its ordering
+        if (!topics.entities[topic.id]) {
+          topics.result.push(topic.id)
+        }
+        topics.entities[topic.id] = topic
+      })
+      // console.log("RECEIVE_TOPICS");
+      // console.log(topics);
+      // topics = topics.concat(action.topics)
+      // topics = normalize(topics, topicListSchema)
 
       return update(state, {
         isFetching: {$set: false},
@@ -153,6 +162,7 @@ export function topics(state = {}, action) {
       })
 
     case HANDLE_TOPICS_ERROR:
+      console.error(action);
       return update(state, {
         isFetching: {$set: false},
         noMoreTopics: {$set: true}

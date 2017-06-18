@@ -1,5 +1,4 @@
 import thunkMiddleware from 'redux-thunk'
-import { normalize, schema } from 'normalizr'
 import { createStore, applyMiddleware, compose, combineReducers} from 'redux'
 import { loginKey, selectedTopic, topics, myProfile, profiles, tags, profileWarnings } from './reducers/RootReducer'
 import { fetchProfileIfLoggedIn } from './actions/ProfileActions'

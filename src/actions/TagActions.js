@@ -41,6 +41,13 @@ export function filterByTag(tag) {
   }
 }
 
+export function unTag() {
+  return (dispatch, getState) => {
+    // Filter by tag 0 === no filter
+    dispatch(filterByTag(0))
+  }
+}
+
 export function fetchTags() {
   return ActionsHelper.sendGet('/tags/', (dispatch) => {
     dispatch(requestTags())
