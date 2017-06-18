@@ -48,6 +48,8 @@ export function fetchTopic(topic) {
     dispatch(requestTopic(topic))
   }, (dispatch, getState, response) => {
     dispatch(receiveTopic(response))
+    console.log(topic);
+    console.log(getState().topics.items[topic]);
     dispatch(fetchMetricsForTopic(topic))
     dispatch(fetchCommentProfilesForTopic(topic))
   })

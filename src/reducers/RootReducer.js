@@ -178,6 +178,7 @@ export function topics(state = {}, action) {
       })
 
     case RECEIVE_TOPIC:
+      console.log(action);
       return update(state, {
         items: {
           $merge: { [action.topic.id]: createTopic(action.topic, true) }
