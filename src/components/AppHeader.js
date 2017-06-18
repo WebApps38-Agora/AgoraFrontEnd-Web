@@ -52,8 +52,10 @@ class AppHeader extends Component {
         <Menu.Item as={Link} to='/' onClick={this.handleLogoClick}>
           <img src={require("../images/agora_logo.png")} alt="logo" />
         </Menu.Item>
-        {notifications}
-        {profile_logo}
+        <Menu.Menu position="right">
+          {notifications}
+          {profile_logo}
+        </Menu.Menu>
       </Menu>
     )
   }
