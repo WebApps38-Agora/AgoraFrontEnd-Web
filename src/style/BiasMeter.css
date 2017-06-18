@@ -8,8 +8,12 @@
   cursor: e-resize;
 }
 
-.bias-text {
+.bias-text:not("not-rated") {
   margin-right: -105px;
+}
+
+.not-rated {
+  text-align: center;
 }
 
 /* Change this to change the height of the meter bias */
@@ -17,6 +21,13 @@
   cursor: e-resize;
 }
 
-.container div.bias-meter {
-  font-size: 1.4em;
+.bias-meter {
+  background-color: var(--app-snd-color);
+  float: "left";
+  margin-right: 10px;
+  text-align: "right";
+  color: white;
+  font-size: 1em;
+  padding-top: 1px;
+  padding-bottom: 1px;
 }
