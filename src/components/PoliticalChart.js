@@ -51,13 +51,13 @@ export default class PoliticalChart extends Component {
         </div>
         <div className="political-grid-container">
           <div className="political-text political-side">
-            Right
+            Left
           </div>
           <div className="political-grid">
             { grid }
           </div>
           <div className="political-text political-side">
-            Left
+            Right
           </div>
         </div>
         <div className="political-text political-top">

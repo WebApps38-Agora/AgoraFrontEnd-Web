@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { fetchTopicsIfNeeded, fetchMoreTopics } from '../actions/RootActions'
 import { fetchTags, filterByTag, fetchTopicsForTag } from '../actions/TagActions'
-import { Visibility, Menu, Button, Segment, List, Sidebar } from 'semantic-ui-react'
+import { Visibility, Menu, Button, List, Sidebar } from 'semantic-ui-react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import { makeTile } from './MakeTile'
 import Missing from './Missing'
@@ -16,11 +16,12 @@ class TopicIndex extends Component {
 
   componentWillMount() {
     this.props.dispatch(fetchTopicsIfNeeded())
-    // this.props.dispatch(fetchTags())
+    this.props.dispatch(fetchTags())
   }
 
   handleScrollBottom() {
-    this.props.dispatch(fetchMoreTopics());
+    if (!this.props.tags.currentFilter)
+      this.props.dispatch(fetchMoreTopics());
   }
 
   handleTagClick(e, tag) {
@@ -38,19 +39,21 @@ class TopicIndex extends Component {
                     header="No topics left!" />
 
     if (this.props.loaded) {
-      let topics = {}
+      let topics = {result: [], entities: {}}
 
       if (this.props.tags.currentFilter) {
-        this.props.topics.items.forEach((topic, index) => {
+        this.props.topics.items.result.forEach((topic_id, index) => {
+          let topic = this.props.topics.items[topic_id]
           if (topic.tag_set.includes(this.props.tags.currentFilter)) {
             topics[topic.id] = topic
+            topics.result.push(topic.id)
           }
         })
       } else {
         topics = this.props.topics.items
       }
 
-      const numTopics = Object.keys(topics).length
+      const numTopics = topics.result.length
 
       let rows = [];
       for (var i = 0; i < numTopics; i += 5) {
@@ -71,6 +74,7 @@ class TopicIndex extends Component {
       footer = <Missing icon="newspaper" icon_size="massive"
                header="Loading more topics..." />;
     }
+
     let tags = null
     if (!this.props.tags.isFetching) {
       tags = this.props.tags.items.map((tag, index) =>
@@ -83,20 +87,22 @@ class TopicIndex extends Component {
     }
 
     return (<div>
-      <Sidebar.Pushable as={Segment}>
-          <Sidebar as={Menu} animation='push' width='thin' visible icon='labeled' vertical>
-            <List>
-              {tags}
-            </List>
-          </Sidebar>
-          <Sidebar.Pusher>
+        <Sidebar.Pushable>
+           <Sidebar as={Menu} animation='push' width='thin' visible icon='labeled' vertical>
+             <List>
+               {tags}
+             </List>
+           </Sidebar>
+           <Sidebar.Pusher>
             {grid}
             <Visibility className="topic-index-bottom" onOnScreen={this.handleScrollBottom} once={false}>
               {footer}
             </Visibility>
-          </Sidebar.Pusher>
-        </Sidebar.Pushable>
-    </div>);
+            </Sidebar.Pusher>
+          </Sidebar.Pushable>
+          </div>
+          );
+
   }
 }
 

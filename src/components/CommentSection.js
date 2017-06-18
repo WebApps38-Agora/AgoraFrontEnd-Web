@@ -99,6 +99,7 @@ class CommentSection extends Component {
 
   render() {
     let comments = []
+    console.log(this.props);
     Object.keys(this.props.comment_hierarchy).forEach((id, index) => {
       comments.push(this.makeComment(this.props.comment_hierarchy[id], []))
     })

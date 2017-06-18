@@ -10,16 +10,6 @@ import { addProfileWarning, fetchCurrentProfile } from '../actions/ProfileAction
 import PoliticalChart from './PoliticalChart'
 import ArticleCard from './ArticleCard'
 
-// const items = [
-//   {
-//     image: '/assets/images/wireframe/image.png',
-//     header: 'Name',
-//     description: 'Description',
-//     meta: 'Joined since ...',
-//     extra: <Button floated='right'> Edit </Button>,
-//   },
-// ]
-
 class ProfilePage extends Component {
 
   componentWillMount() {

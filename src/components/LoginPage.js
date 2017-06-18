@@ -50,8 +50,8 @@ class LoginPage extends Component {
               <Message
                 header='Login'
               />
-              <Form.Input label='Email' placeholder='agora@gmail.com' />
-              <Form.Input label='Password' placeholder='Password' type='Password' />
+              <Form.Input placeholder='Email' />
+              <Form.Input placeholder='Password' type='Password' />
               <Message
                 error
                 header='Oh no!'
