@@ -1,8 +1,8 @@
 import React from 'react';
-import { Statistic, Segment, Header, Icon } from 'semantic-ui-react'
+import { Statistic, Icon } from 'semantic-ui-react'
 import { Grid, Col } from 'react-bootstrap'
 
-const square = { width: 175, height: 175 }
+// const square = { width: 175, height: 175 }
 
 const StatsSection = ({ props }) => {
 return (

@@ -15,10 +15,10 @@ import {
   REQUEST_METRICS, RECEIVE_METRICS, RATE_BIAS_RECEIVE
 } from '../actions/MetricsActions'
 import {
-  RECEIVE_PROFILE, ADD_PROFILE_RESPONSE, ADD_PROFILE_WARNING, REMOVE_PROFILE_WARNING, HANDLE_PROFILE_ERROR
+  RECEIVE_CURRENT_PROFILE, RECEIVE_PROFILE, ADD_PROFILE_RESPONSE, ADD_PROFILE_WARNING, REMOVE_PROFILE_WARNING, HANDLE_PROFILE_ERROR
 } from '../actions/ProfileActions'
 import {
-  REQUEST_TAGS, RECEIVE_TAGS, FILTER_BY_TAG
+  REQUEST_TAGS, RECEIVE_TAGS, FILTER_BY_TAG, RECEIVE_TOPICS_FOR_TAG
 } from '../actions/TagActions'
 
 import Globals from '../globals'
@@ -53,7 +53,7 @@ export function tags(state = {}, action) {
       return update(state, {
         isFetching: {$set: false},
         items: {
-          $push: action.tags
+          $merge: action.tags
         }
       })
     }
@@ -70,17 +70,6 @@ export function tags(state = {}, action) {
   }
 }
 
-const findArticleIndex = (article_set, article_id) => {
-  let found_index = -1;
-  article_set.forEach((article, index) => {
-    if (article.id === article_id) {
-
-      found_index = index
-    }
-  })
-  return found_index
-}
-
 export function profileWarnings(state = false, action) {
   switch (action.type) {
     case ADD_PROFILE_WARNING:
@@ -94,6 +83,7 @@ export function profileWarnings(state = false, action) {
 
 const createTopic = (topic, deep) => {
   let new_comment_set = {}
+  let new_article_set = {}
 
   let extra = {}
   if (deep) {
@@ -101,14 +91,22 @@ const createTopic = (topic, deep) => {
       new_comment_set[comment.id] = comment
     })
 
+    topic.article_set.forEach((article) => {
+      article.metrics = {
+        isFetching: false
+      }
+      new_article_set[article.id] = article
+    })
+
     extra = {
       comment_set: new_comment_set,
+      article_set: new_article_set,
     }
   } else {
     extra = {
       comment_set: {},
       fact_set: [],
-      article_set: [],
+      article_set: {},
     }
   }
 
@@ -117,9 +115,6 @@ const createTopic = (topic, deep) => {
     ...extra,
     isFetching: false,
     url: `${Globals.BACKEND_URL}/topics/${topic.id}/`,
-    metrics: {
-      isFetching: false
-    }
   }
 }
 
@@ -129,17 +124,21 @@ export function topics(state = {}, action) {
       return update(state, {
         isFetching: {$set: true}
       })
+
+    case RECEIVE_TOPICS_FOR_TAG:
     case RECEIVE_TOPICS:
       let topics = state.items
       action.topics.forEach((topic) => {
-          topics.push(createTopic(topic, false))
+          console.log("pushing topic")
+          console.log(createTopic(topic, false))
+          topics[topic.id] = createTopic(topic, false)
         }
       )
 
       return update(state, {
         isFetching: {$set: false},
         loaded: {$set: true},
-        items: {$set: topics},
+        items: {$merge: topics},
         nextPage: {$set: action.nextPage}
       })
 
@@ -210,11 +209,14 @@ export function topics(state = {}, action) {
       })
 
     case REQUEST_METRICS: {
+      console.log("requesting metrics")
+      console.log(action.topic)
+      console.log(action.article)
       return update(state, {
         items: {
           [action.topic]: {
             article_set: {
-              [findArticleIndex(state.items[action.topic].article_set, action.article)]: {
+              [action.article]: {
                 metrics: {
                   isFetching: {$set: true}
                 }
@@ -226,14 +228,11 @@ export function topics(state = {}, action) {
     }
 
     case RECEIVE_METRICS: {
-
-      console.log("in reducer")
-      console.log(action)
       return update(state, {
         items: {
           [action.topic]: {
             article_set: {
-              [findArticleIndex(state.items[action.topic].article_set, action.article)]: {
+              [action.article]: {
                 metrics: {$set: action.metrics}
               }
             }
@@ -257,13 +256,11 @@ export function topics(state = {}, action) {
   }
 }
 
-export function myProfile(state = 0, action) {
+export function myProfile(state = -1, action) {
   switch (action.type) {
-    case RECEIVE_PROFILE:
-      return action.profile
-
+    case RECEIVE_CURRENT_PROFILE:
     case ADD_PROFILE_RESPONSE:
-      return action.profile
+      return action.profile.id
 
     case HANDLE_PROFILE_ERROR:
       return action
@@ -272,8 +269,16 @@ export function myProfile(state = 0, action) {
   }
 }
 
-export function profiles(state = [], action) {
+export function profiles(state = {}, action) {
   switch (action.type) {
+    case RECEIVE_CURRENT_PROFILE:
+    case RECEIVE_PROFILE:
+      return update(state, {
+        [action.profile.id]: {
+          $set: action.profile
+        }
+      })
+
     default:
       return state
   }

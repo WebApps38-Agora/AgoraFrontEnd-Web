@@ -4,16 +4,12 @@ import { Icon, Form, Message } from 'semantic-ui-react'
 import { Redirect } from 'react-router-dom'
 import FacebookProvider, { Login } from 'react-facebook';
 import { sendLogin } from '../actions/RootActions'
-import { fetchProfile, updateProfile , removeProfileWarning } from '../actions/ProfileActions'
+import { removeProfileWarning } from '../actions/ProfileActions'
 import { connect } from 'react-redux'
 import ProfilePage from './ProfilePage'
 import Globals from '../globals'
 
 class LoginPage extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentWillUnmount = () => {
     this.props.dispatch(removeProfileWarning())
   }
@@ -75,7 +71,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     loginKey: state.loginKey,
     profileWarnings: state.profileWarnings,
-    myProfile: state.myProfile,
+    myProfile: state.profiles[state.myProfile],
   }
 }
 

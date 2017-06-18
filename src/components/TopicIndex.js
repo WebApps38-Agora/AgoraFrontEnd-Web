@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { fetchMoreTopics, fetchTopicsIfNeeded } from '../actions/RootActions'
-import { Visibility, Menu, Button, Label, Segment, Icon, Sidebar, Loader, Dimmer } from 'semantic-ui-react'
-import { fetchTags, filterByTag } from '../actions/TagActions'
+import { fetchTopicsIfNeeded, fetchMoreTopics } from '../actions/RootActions'
+import { fetchTags, filterByTag, fetchTopicsForTag } from '../actions/TagActions'
+import { Visibility, Menu, Button, Segment, List, Sidebar } from 'semantic-ui-react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import { makeTile } from './MakeTile'
-import SearchTags from './SearchTags'
 import Missing from './Missing'
 
 class TopicIndex extends Component {
@@ -25,7 +24,12 @@ class TopicIndex extends Component {
   }
 
   handleTagClick(e, tag) {
-    // this.props.dispatch(filterByTag(tag))
+    if (this.props.tags.currentFilter !== tag) {
+      this.props.dispatch(fetchTopicsForTag(tag))
+      this.props.dispatch(filterByTag(tag))
+    } else {
+      this.props.dispatch(filterByTag(false))
+    }
   }
 
   render() {
@@ -38,10 +42,7 @@ class TopicIndex extends Component {
 
       if (this.props.tags.currentFilter) {
         this.props.topics.items.forEach((topic, index) => {
-          console.log("topics in current tag")
-          console.log(topic.id)
-          console.log(this.props.tags.items[this.props.tags.currentFilter].topics)
-          if (this.props.tags.items[this.props.tags.currentFilter].topics.includes(topic.id)) {
+          if (topic.tag_set.includes(this.props.tags.currentFilter)) {
             topics[topic.id] = topic
           }
         })
@@ -70,28 +71,31 @@ class TopicIndex extends Component {
       footer = <Missing icon="newspaper" icon_size="massive"
                header="Loading more topics..." />;
     }
-    //
-    // let tags = null
-    // if (!this.props.tags.isFetching) {
-    //   tags = this.props.tags.items.map((tag, index) =>
-    //     <a>
-    //       <Label onClick={(e) => this.handleTagClick(e, tag.id)} key={index}>{tag.name}</Label>
-    //     </a>
-    //   )
-    // }
+    let tags = null
+    if (!this.props.tags.isFetching) {
+      tags = this.props.tags.items.map((tag, index) =>
+        <List.Item key={index}>
+          <List.Content>
+            <Button onClick={(e) => this.handleTagClick(e, tag.id)}>{tag.name}</Button>
+          </List.Content>
+        </List.Item>
+      )
+    }
 
     return (<div>
-      {/* <Sidebar.Pushable as={Segment}>
+      <Sidebar.Pushable as={Segment}>
           <Sidebar as={Menu} animation='push' width='thin' visible icon='labeled' vertical>
-            {tags}
+            <List>
+              {tags}
+            </List>
           </Sidebar>
-          <Sidebar.Pusher> */}
-      {grid}
-      <Visibility className="topic-index-bottom" onOnScreen={this.handleScrollBottom} once={false}>
-        {footer}
-      </Visibility>
-          {/* </Sidebar.Pusher> */}
-        {/* </Sidebar.Pushable> */}
+          <Sidebar.Pusher>
+            {grid}
+            <Visibility className="topic-index-bottom" onOnScreen={this.handleScrollBottom} once={false}>
+              {footer}
+            </Visibility>
+          </Sidebar.Pusher>
+        </Sidebar.Pushable>
     </div>);
   }
 }

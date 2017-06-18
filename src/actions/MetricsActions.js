@@ -14,8 +14,8 @@ export function receiveMetrics(topic, article, json) {
   return ({
     type: RECEIVE_METRICS,
     metrics: json,
-    topic,
-    article,
+    topic: topic,
+    article: article
   })
 }
 
@@ -28,8 +28,8 @@ export function rateBiasRequest(article) {
 }
 
 export const RATE_BIAS_RECEIVE = 'RATE_BIAS_RECEIVE'
-export function rateBiasReceive(article, json) {
-  return receiveMetrics(article, json)
+export function rateBiasReceive(topic, article, json) {
+  return receiveMetrics(topic, article, json)
 }
 
 export function fetchMetrics(topic, article) {
@@ -40,12 +40,13 @@ export function fetchMetrics(topic, article) {
   })
 }
 
-export function sendRateBiasRequest(article, bias) {
-  return {type: 'RESPONSE'};
+export function sendRateBiasRequest(topic, article, bias) {
   return ActionsHelper.sendPost('/metrics/', (dispatch) => {
     dispatch(rateBiasRequest(article))
   }, (dispatch, getState, response) => {
-    dispatch(rateBiasReceive(article, response))
+    console.log("asdawdasasd")
+    console.log(response)
+    dispatch(rateBiasReceive(topic, article, response))
   }, {
     article: article,
     bias: bias,

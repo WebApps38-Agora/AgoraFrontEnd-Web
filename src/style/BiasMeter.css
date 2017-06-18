@@ -12,6 +12,7 @@
   margin-right: -105px;
 }
 
+/* Change this to change the height of the meter bias */
 .bias-meter:hover {
   cursor: e-resize;
 }

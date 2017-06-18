@@ -27,7 +27,7 @@ export function showReplyInput(topic, chain) {
   }
 }
 
-export function sendAddCommentRequest(topic, content) {
+export function sendAddCommentRequest(topic, content, parent) {
   return ActionsHelper.sendPost('/comments/', (dispatch) => {
     dispatch(addCommentRequest())
   }, (dispatch, getState, response) => {
@@ -35,6 +35,6 @@ export function sendAddCommentRequest(topic, content) {
   }, {
     topic: topic,
     content: content,
-    parent_comment: null,
+    parent_comment: parent,
   })
 }

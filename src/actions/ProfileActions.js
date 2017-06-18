@@ -44,6 +44,14 @@ export function receiveProfile(profile) {
   }
 }
 
+export const RECEIVE_CURRENT_PROFILE = 'RECEIVE_CURRENT_PROFILE'
+export function receiveCurrentProfile(profile) {
+  return {
+    type: RECEIVE_CURRENT_PROFILE,
+    profile
+  }
+}
+
 export const HANDLE_PROFILE_ERROR = 'HANDLE_PROFILE_ERROR'
 export function handleProfileError(error) {
   return {
@@ -52,8 +60,8 @@ export function handleProfileError(error) {
   }
 }
 
-export function fetchProfile() {
-  return ActionsHelper.sendGet('/profiles', (dispatch) => {
+export function fetchUserProfile(profile_id) {
+  return ActionsHelper.sendGet(`/profiles/${profile_id}/`, (dispatch) => {
     dispatch(requestProfile())
   }, (dispatch, getState, response) => {
     dispatch(receiveProfile(response))
@@ -62,10 +70,20 @@ export function fetchProfile() {
   })
 }
 
+export function fetchCurrentProfile() {
+  return ActionsHelper.sendGet('/profiles/', (dispatch) => {
+    dispatch(requestProfile())
+  }, (dispatch, getState, response) => {
+    dispatch(receiveCurrentProfile(response))
+  }, (dispatch, getState, error) => {
+    dispatch(handleProfileError(error))
+  })
+}
+
 export function fetchProfileIfLoggedIn() {
   return (dispatch, getState) => {
     if (getState().loginKey) {
-      dispatch(fetchProfile())
+      dispatch(fetchCurrentProfile())
     }
   }
 }

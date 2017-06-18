@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 import Globals from '../globals'
 import ActionsHelper from './ActionsHelper'
-import { fetchProfile, updateProfile } from './ProfileActions'
+import { fetchCurrentProfile, updateProfile } from './ProfileActions'
 
 export const RECEIVE_LOGIN = 'RECEIVE_LOGIN'
 export function receiveLogin(key) {
@@ -67,7 +67,7 @@ export function sendLogin(data) {
     dispatch(receiveLogin(response.key))
     Cookies.set('login_key', response.key ,{expires : 7})
     dispatch(updateProfile(data, getState().myProfile.id))
-    dispatch(fetchProfile())
+    dispatch(fetchCurrentProfile())
   }, {
     access_token: data.tokenDetail.accessToken
   })

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Segment, Button, Comment, Form } from 'semantic-ui-react'
+import { Segment, Button, Comment, Form, Label } from 'semantic-ui-react'
 import Textarea from 'react-textarea-autosize';
 import '../style/Views.css';
 import '../style/CommentSection.css';
 import * as actions from '../actions/CommentActions'
 import Missing from './Missing'
+var moment = require('moment')
 
 function arraysEqual(arr1, arr2) {
     if (!arr1 || !arr2) return false
@@ -25,6 +26,7 @@ class CommentSection extends Component {
     super(props)
     this.state = {
       comment_content: '',
+      reply_content: '',
       textAreaHeight: 60,
     }
   }
@@ -39,25 +41,39 @@ class CommentSection extends Component {
       return this.makeComment(child, [...parents, comment])
     })
 
-
-
-
     const replyInput = arraysEqual(this.props.topic.reply_to_comment, [...Object.keys(parents), comment.id]) ?
-      "replying"
+      <Form reply id="reply-form">
+        <Form.Group>
+          <Textarea
+            minRows={1}
+            maxRows={3}
+            value={this.state.reply_content}
+            onChange={ (e) => this.setState({reply_content: e.target.value}) }
+            onHeightChange={ (height, instance) => this.updateTextAreaSize(height)}
+            placeholder='Write a reply or a new comment on the topic...' />
+          <Button onClick={(e) => this.handleSubmit(e, this.state.reply_content, [...parents, comment.id].slice(-1)[0])}
+                  disabled={this.state.reply_content === ''}
+                  content='Comment'
+                  labelPosition='left' icon='edit' primary />
+        </Form.Group>
+      </Form>
     : null
+
+    const profile = this.props.profiles[comment.owner_profile]
 
     return (
       <Comment key={comment.id}>
-        <Comment.Avatar src='http://www.ruralagriventures.com/wp-content/uploads/2017/05/man-team.jpg' />
+        <Comment.Avatar src={profile.profile_picture} />
         <Comment.Content>
-          <Comment.Author as='a'>Elliot</Comment.Author>
+          <Comment.Author as='a' href='/profile/'>{profile.first_name} {profile.last_name}</Comment.Author>
           <Comment.Metadata>
-            <div>{comment.published_at}</div>
+            <Label color='green'>Left-wing Liberal</Label>
           </Comment.Metadata>
           <Comment.Text>
             <p>{comment.content}</p>
           </Comment.Text>
           <Comment.Actions>
+            <div>{moment(comment.published_at).fromNow()}</div>
             <Comment.Action onClick={(e) => this.handleClickReply(e, comment, parents)}>Reply</Comment.Action>
           </Comment.Actions>
         </Comment.Content>
@@ -71,14 +87,9 @@ class CommentSection extends Component {
     )
   }
 
-  handleSubmit = e => {
+  handleSubmit = (e, content, parent) => {
     e.preventDefault()
-    this.props.dispatch(actions.sendAddCommentRequest(this.props.topic.id, this.state.comment_content))
-    this.setState({fact_content: ''});
-  }
-
-  checkInputEmpty() {
-    return this.state.comment_content === "";
+    this.props.dispatch(actions.sendAddCommentRequest(this.props.topic.id, content, parent))
   }
 
   updateTextAreaSize(height) {
@@ -116,8 +127,8 @@ class CommentSection extends Component {
                     onChange={ (e) => this.setState({comment_content: e.target.value}) }
                     onHeightChange={ (height, instance) => this.updateTextAreaSize(height)}
                     placeholder='Write a reply or a new comment on the topic...' />
-                  <Button onClick={this.handleSubmit}
-                          disabled={this.checkInputEmpty()}
+                  <Button onClick={(e) => this.handleSubmit(e, this.state.comment_content, null)}
+                          disabled={this.state.comment_content === ''}
                           content='Comment'
                           labelPosition='left' icon='edit' primary />
                 </Form.Group>

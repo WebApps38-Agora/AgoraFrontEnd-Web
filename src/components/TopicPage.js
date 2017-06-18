@@ -74,16 +74,15 @@ class TopicPage extends Component {
 
   render() {
     if (!this.props.isFetching) {
-      console.log("HERE");
-      let cards = this.props.topic.article_set.map((article, index) => {
-          // TODO: REMOVE BELOW
-          if (index < 10) {
-            return (<List.Item key={index}>
-              <ArticleCard topic={this.props.topic} id={index} article={article} handleStepClick={this.handleStepClick}/>
-            </List.Item>);
-          }
-        }
-      )
+      let cards = []
+      Object.keys(this.props.topic.article_set).forEach((id, index) => {
+        const article = this.props.topic.article_set[id]
+        cards.push(
+          index < 10 ? <List.Item key={index}>
+            <ArticleCard topic={this.props.topic} id={index} article={article} handleStepClick={this.handleStepClick}/>
+          </List.Item> : null
+        )
+      })
 
       let card_list = this.getCardList(cards);
 
@@ -98,7 +97,7 @@ class TopicPage extends Component {
                              left_subtitle={moment(this.props.topic.published_at).fromNow()} />
                 </ReactHeight>
               </div>
-              <TopicViews isFetching={this.props.isFetching} topic={this.props.topic} titleHeight={this.state.titleHeight} />
+              <TopicViews isFetching={this.props.isFetching} topic={this.props.topic} titleHeight={this.state.titleHeight} profiles={this.props.profiles} />
             </Col>
 
             <ReactHeight style={{height: "calc(100% - 51px - 2rem)"}} onHeightReady={ height => this.setState({ height: height }) }>
@@ -122,7 +121,8 @@ const mapStateToProps = (state) => {
                 || !(state.selectedTopic in state.topics.items)
                 || state.topics.items[state.selectedTopic].isFetching,
     topic: state.topics.items[state.selectedTopic] || {},
-    nextPage: state.topics.nextPage
+    nextPage: state.topics.nextPage,
+    profiles: state.profiles
   }
 }
 
