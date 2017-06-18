@@ -89,7 +89,6 @@ class CommentSection extends Component {
 
   handleSubmit = (e, content, parent) => {
     e.preventDefault()
-    alert(parent)
     this.props.dispatch(actions.sendAddCommentRequest(this.props.topic.id, content, parent))
   }
 

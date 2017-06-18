@@ -74,13 +74,15 @@ class TopicPage extends Component {
 
   render() {
     if (!this.props.isFetching) {
-      let cards = this.props.topic.article_set.map((article, index) => {
-          // TODO: REMOVE BELOW
-            return (index < 10 ? <List.Item key={index}>
-              <ArticleCard topic={this.props.topic} id={index} article={article} handleStepClick={this.handleStepClick}/>
-            </List.Item> : null);
-        }
-      )
+      let cards = []
+      Object.keys(this.props.topic.article_set).forEach((id, index) => {
+        const article = this.props.topic.article_set[id]
+        cards.push(
+          index < 10 ? <List.Item key={index}>
+            <ArticleCard topic={this.props.topic} id={index} article={article} handleStepClick={this.handleStepClick}/>
+          </List.Item> : null
+        )
+      })
 
       let card_list = this.getCardList(cards);
 

@@ -14,7 +14,6 @@ export default class SearchExampleStandard extends Component {
   resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
 
   handleResultSelect = (e, result) => {
-    alert('result selected')
     this.setState({ value: result.title })
   }
 

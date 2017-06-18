@@ -70,17 +70,6 @@ export function tags(state = {}, action) {
   }
 }
 
-const findArticleIndex = (article_set, article_id) => {
-  let found_index = -1;
-  article_set.forEach((article, index) => {
-    if (article.id === article_id) {
-
-      found_index = index
-    }
-  })
-  return found_index
-}
-
 export function profileWarnings(state = false, action) {
   switch (action.type) {
     case ADD_PROFILE_WARNING:
@@ -94,6 +83,7 @@ export function profileWarnings(state = false, action) {
 
 const createTopic = (topic, deep) => {
   let new_comment_set = {}
+  let new_article_set = {}
 
   let extra = {}
   if (deep) {
@@ -101,14 +91,22 @@ const createTopic = (topic, deep) => {
       new_comment_set[comment.id] = comment
     })
 
+    topic.article_set.forEach((article) => {
+      article.metrics = {
+        isFetching: false
+      }
+      new_article_set[article.id] = article
+    })
+
     extra = {
       comment_set: new_comment_set,
+      article_set: new_article_set,
     }
   } else {
     extra = {
       comment_set: {},
       fact_set: [],
-      article_set: [],
+      article_set: {},
     }
   }
 
@@ -117,9 +115,6 @@ const createTopic = (topic, deep) => {
     ...extra,
     isFetching: false,
     url: `${Globals.BACKEND_URL}/topics/${topic.id}/`,
-    metrics: {
-      isFetching: false
-    }
   }
 }
 
@@ -214,11 +209,14 @@ export function topics(state = {}, action) {
       })
 
     case REQUEST_METRICS: {
+      console.log("requesting metrics")
+      console.log(action.topic)
+      console.log(action.article)
       return update(state, {
         items: {
           [action.topic]: {
             article_set: {
-              [findArticleIndex(state.items[action.topic].article_set, action.article)]: {
+              [action.article]: {
                 metrics: {
                   isFetching: {$set: true}
                 }
@@ -234,7 +232,7 @@ export function topics(state = {}, action) {
         items: {
           [action.topic]: {
             article_set: {
-              [findArticleIndex(state.items[action.topic].article_set, action.article)]: {
+              [action.article]: {
                 metrics: {$set: action.metrics}
               }
             }

@@ -28,7 +28,8 @@ export function receiveTopic(json) {
 
 export function fetchMetricsForTopic(topic) {
   return (dispatch, getState) => {
-    getState().topics.items[topic].article_set.forEach((article) => {
+    Object.keys(getState().topics.items[topic].article_set).forEach((id) => {
+      const article = getState().topics.items[topic].article_set[id]
       dispatch(fetchMetrics(topic, article.id))
     })
   }
@@ -36,7 +37,8 @@ export function fetchMetricsForTopic(topic) {
 
 export function fetchCommentProfilesForTopic(topic) {
   return (dispatch, getState) => {
-    getState().topics.items[topic].comment_set.forEach((comment) => {
+    Object.keys(getState().topics.items[topic].comment_set).forEach((id) => {
+      const comment = getState().topics.items[topic].comment_set[id]
       dispatch(fetchUserProfile(comment.owner_profile))
     })
   }
