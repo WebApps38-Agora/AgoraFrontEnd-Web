@@ -22,6 +22,7 @@ import {
 } from '../actions/TagActions'
 
 import Globals from '../globals'
+import { denormalize, normalize, schema } from 'normalizr'
 
 export function selectedTopic(state = 0, action) {
   switch (action.type) {
@@ -74,11 +75,14 @@ const findArticleIndex = (article_set, article_id) => {
   let found_index = -1;
   article_set.forEach((article, index) => {
     if (article.id === article_id) {
-
       found_index = index
     }
   })
   return found_index
+}
+
+const getTopicIndexById = (norm, id) => {
+  norm.result.forEach()
 }
 
 export function profileWarnings(state = false, action) {
@@ -124,6 +128,9 @@ const createTopic = (topic, deep) => {
 }
 
 export function topics(state = {}, action) {
+  const topicSchema     = new schema.Entity('topic')
+  const topicListSchema = new schema.Array(topicSchema)
+
   switch (action.type) {
     case REQUEST_TOPICS:
       return update(state, {
@@ -132,13 +139,11 @@ export function topics(state = {}, action) {
 
     case RECEIVE_TOPICS_FOR_TAG:
     case RECEIVE_TOPICS:
-      let topics = state.items
-      action.topics.forEach((topic) => {
-          console.log("pushing topic")
-          console.log(createTopic(topic, false))
-          topics[topic.id] = createTopic(topic, false)
-        }
-      )
+      // denormalize items to get real topic data
+      let topics = denormalize(state.items.result, topicListSchema, state.items.entities) || []
+      // concatinate received topics
+      topics = topics.concat(action.topics)
+      topics = normalize(topics, topicListSchema)
 
       return update(state, {
         isFetching: {$set: false},

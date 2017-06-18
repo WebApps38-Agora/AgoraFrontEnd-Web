@@ -47,7 +47,7 @@ class TopicIndex extends Component {
         topics = this.props.topics.items
       }
 
-      const numTopics = Object.keys(topics).length
+      const numTopics = topics.result.length
 
       let rows = [];
       for (var i = 0; i < numTopics; i += 5) {
@@ -80,19 +80,23 @@ class TopicIndex extends Component {
       )
     }
 
-    return (<Sidebar.Pushable as={Segment}>
-          <Sidebar as={Menu} animation='push' width='thin' visible icon='labeled' vertical>
-            <List>
-              {tags}
-            </List>
-          </Sidebar>
-          <Sidebar.Pusher>
+    return (<div>
+        {/* <Sidebar.Pushable as={Segment}>
+           <Sidebar as={Menu} animation='push' width='thin' visible icon='labeled' vertical>
+             <List>
+               {tags}
+             </List>
+           </Sidebar>
+           <Sidebar.Pusher> */}
             {grid}
             <Visibility className="topic-index-bottom" onOnScreen={this.handleScrollBottom} once={false}>
               {footer}
             </Visibility>
-          </Sidebar.Pusher>
-        </Sidebar.Pushable>);
+            {/* </Sidebar.Pusher>
+          </Sidebar.Pushable> */}
+          </div>
+          );
+
   }
 }
 

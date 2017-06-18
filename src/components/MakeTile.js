@@ -2,7 +2,12 @@ import React from 'react';
 import TopicIndexTile from './TopicIndexTile'
 
 export const makeTile = (topics, index) => {
-  const topic = topics[Object.keys(topics)[index]]
+  // get the index from the normalized list
+  const topic_id = topics.result[index]
+  const topic = topics.entities.topic[topic_id]
+  console.log("TOPIC");
+  console.log(topic_id);
+  console.log(topic);
   return topic &&
     <TopicIndexTile
       to={"/topic/" + topic.id}
