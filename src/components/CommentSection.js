@@ -26,6 +26,7 @@ class CommentSection extends Component {
     super(props)
     this.state = {
       comment_content: '',
+      reply_content: '',
       textAreaHeight: 60,
     }
   }
@@ -41,7 +42,21 @@ class CommentSection extends Component {
     })
 
     const replyInput = arraysEqual(this.props.topic.reply_to_comment, [...Object.keys(parents), comment.id]) ?
-      "replying"
+      <Form reply id="reply-form">
+        <Form.Group>
+          <Textarea
+            minRows={1}
+            maxRows={3}
+            value={this.state.reply_content}
+            onChange={ (e) => this.setState({reply_content: e.target.value}) }
+            onHeightChange={ (height, instance) => this.updateTextAreaSize(height)}
+            placeholder='Write a reply or a new comment on the topic...' />
+          <Button onClick={(e) => this.handleSubmit(e, this.state.reply_content, [...parents, comment.id].slice(-1)[0])}
+                  disabled={this.state.reply_content === ''}
+                  content='Comment'
+                  labelPosition='left' icon='edit' primary />
+        </Form.Group>
+      </Form>
     : null
 
     const profile = this.props.profiles[comment.owner_profile]
@@ -72,14 +87,10 @@ class CommentSection extends Component {
     )
   }
 
-  handleSubmit = e => {
+  handleSubmit = (e, content, parent) => {
     e.preventDefault()
-    this.props.dispatch(actions.sendAddCommentRequest(this.props.topic.id, this.state.comment_content))
-    this.setState({fact_content: ''});
-  }
-
-  checkInputEmpty() {
-    return this.state.comment_content === "";
+    alert(parent)
+    this.props.dispatch(actions.sendAddCommentRequest(this.props.topic.id, content, parent))
   }
 
   updateTextAreaSize(height) {
@@ -117,8 +128,8 @@ class CommentSection extends Component {
                     onChange={ (e) => this.setState({comment_content: e.target.value}) }
                     onHeightChange={ (height, instance) => this.updateTextAreaSize(height)}
                     placeholder='Write a reply or a new comment on the topic...' />
-                  <Button onClick={this.handleSubmit}
-                          disabled={this.checkInputEmpty()}
+                  <Button onClick={(e) => this.handleSubmit(e, this.state.comment_content, null)}
+                          disabled={this.state.comment_content === ''}
                           content='Comment'
                           labelPosition='left' icon='edit' primary />
                 </Form.Group>
