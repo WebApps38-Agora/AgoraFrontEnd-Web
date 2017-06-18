@@ -13,9 +13,7 @@ class AppHeader extends Component {
   }
 
   handleLogoClick() {
-    if (this.props.isTagged) {
-      this.props.dispatch(filterByTag(false))
-    }
+    this.props.dispatch(filterByTag(0))
   }
 
   render() {
