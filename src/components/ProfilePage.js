@@ -24,11 +24,6 @@ class ProfilePage extends Component {
     this.setState({ error });
   }
 
-  handleclick = (e,x,y) => {
-    console.log(x);
-    console.log(y);
-  }
-
   render() {
     if (!this.props.loginKey) {
       this.props.dispatch(addProfileWarning())

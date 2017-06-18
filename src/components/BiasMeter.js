@@ -36,14 +36,19 @@ class BiasMeter extends Component {
   }
 
   render() {
+    const notRated = this.state.bias === -1
+
     const style = {
-      width: this.state.bias + '%',
-      backgroundColor: "orange",
-      float: "left",
-      marginRight: "10px",
-      textAlign: "right",
-      transition: "0.15s",
+      width: notRated ? "100%" : this.state.bias + '%',
+      backgroundColor: notRated ? "white" : "var(--app-snd-color)",
+      color: notRated ? "inherit" : "white"
     }
+
+    const text = notRated ?
+                 "Hover to rate bias" :
+                 Math.round(this.state.bias) + "%" + (
+                   this.state.bias >= 30 ? " biased" : ""
+                 )
 
     return (
       <Container className="bias-container"
@@ -52,7 +57,7 @@ class BiasMeter extends Component {
                  onClick={(e) => this.handleClick(e)}
                  fluid>
         <div style={style} className="bias-meter">
-          <div className="bias-text">{Math.round(this.state.bias) + "% biased"}</div>
+          <div className={"bias-text" + notRated ? " not-rated" : ""}>{text}</div>
         </div>
       </Container>
     )
