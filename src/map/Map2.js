@@ -1,11 +1,9 @@
 /* global window,document */
-import React, { Component} from 'react';
-import ReactDOM from 'react-dom'
+import React, {Component} from 'react';
 import MapGL from 'react-map-gl';
 import DeckGLOverlay from './deckgl-overlay.js';
 import Dimensions from 'react-dimensions'
 
-// Set your mapbox token here
 const MAPBOX_TOKEN = "pk.eyJ1IjoiY2hhd2ttIiwiYSI6ImNqM3o3emRzbzAwY28zMW41NnJkcnlyc3oifQ.M_UwGN_kUOOScXtqTs6vSA"; // eslint-disable-line
 
 const data = [
@@ -31,17 +29,17 @@ const data = [
  [-0.030334, 51.518213],
  [-0.030698, 51.529819],
  [-0.057632, 51.530448],
- [-0.011324, 51.511237],
- [-0.048506, 51.511232],
- [-0.063498, 51.511121],
- [-0.050251, 51.520973],
- [-0.065085, 51.517892],
- [-0.025275, 51.538541],
- [-0.074178, 51.524426],
- [0.000436,  51.513195],
- [-0.048189, 51.528763],
- [-0.031465, 51.528753],
- [-0.012624, 51.511169],
+ [-0.011324, 51.411237],
+ [-0.048506, 51.411232],
+ [-0.063498, 51.411121],
+ [-0.050251, 51.420973],
+ [-0.065085, 51.417892],
+ [-0.025275, 51.438541],
+ [-0.074178, 51.424426],
+ [0.000436,  51.413195],
+ [-0.048189, 51.428763],
+ [-0.031465, 51.428753],
+ [-0.012624, 51.411169],
  [-0.051707, 51.520638],
  [-0.028709, 51.535811],
  [-0.067046, 51.512439],
@@ -49,18 +47,18 @@ const data = [
  [-0.014956, 51.507252],
  [-0.034793, 51.525122],
  [-0.032606, 51.512316],
- [-0.071836, 51.515035],
- [-0.015233, 51.524073],
- [-0.037495, 51.512577],
- [-0.019120, 51.510920],
- [-0.039561, 51.511443],
- [-0.020310, 51.520022],
- [-0.049211, 51.525093],
- [-0.075740, 51.528409],
- [-0.023261, 51.518453],
- [-0.068747, 51.516513],
- [-0.061827, 51.526741],
- [-0.023300, 51.527537]]
+ [-0.071836, 51.615035],
+ [-0.015233, 51.624073],
+ [-0.037495, 51.612577],
+ [-0.019120, 51.610920],
+ [-0.039561, 51.611443],
+ [-0.020310, 51.620022],
+ [-0.049211, 51.625093],
+ [-0.075740, 51.628409],
+ [-0.023261, 51.618453],
+ [-0.068747, 51.616513],
+ [-0.061827, 51.626741],
+ [-0.023300, 51.627537]]
 
 class MapApp extends Component {
 
@@ -77,20 +75,17 @@ class MapApp extends Component {
 
   }
 
-  componentWillMount() {
-  }
-
   componentDidMount() {
-    // window.addEventListener('resize', this._resize.bind(this));
-    // this._resize();
+    window.addEventListener('resize', this._resize.bind(this));
     this.setState({data});
+    this._resize();
   }
 
   _resize() {
-    // this._onChangeViewport({
-    //   width: window.innerWidth,
-    //   height: window.innerHeight
-    // });
+    this._onChangeViewport({
+      width: this.props.containerWidth,
+      height: this.props.containerHeight
+    });
   }
 
   _onChangeViewport(viewport) {
@@ -100,23 +95,22 @@ class MapApp extends Component {
   }
 
   render() {
-    const { viewport, data } = this.state
+    const {viewport, data} = this.state;
 
     return (
-      <div>
-        <MapGL
-          {...viewport}
-          mapStyle="mapbox://styles/mapbox/dark-v9"
-          perspectiveEnabled={true}
-          onChangeViewport={this._onChangeViewport.bind(this)}
-          mapboxApiAccessToken={MAPBOX_TOKEN}>
-          <DeckGLOverlay
-            viewport={viewport}
-            data={data || []}
-          />
-        </MapGL>
-      </div>
+      <MapGL
+        {...viewport}
+        mapStyle="mapbox://styles/mapbox/dark-v9"
+        perspectiveEnabled={true}
+        onChangeViewport={this._onChangeViewport.bind(this)}
+        mapboxApiAccessToken={MAPBOX_TOKEN}>
+        <DeckGLOverlay
+          viewport={viewport}
+          data={data || []}
+        />
+      </MapGL>
     );
   }
 }
+
 export default Dimensions()(MapApp)

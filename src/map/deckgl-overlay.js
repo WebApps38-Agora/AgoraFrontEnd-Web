@@ -12,18 +12,18 @@ const LIGHT_SETTINGS = {
 };
 
 const colorRange = [
-  [1, 152, 189],
-  [73, 227, 206],
-  [216, 254, 181],
-  [254, 237, 177],
-  [254, 173, 84],
-  [209, 55, 78]
+  [1, 152, 189, 150],
+  [73, 227, 206, 150],
+  [216, 254, 181, 150],
+  [254, 237, 177, 150],
+  [254, 173, 84, 150],
+  [209, 55, 78, 150]
 ];
 
-const elevationScale = {min: 1, max: 50};
+const elevationScale = {min: 1, max: 30};
 
 const defaultProps = {
-  radius: 1000,
+  radius: 4000,
   upperPercentile: 100,
   coverage: 1
 };
@@ -36,13 +36,13 @@ export default class DeckGLOverlay extends Component {
 
   static get defaultViewport() {
     return {
-      longitude: -1.4157267858730052,
-      latitude: 51.232395363869415,
-      zoom: 6.6,
+      longitude: -1.2157267858730052,
+      latitude: 51.932395363869415,
+      zoom: 5.6,
       minZoom: 1,
       maxZoom: 15,
-      pitch: 30.5,
-      bearing: -27.396674584323023
+      pitch: 18.5,
+      bearing: 0
     };
   }
 

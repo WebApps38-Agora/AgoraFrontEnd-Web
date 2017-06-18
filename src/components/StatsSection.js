@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Statistic, Icon } from 'semantic-ui-react'
 import { Grid, Col, Row } from 'react-bootstrap'
-import MapApp from '../map/MapApp'
+import MapApp from '../map/Map2'
 import ReactDOM from 'react-dom'
 
 
@@ -29,7 +29,7 @@ export default class StatsSection extends Component {
   render () {
 
     return (
-      <div>
+      <div style={{height:'100%', width:'100%'}}>
         <Grid>
           <Row>
               <Col className="grid-tile" xs={4}>
@@ -65,7 +65,9 @@ export default class StatsSection extends Component {
             </Row>
             </Grid>
 
+            <div style={{width:'100%', height:'80%'}}>
               <MapApp />
+            </div>
           </div>)
   }
 }

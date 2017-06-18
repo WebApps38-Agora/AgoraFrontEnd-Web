@@ -19,7 +19,7 @@ var data = {
 }
 
  var width = 300;
-  var height = 300;
+  var height = 280;
   // set your zoom scale
   var scale = 1200 * 5;
   // min and max of your zoom scale
