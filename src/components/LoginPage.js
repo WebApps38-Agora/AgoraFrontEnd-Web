@@ -47,9 +47,6 @@ class LoginPage extends Component {
             </FacebookProvider>
             <Divider horizontal>Or</Divider>
             <Form success={false}>
-              <Message
-                header='Login'
-              />
               <Form.Input placeholder='Email' />
               <Form.Input placeholder='Password' type='Password' />
               <Message
@@ -57,7 +54,7 @@ class LoginPage extends Component {
                 header='Oh no!'
                 content="There seems to be an error with that email."
               />
-              <Button>Submit</Button>
+              <Button style={{backgroundColor: "var(--app-snd-color)", color: "white", width: "100%"}}>Submit</Button>
             </Form>
           </Segment>
         }
