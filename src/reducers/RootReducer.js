@@ -15,7 +15,7 @@ import {
   REQUEST_METRICS, RECEIVE_METRICS, RATE_BIAS_RECEIVE
 } from '../actions/MetricsActions'
 import {
-  RECEIVE_PROFILE, ADD_PROFILE_RESPONSE, ADD_PROFILE_WARNING, REMOVE_PROFILE_WARNING, HANDLE_PROFILE_ERROR
+  RECEIVE_CURRENT_PROFILE, RECEIVE_PROFILE, ADD_PROFILE_RESPONSE, ADD_PROFILE_WARNING, REMOVE_PROFILE_WARNING, HANDLE_PROFILE_ERROR
 } from '../actions/ProfileActions'
 import {
   REQUEST_TAGS, RECEIVE_TAGS, FILTER_BY_TAG, RECEIVE_TOPICS_FOR_TAG
@@ -260,6 +260,7 @@ export function topics(state = {}, action) {
 
 export function myProfile(state = -1, action) {
   switch (action.type) {
+    case RECEIVE_CURRENT_PROFILE:
     case ADD_PROFILE_RESPONSE:
       return action.profile.id
 
@@ -272,6 +273,7 @@ export function myProfile(state = -1, action) {
 
 export function profiles(state = {}, action) {
   switch (action.type) {
+    case RECEIVE_CURRENT_PROFILE:
     case RECEIVE_PROFILE:
       return update(state, {
         [action.profile.id]: {

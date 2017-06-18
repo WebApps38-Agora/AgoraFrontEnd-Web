@@ -44,6 +44,14 @@ export function receiveProfile(profile) {
   }
 }
 
+export const RECEIVE_CURRENT_PROFILE = 'RECEIVE_CURRENT_PROFILE'
+export function receiveCurrentProfile(profile) {
+  return {
+    type: RECEIVE_CURRENT_PROFILE,
+    profile
+  }
+}
+
 export const HANDLE_PROFILE_ERROR = 'HANDLE_PROFILE_ERROR'
 export function handleProfileError(error) {
   return {
@@ -66,7 +74,7 @@ export function fetchCurrentProfile() {
   return ActionsHelper.sendGet('/profiles/', (dispatch) => {
     dispatch(requestProfile())
   }, (dispatch, getState, response) => {
-    dispatch(receiveProfile(response))
+    dispatch(receiveCurrentProfile(response))
   }, (dispatch, getState, error) => {
     dispatch(handleProfileError(error))
   })

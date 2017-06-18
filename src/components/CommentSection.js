@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Segment, Button, Comment, Form } from 'semantic-ui-react'
+import { Segment, Button, Comment, Form, Label } from 'semantic-ui-react'
 import Textarea from 'react-textarea-autosize';
 import '../style/Views.css';
 import '../style/CommentSection.css';
@@ -50,14 +50,15 @@ class CommentSection extends Component {
       <Comment key={comment.id}>
         <Comment.Avatar src={profile.profile_picture} />
         <Comment.Content>
-          <Comment.Author as='a'>{profile.first_name} {profile.last_name}</Comment.Author>
+          <Comment.Author as='a' href='/profile/'>{profile.first_name} {profile.last_name}</Comment.Author>
           <Comment.Metadata>
-            <div>{moment(comment.published_at).fromNow()}</div>
+            <Label color='green'>Left-wing Liberal</Label>
           </Comment.Metadata>
           <Comment.Text>
             <p>{comment.content}</p>
           </Comment.Text>
           <Comment.Actions>
+            <div>{moment(comment.published_at).fromNow()}</div>
             <Comment.Action onClick={(e) => this.handleClickReply(e, comment, parents)}>Reply</Comment.Action>
           </Comment.Actions>
         </Comment.Content>
