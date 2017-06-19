@@ -17,7 +17,8 @@ class App extends Component {
     return (<main>
       <AppHeader />
       <div className="app-wrapper">
-        <Route exact path="/" render={()=> <TopicIndex {...props}/>}/>
+        <Route exact path="/" component={TopicIndex}/>
+        <Route path="/tag/:tag" component={TopicIndex}/>
         <Route path="/login" component={LoginPage}/>
         <Route path="/profile" component={ProfilePage}/>
         <Route path="/topic/:id" component={TopicPage}/>

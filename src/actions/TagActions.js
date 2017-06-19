@@ -41,12 +41,13 @@ export function filterByTag(tag) {
   }
 }
 
-export function unTag() {
-  return (dispatch, getState) => {
-    // Filter by tag 0 === no filter
-    dispatch(filterByTag(0))
+export const TOGGLE_TAGS = 'TOGGLE_TAGS'
+export function toggleTags() {
+  return {
+    type: TOGGLE_TAGS,
   }
 }
+
 
 export function fetchTags() {
   return ActionsHelper.sendGet('/tags/', (dispatch) => {

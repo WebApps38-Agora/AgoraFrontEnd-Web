@@ -19,7 +19,8 @@ const preloadedState = {
   profiles: {},
   tags: {
     isFetching: false,
-    filterByTag: false,
+    currentFilter: false,
+    showing: false,
     items: []
   }
 }

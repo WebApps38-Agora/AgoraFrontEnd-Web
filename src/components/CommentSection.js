@@ -62,9 +62,9 @@ class CommentSection extends Component {
     const profile = this.props.profiles[comment.owner_profile]
 
     return (
-      <div>
+      <div key={comment.id}>
         {profile &&
-        <Comment key={comment.id}>
+        <Comment>
           <Comment.Avatar src={profile.profile_picture} />
           <Comment.Content>
             <Comment.Author as='a' href='/profile/'>{profile.first_name} {profile.last_name}</Comment.Author>
