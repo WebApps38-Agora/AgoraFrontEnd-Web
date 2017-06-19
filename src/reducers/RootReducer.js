@@ -15,7 +15,7 @@ import {
   REQUEST_METRICS, RECEIVE_METRICS, RATE_BIAS_RECEIVE
 } from '../actions/MetricsActions'
 import {
-  RECEIVE_CURRENT_PROFILE, RECEIVE_PROFILE, ADD_PROFILE_RESPONSE, ADD_PROFILE_WARNING, REMOVE_PROFILE_WARNING, HANDLE_PROFILE_ERROR
+  RECEIVE_MARK_NOTIFICATION_SEEN, RECEIVE_NOTIFICATIONS, RECEIVE_CURRENT_PROFILE, RECEIVE_PROFILE, ADD_PROFILE_RESPONSE, ADD_PROFILE_WARNING, REMOVE_PROFILE_WARNING, HANDLE_PROFILE_ERROR
 } from '../actions/ProfileActions'
 import {
   REQUEST_TAGS, RECEIVE_TAGS, FILTER_BY_TAG, RECEIVE_TOPICS_FOR_TAG, TOGGLE_TAGS
@@ -148,8 +148,6 @@ export function topics(state = {}, action) {
         }
         topics[topic.id] = createTopic(topic, false)
       })
-
-      console.log(topics);
 
       return update(state, {
         isFetching: {$set: false},
@@ -297,6 +295,32 @@ export function profiles(state = {}, action) {
         }
       })
 
+    default:
+      return state
+  }
+}
+
+export function notifications(state = {}, action) {
+  switch (action.type) {
+    case RECEIVE_NOTIFICATIONS:
+      let notifications = {}
+
+      action.notifications.forEach((noti, index) => {
+        notifications[noti.id] = noti
+      })
+
+      return update(state, {
+        items: {$merge: notifications},
+      })
+
+    case RECEIVE_MARK_NOTIFICATION_SEEN:
+      return update(state, {
+        items: {
+          [action.notification]: {
+            seen: true
+          }
+        }
+      })
     default:
       return state
   }

@@ -60,6 +60,36 @@ export function handleProfileError(error) {
   }
 }
 
+export const REQUEST_NOTIFICATIONS = 'REQUEST_NOTIFICATIONS'
+export function requestNotifications() {
+  return {
+    type: REQUEST_NOTIFICATIONS
+  }
+}
+
+export const RECEIVE_NOTIFICATIONS = 'RECEIVE_NOTIFICATIONS'
+export function receiveNotifications(json) {
+  return {
+    type: RECEIVE_NOTIFICATIONS,
+    notifications: json.results
+  }
+}
+
+export const REQUEST_MARK_NOTIFICATION_SEEN = 'REQUEST_MARK_NOTIFICATION_SEEN'
+export function requestMarkNotificationSeen() {
+  return {
+    type: REQUEST_MARK_NOTIFICATION_SEEN
+  }
+}
+
+export const RECEIVE_MARK_NOTIFICATION_SEEN = 'RECEIVE_MARK_NOTIFICATION_SEEN'
+export function receiveMarkNotificationSeen(json) {
+  return {
+    type: RECEIVE_MARK_NOTIFICATION_SEEN,
+  }
+}
+
+
 export function fetchUserProfile(profile_id) {
   return ActionsHelper.sendGet(`/profiles/${profile_id}/`, (dispatch) => {
     dispatch(requestProfile())
@@ -70,11 +100,32 @@ export function fetchUserProfile(profile_id) {
   })
 }
 
+export function fetchNotifications() {
+  return ActionsHelper.sendGet('/notifications/', (dispatch) => {
+    dispatch(requestNotifications())
+  }, (dispatch, getState, response) => {
+    dispatch(receiveNotifications(response))
+  }, (dispatch, getState, error) => {
+    dispatch(handleProfileError(error))
+  })
+}
+
+export function markNotificationSeen(id) {
+  return ActionsHelper.sendGet(`/notifications/${id}/seen/`, (dispatch) => {
+    dispatch(requestMarkNotificationSeen())
+  }, (dispatch, getState, response) => {
+    dispatch(receiveMarkNotificationSeen(response))
+  }, (dispatch, getState, error) => {
+    dispatch(handleProfileError(error))
+  })
+}
+
 export function fetchCurrentProfile() {
   return ActionsHelper.sendGet('/profiles/', (dispatch) => {
     dispatch(requestProfile())
   }, (dispatch, getState, response) => {
     dispatch(receiveCurrentProfile(response))
+    dispatch(fetchNotifications())
   }, (dispatch, getState, error) => {
     dispatch(handleProfileError(error))
   })
