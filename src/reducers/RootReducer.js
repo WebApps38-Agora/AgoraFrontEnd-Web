@@ -139,6 +139,12 @@ export function topics(state = {}, action) {
       let topics = state.items
       topics = { result: [] }
 
+      if (!action.replace) {
+        if (state.items.result) {
+          topics.result = state.items.result
+        }
+      }
+
       action.topics.forEach((topic, index) => {
         topics.result.push(topic.id)
         topics[topic.id] = createTopic(topic, false)

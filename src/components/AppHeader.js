@@ -35,7 +35,7 @@ class AppHeader extends Component {
   }
 
   handlePopClick() {
-    this.props.dispatch(fetchTopics(Globals.BACKEND_URL + "/topics/"))
+    this.props.dispatch(fetchTopics(Globals.BACKEND_URL + "/topics/", true))
     this.props.dispatch(filterByTag(false))
   }
 
