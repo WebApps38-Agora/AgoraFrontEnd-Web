@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { fetchTopicsIfNeeded, fetchMoreTopics, fetchTopics } from '../actions/RootActions'
-import { fetchTags, filterByTag, fetchTopicsForTag } from '../actions/TagActions'
+import { fetchTags, filterByTag, fetchTopicsForTag, hideTags } from '../actions/TagActions'
 import { Visibility, Button, Segment, List } from 'semantic-ui-react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import { makeTile } from './MakeTile'
@@ -38,6 +38,7 @@ class TopicIndex extends Component {
       this.props.dispatch(fetchTopicsForTag(tag.id))
       this.props.dispatch(filterByTag(tag.id))
     } else {
+      this.props.dispatch(hideTags())
       this.props.dispatch(fetchTopics(Globals.BACKEND_URL + "/topics/"))
       this.props.dispatch(filterByTag(false))
     }
