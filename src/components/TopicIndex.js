@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { fetchTopicsIfNeeded, fetchMoreTopics, fetchTopics } from '../actions/RootActions'
 import { fetchTags, filterByTag, fetchTopicsForTag, hideTags } from '../actions/TagActions'
@@ -39,7 +38,6 @@ class TopicIndex extends Component {
       this.props.dispatch(fetchTopicsForTag(tag.id))
       this.props.dispatch(filterByTag(tag.id))
     } else {
-      this.props.dispatch(hideTags())
       this.props.dispatch(fetchTopics(Globals.BACKEND_URL + "/topics/"))
       this.props.dispatch(filterByTag(false))
     }
@@ -48,16 +46,20 @@ class TopicIndex extends Component {
   filterTopics() {
     let topics = {result: [], entities: {}}
     if (this.props.tags.currentFilter) {
-      this.props.topics.items.result.forEach((topic_id, index) => {
-        let topic = this.props.topics.items[topic_id]
-        if (topic.tag_set.includes(this.props.tags.currentFilter)) {
-          topics[topic.id] = topic
-          topics.result.push(topic.id)
+      Object.keys(this.props.topics.items).forEach((id) => {
+        if (id !== "result") {
+          const topic = this.props.topics.items[id]
+          console.log(topic);
+          if (topic.tag_set.includes(this.props.tags.currentFilter)) {
+            topics[topic.id] = topic
+            topics.result.push(topic.id)
+          }
         }
       })
     } else {
       topics = this.props.topics.items
     }
+
     return topics
   }
 

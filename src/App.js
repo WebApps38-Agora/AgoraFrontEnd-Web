@@ -13,7 +13,6 @@ import './style/App.css';
 
 class App extends Component {
   render() {
-    let props = this.state;
     return (<main>
       <AppHeader />
       <div className="app-wrapper">
