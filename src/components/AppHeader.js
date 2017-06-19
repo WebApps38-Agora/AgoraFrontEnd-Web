@@ -21,7 +21,7 @@ class AppHeader extends Component {
   }
 
   handleLogoClick() {
-    this.props.dispatch(filterByTag(0))
+    this.props.dispatch(filterByTag(false))
   }
 
   handleNotificationClick(e, id, href) {
@@ -37,7 +37,7 @@ class AppHeader extends Component {
 
   handlePopClick() {
     this.props.dispatch(hideTags())
-    this.props.dispatch(fetchTopics(Globals.BACKEND_URL + "/topics/"))
+    this.props.dispatch(fetchTopics(Globals.BACKEND_URL + "/topics/", true))
     this.props.dispatch(filterByTag(false))
   }
 

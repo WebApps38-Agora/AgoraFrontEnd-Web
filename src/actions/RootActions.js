@@ -19,11 +19,12 @@ export function requestTopics() {
 }
 
 export const RECEIVE_TOPICS = 'RECEIVE_TOPICS'
-export function receiveTopics(json) {
+export function receiveTopics(json, replace) {
   return {
     type: RECEIVE_TOPICS,
     topics: json.results,
-    nextPage: json.next
+    nextPage: json.next,
+    replace: replace,
   }
 }
 
@@ -35,12 +36,12 @@ export function handleTopicsError(error) {
   }
 }
 
-export function fetchTopics(url) {
+export function fetchTopics(url, replace) {
   return (dispatch, getState) => {
     return ActionsHelper.sendURLGet(url, (dispatch) => {
       dispatch(requestTopics())
     }, (dispatch, getState, response) => {
-      dispatch(receiveTopics(response))
+      dispatch(receiveTopics(response, replace))
     }, (dispatch, getState, error) => {
       dispatch(handleTopicsError(error))
     })(dispatch, getState)
@@ -51,7 +52,7 @@ export function fetchNewestTopics() {
   return ActionsHelper.sendGet('/topics/latest/', (dispatch) => {
     dispatch(requestTopics())
   }, (dispatch, getState, response) => {
-    dispatch(receiveTopics(response))
+    dispatch(receiveTopics(response, true))
   }, (dispatch, getState, error) => {
     dispatch(handleTopicsError(error))
   })
@@ -60,14 +61,14 @@ export function fetchNewestTopics() {
 export function fetchTopicsIfNeeded() {
   return (dispatch, getState) => {
     if (!getState().topics.loaded) {
-      dispatch(fetchTopics(Globals.BACKEND_URL + '/topics'))
+      dispatch(fetchTopics(Globals.BACKEND_URL + '/topics', false))
     }
   }
 }
 
 export function fetchMoreTopics() {
   return (dispatch, getState) => {
-    dispatch(fetchTopics(getState().topics.nextPage))
+    dispatch(fetchTopics(getState().topics.nextPage, false))
   }
 }
 
