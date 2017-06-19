@@ -48,6 +48,13 @@ export function toggleTags() {
   }
 }
 
+export const HIDE_TAGS = 'HIDE_TAGS'
+export function hideTags() {
+  return {
+    type: HIDE_TAGS,
+  }
+}
+
 
 export function fetchTags() {
   return ActionsHelper.sendGet('/tags/', (dispatch) => {

@@ -208,51 +208,63 @@ a, a:hover, a:visited, a:focus {
 }
 
 .tag-col {
-  display: flex;
+  /*display: flex;*/
+  width: auto;
 }
 
-.tag-col > .button {
+#tag-drawer-inner > .button {
   text-align: left;
-  height: 4rem;
-  margin: 2.5%;
+  height: 3rem;
+  margin: 0.25rem;
   width: 100%;
 }
 
-.primary, .ui.menu .item > .label, .tag-col > .button, .tag-col > .button:hover,
-    .tag-col > .button:visited, .tag-col > .button:active {
+.primary, .ui.menu .item > .label, #tag-drawer-inner > .button, #tag-drawer-inner > .button:hover,
+    #tag-drawer-inner > .button:visited, #tag-drawer-inner > .button:active {
   background-color: var(--app-snd-color) !important;
   color: white !important;
 }
 
-.tag-col > .button {
+#tag-drawer-inner > .button {
   transition: 0.3s easy-in-out;
+  width: auto;
 }
 
-.tag-col > .button:hover {
-  border-bottom: 5px solid white;
+#tag-drawer-inner > .button:hover {
+  border-left: 5px solid white;
+  padding-right: -5px;
 }
 
-.tag-col > .button.active {
+#tag-drawer-inner > .button.active {
   background-color: var(--app-snd-color) !important;
-  border: 5px solid white;
+  /*border: 5px solid white;*/
 }
 
 #tag-drawer {
-  max-width: 930px;
-  min-width: 300px;
-  margin: 2rem auto;
-  margin-top: 8rem;
+  width: 100vw;
+  top: 0;
+  border-radius: 0px;
+  display: inline-flex;
+  margin-top: -2.5rem;
   background-color: var(--app-main-color);
-  max-height: 362px;
-
+  min-height: 100px;
+  max-height: 30vh;
+  display: inline;
   -webkit-transition: 3s easy-in-out;
   transition: 3s easy-in-out;
 }
 
+#tag-drawer-inner {
+  max-width: 1000px;
+  min-width: 300px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
 @media only screen and (max-width: 992px) {
   #tag-drawer {
-    margin: 35px;
-    margin-top: 8rem;
+    /*margin: 35px;
+    margin-top: 8rem;*/
     overflow-y: scroll;
   }
 }

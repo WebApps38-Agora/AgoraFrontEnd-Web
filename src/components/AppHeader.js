@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Menu, Image, Label, Dropdown } from 'semantic-ui-react'
 import { markNotificationSeen } from "../actions/ProfileActions"
-import { filterByTag, toggleTags } from '../actions/TagActions'
+import { filterByTag, toggleTags, hideTags } from '../actions/TagActions'
 import { fetchTopics, fetchNewestTopics } from '../actions/RootActions'
 import Globals from '../globals'
 
@@ -21,7 +21,7 @@ class AppHeader extends Component {
   }
 
   handleLogoClick() {
-    this.props.dispatch(filterByTag(0))
+    this.props.dispatch(filterByTag(false))
   }
 
   handleNotificationClick(e, id, href) {
@@ -30,11 +30,13 @@ class AppHeader extends Component {
   }
 
   handleNewClick() {
+    this.props.dispatch(hideTags())
     this.props.dispatch(fetchNewestTopics())
     this.props.dispatch(filterByTag(false))
   }
 
   handlePopClick() {
+    this.props.dispatch(hideTags())
     this.props.dispatch(fetchTopics(Globals.BACKEND_URL + "/topics/", true))
     this.props.dispatch(filterByTag(false))
   }
@@ -121,7 +123,7 @@ class AppHeader extends Component {
           <Menu.Item name="new" active={this.props.currentFilter === "new"} onClick={this.handleNewClick} />
           <Menu.Item name="tags" onClick={this.handleTagClick}>
             Tags
-            <Label>51</Label>
+            <Label>{Object.keys(this.props.tags.items).length}</Label>
           </Menu.Item>
         </Menu.Menu>
         <Menu.Item position="right" style={{padding: 0}}>
