@@ -63,7 +63,7 @@ class StatsSection extends Component {
               </Statistic.Group>
             </Col>
           </Grid>
-          <div style={{width: '100%', height: '70%'}}>
+          <div style={{width: '100%', height: '70%', border: '5px solid #FF706E'}}>
             <Map />
           </div>
     </div>)
