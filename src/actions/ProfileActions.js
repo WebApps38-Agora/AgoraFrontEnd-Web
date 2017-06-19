@@ -60,6 +60,22 @@ export function handleProfileError(error) {
   }
 }
 
+export const REQUEST_NOTIFICATIONS = 'REQUEST_NOTIFICATIONS'
+export function requestNotifications() {
+  return {
+    type: REQUEST_NOTIFICATIONS
+  }
+}
+
+export const RECEIVE_NOTIFICATIONS = 'RECEIVE_NOTIFICATIONS'
+export function receiveNotifications(json) {
+  return {
+    type: RECEIVE_NOTIFICATIONS,
+    notifications: json.results
+  }
+}
+
+
 export function fetchUserProfile(profile_id) {
   return ActionsHelper.sendGet(`/profiles/${profile_id}/`, (dispatch) => {
     dispatch(requestProfile())
@@ -70,11 +86,22 @@ export function fetchUserProfile(profile_id) {
   })
 }
 
+export function fetchNotifications() {
+  return ActionsHelper.sendGet('/notifications/', (dispatch) => {
+    dispatch(requestNotifications())
+  }, (dispatch, getState, response) => {
+    dispatch(receiveNotifications(response))
+  }, (dispatch, getState, error) => {
+    dispatch(handleProfileError(error))
+  })
+}
+
 export function fetchCurrentProfile() {
   return ActionsHelper.sendGet('/profiles/', (dispatch) => {
     dispatch(requestProfile())
   }, (dispatch, getState, response) => {
     dispatch(receiveCurrentProfile(response))
+    dispatch(fetchNotifications())
   }, (dispatch, getState, error) => {
     dispatch(handleProfileError(error))
   })
