@@ -237,7 +237,7 @@ a, a:hover, a:visited, a:focus {
 
 #tag-drawer-inner > .button.active {
   background-color: var(--app-snd-color) !important;
-  /*border: 5px solid white;*/
+  border-left: 5px solid white;
 }
 
 #tag-drawer {

@@ -42,7 +42,9 @@ class AppHeader extends Component {
   }
 
   handleTagClick() {
-    this.props.dispatch(toggleTags())
+    if (!this.props.tags.showing) {
+      this.props.dispatch(toggleTags())
+    }
   }
 
   render() {

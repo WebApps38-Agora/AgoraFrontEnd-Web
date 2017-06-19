@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { fetchTopicsIfNeeded, fetchMoreTopics, fetchTopics } from '../actions/RootActions'
 import { fetchTags, filterByTag, fetchTopicsForTag, hideTags } from '../actions/TagActions'
@@ -83,7 +84,7 @@ class TopicIndex extends Component {
     Object.keys(this.props.tags.items).forEach((id) => {
       const tag = this.props.tags.items[id]
       result.push(
-      <Button key={id} active={this.props.tags.currentFilter === id}
+      <Button key={id} active={this.props.tags.currentFilter == id}
               onClick={(e) => this.handleTagClick(e, tag)}>
         {tag.name}
       </Button>)
