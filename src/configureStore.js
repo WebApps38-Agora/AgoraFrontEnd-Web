@@ -21,7 +21,7 @@ const preloadedState = {
     isFetching: false,
     currentFilter: false,
     showing: false,
-    items: []
+    items: {}
   },
   notifications: {
     items: {}

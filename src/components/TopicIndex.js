@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { fetchTopicsIfNeeded, fetchMoreTopics } from '../actions/RootActions'
+import { fetchTopicsIfNeeded, fetchMoreTopics, fetchTopics } from '../actions/RootActions'
 import { fetchTags, filterByTag, fetchTopicsForTag } from '../actions/TagActions'
 import { Visibility, Button, Segment, List } from 'semantic-ui-react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import { makeTile } from './MakeTile'
 import Missing from './Missing'
+import Globals from '../globals'
 
 class TopicIndex extends Component {
 
@@ -33,11 +34,11 @@ class TopicIndex extends Component {
   }
 
   handleTagClick(e, tag) {
-    this.setState({curTagName: tag.name})
     if (this.props.tags.currentFilter !== tag.id) {
       this.props.dispatch(fetchTopicsForTag(tag.id))
       this.props.dispatch(filterByTag(tag.id))
     } else {
+      this.props.dispatch(fetchTopics(Globals.BACKEND_URL + "/topics/"))
       this.props.dispatch(filterByTag(false))
     }
   }
@@ -78,17 +79,15 @@ class TopicIndex extends Component {
 
   makeTagGrid() {
     let result = []
-    // result.push(<h2>{this.state.tagText}</h2>)
-    return this.props.tags.items.map((tag, index) =>
-      // <Col key={index} className="tag-col" xs={12} sm={4} md={3}>
-    // <div className="tag-col" key={index}>
-      <Button key={index} active={this.props.tags.currentFilter === tag.id}
+    Object.keys(this.props.tags.items).forEach((id) => {
+      const tag = this.props.tags.items[id]
+      result.push(
+      <Button key={id} active={this.props.tags.currentFilter === id}
               onClick={(e) => this.handleTagClick(e, tag)}>
         {tag.name}
-      </Button>
-    // </div>
-      // </Col>
-    )
+      </Button>)
+    })
+    return result
   }
 
   render() {
@@ -99,9 +98,9 @@ class TopicIndex extends Component {
       let topics = this.filterTopics()
       let rows = this.makeTileGrid(topics)
       grid = <Grid id="topic-index">
-        {(this.state.curTagName !== "") &&
+        {this.props.tags.currentFilter &&
             <Row style={{padding: "2rem", fontSize: "6rem"}}>
-              <Col xs={12}> <h1>{this.state.curTagName}</h1></Col>
+              <Col xs={12}> <h1>{this.props.tags.items[this.props.tags.currentFilter].name}</h1></Col>
             </Row>}
         {rows}</Grid>;
       footerText = "No topics left!"
@@ -109,9 +108,6 @@ class TopicIndex extends Component {
 
     let tags = (this.props.tags.isFetching) ? null : this.makeTagGrid()
     let tags_style = (this.props.tags.showing) ? {display: "inline-block"} : {display: "none"}
-
-    console.log("TAAAAAG");
-    console.log(this.state.curTagName);
 
     return (<div className="app-shell">
             <Segment id="tag-drawer" style={tags_style} raised>

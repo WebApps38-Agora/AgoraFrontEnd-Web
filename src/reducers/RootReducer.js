@@ -18,7 +18,7 @@ import {
   RECEIVE_MARK_NOTIFICATION_SEEN, RECEIVE_NOTIFICATIONS, RECEIVE_CURRENT_PROFILE, RECEIVE_PROFILE, ADD_PROFILE_RESPONSE, ADD_PROFILE_WARNING, REMOVE_PROFILE_WARNING, HANDLE_PROFILE_ERROR
 } from '../actions/ProfileActions'
 import {
-  REQUEST_TAGS, RECEIVE_TAGS, FILTER_BY_TAG, RECEIVE_TOPICS_FOR_TAG, TOGGLE_TAGS
+  REQUEST_TAGS, RECEIVE_TAGS, FILTER_BY_TAG, RECEIVE_TOPICS_FOR_TAG, TOGGLE_TAGS, HIDE_TAGS
 } from '../actions/TagActions'
 
 import Globals from '../globals'
@@ -52,10 +52,16 @@ export function tags(state = {}, action) {
     }
 
     case RECEIVE_TAGS: {
+      let tags = {}
+      action.tags.forEach((tag, index) => {
+        if (index < MAX_TAG_NUM) {
+          tags[tag.id] = tag
+        }
+      })
       return update(state, {
         isFetching: {$set: false},
         items: {
-          $merge: action.tags.slice(0, MAX_TAG_NUM)
+            $merge: tags
         }
       })
     }
@@ -69,6 +75,12 @@ export function tags(state = {}, action) {
     case TOGGLE_TAGS: {
       return update(state, {
         showing: {$set: !state.showing}
+      })
+    }
+
+    case HIDE_TAGS: {
+      return update(state, {
+        showing: {$set: false}
       })
     }
 
@@ -137,15 +149,10 @@ export function topics(state = {}, action) {
     case RECEIVE_TOPICS_FOR_TAG:
     case RECEIVE_TOPICS:
       let topics = state.items
-      // set default
-      if (!state.items.result) {
-        topics = { result: [] }
-      }
+      topics = { result: [] }
+
       action.topics.forEach((topic, index) => {
-        // if the topic already exists, don't change its ordering
-        if (!topics[topic.id]) {
-          topics.result.push(topic.id)
-        }
+        topics.result.push(topic.id)
         topics[topic.id] = createTopic(topic, false)
       })
 
