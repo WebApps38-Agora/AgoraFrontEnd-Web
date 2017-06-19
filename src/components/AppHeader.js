@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import { Menu, Image, Label, Dropdown } from 'semantic-ui-react'
 import { markNotificationSeen } from "../actions/ProfileActions"
 import { filterByTag, toggleTags } from '../actions/TagActions'
+import { fetchTopics, fetchNewestTopics } from '../actions/RootActions'
+import Globals from '../globals'
 
 import 'semantic-ui-css/semantic.min.css';
 import '../style/App.css'
@@ -28,11 +30,13 @@ class AppHeader extends Component {
   }
 
   handleNewClick() {
-    this.props.dispatch(filterByTag("new"))
+    this.props.dispatch(fetchNewestTopics())
+    this.props.dispatch(filterByTag(false))
   }
 
   handlePopClick() {
-    this.props.dispatch(filterByTag("popular"))
+    this.props.dispatch(fetchTopics(Globals.BACKEND_URL + "/topics/"))
+    this.props.dispatch(filterByTag(false))
   }
 
   handleTagClick() {

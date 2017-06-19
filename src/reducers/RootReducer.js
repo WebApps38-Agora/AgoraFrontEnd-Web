@@ -137,15 +137,10 @@ export function topics(state = {}, action) {
     case RECEIVE_TOPICS_FOR_TAG:
     case RECEIVE_TOPICS:
       let topics = state.items
-      // set default
-      if (!state.items.result) {
-        topics = { result: [] }
-      }
+      topics = { result: [] }
+
       action.topics.forEach((topic, index) => {
-        // if the topic already exists, don't change its ordering
-        if (!topics[topic.id]) {
-          topics.result.push(topic.id)
-        }
+        topics.result.push(topic.id)
         topics[topic.id] = createTopic(topic, false)
       })
 

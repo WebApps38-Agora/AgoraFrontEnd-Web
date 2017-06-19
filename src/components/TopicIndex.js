@@ -36,9 +36,10 @@ class TopicIndex extends Component {
     if (this.props.tags.currentFilter !== tag) {
       this.props.dispatch(fetchTopicsForTag(tag))
       this.props.dispatch(filterByTag(tag))
-    } else {
-      this.props.dispatch(filterByTag(false))
+      return
     }
+
+    this.props.dispatch(filterByTag(false))
   }
 
   filterTopics() {

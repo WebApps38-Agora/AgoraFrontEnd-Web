@@ -47,6 +47,16 @@ export function fetchTopics(url) {
   }
 }
 
+export function fetchNewestTopics() {
+  return ActionsHelper.sendGet('/topics/latest/', (dispatch) => {
+    dispatch(requestTopics())
+  }, (dispatch, getState, response) => {
+    dispatch(receiveTopics(response))
+  }, (dispatch, getState, error) => {
+    dispatch(handleTopicsError(error))
+  })
+}
+
 export function fetchTopicsIfNeeded() {
   return (dispatch, getState) => {
     if (!getState().topics.loaded) {
