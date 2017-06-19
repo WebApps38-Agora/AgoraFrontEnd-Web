@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import { Menu, Image, Dropdown } from 'semantic-ui-react'
 import Badge from 'material-ui/Badge'
 import { filterByTag } from '../actions/TagActions'
+import { markNotificationSeen } from "../actions/ProfileActions"
+
 import 'semantic-ui-css/semantic.min.css';
 
 class AppHeader extends Component {
@@ -15,6 +17,11 @@ class AppHeader extends Component {
 
   handleLogoClick() {
     this.props.dispatch(filterByTag(0))
+  }
+
+  handleNotificationClick(e, id, href) {
+    this.props.dispatch(markNotificationSeen(id))
+    window.location.replace(href)
   }
 
   render() {
@@ -39,8 +46,14 @@ class AppHeader extends Component {
     }
 
     let notifications = []
+    let unseen_notifications = 0
     Object.keys(this.props.notifications).forEach((id) => {
       const notification = this.props.notifications[id]
+
+      if (!notification.seen) {
+        unseen_notifications++
+      }
+
       let icon = ""
       let href = ""
 
@@ -76,7 +89,7 @@ class AppHeader extends Component {
                             text={notification.content}
                             icon={icon}
                             as="a"
-                            href={href}/>)
+                            onClick={(e) => this.handleNotificationClick(e, notification.id, href)}/>)
     })
 
     return (
@@ -84,17 +97,15 @@ class AppHeader extends Component {
         <Menu.Item as={Link} to='/' onClick={this.handleLogoClick}>
           <img src={require("../images/agora_logo.png")} alt="logo" />
         </Menu.Item>
-          <Menu.Item position="right">
-            <Badge badgeContent={notifications.length} primary={true}>
-              <Dropdown item icon="alarm outline">
-                <Dropdown.Menu style={{right: 0, left: "auto"}}>
-                  <Dropdown.Header>Notifications</Dropdown.Header>
-                  {notifications}
-                </Dropdown.Menu>
-              </Dropdown>
-            </Badge>
-          </Menu.Item>
-        <Menu.Item>
+        <Menu.Item position="right" style={{padding: 0}}>
+          <Dropdown item icon="alarm outline" text={unseen_notifications + "   "}>
+            <Dropdown.Menu style={{right: 0, left: "auto"}}>
+              <Dropdown.Header>Notifications</Dropdown.Header>
+              {notifications}
+            </Dropdown.Menu>
+          </Dropdown>
+        </Menu.Item>
+        <Menu.Item className="menu-item" style={{padding: 0}}>
           {profile_logo}
         </Menu.Item>
       </Menu>

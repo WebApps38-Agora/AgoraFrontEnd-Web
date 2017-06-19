@@ -75,6 +75,20 @@ export function receiveNotifications(json) {
   }
 }
 
+export const REQUEST_MARK_NOTIFICATION_SEEN = 'REQUEST_MARK_NOTIFICATION_SEEN'
+export function requestMarkNotificationSeen() {
+  return {
+    type: REQUEST_MARK_NOTIFICATION_SEEN
+  }
+}
+
+export const RECEIVE_MARK_NOTIFICATION_SEEN = 'RECEIVE_MARK_NOTIFICATION_SEEN'
+export function receiveMarkNotificationSeen(json) {
+  return {
+    type: RECEIVE_MARK_NOTIFICATION_SEEN,
+  }
+}
+
 
 export function fetchUserProfile(profile_id) {
   return ActionsHelper.sendGet(`/profiles/${profile_id}/`, (dispatch) => {
@@ -91,6 +105,16 @@ export function fetchNotifications() {
     dispatch(requestNotifications())
   }, (dispatch, getState, response) => {
     dispatch(receiveNotifications(response))
+  }, (dispatch, getState, error) => {
+    dispatch(handleProfileError(error))
+  })
+}
+
+export function markNotificationSeen(id) {
+  return ActionsHelper.sendGet(`/notifications/${id}/seen/`, (dispatch) => {
+    dispatch(requestMarkNotificationSeen())
+  }, (dispatch, getState, response) => {
+    dispatch(receiveMarkNotificationSeen(response))
   }, (dispatch, getState, error) => {
     dispatch(handleProfileError(error))
   })
