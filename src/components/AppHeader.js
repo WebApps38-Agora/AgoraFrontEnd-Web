@@ -65,7 +65,7 @@ class AppHeader extends Component {
             <Menu.Item name="new" active={this.props.currentFilter === "new"} onClick={this.handleNewClick} />
             <Menu.Item name="tags" onClick={this.handleTagClick}>
               Tags
-              <Label>51</Label>
+              <Label>{this.props.tags.items.length}</Label>
             </Menu.Item>
           </Menu.Menu>
           <Menu.Menu position="right">

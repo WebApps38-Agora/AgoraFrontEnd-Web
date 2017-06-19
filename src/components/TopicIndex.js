@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { fetchTopicsIfNeeded, fetchMoreTopics } from '../actions/RootActions'
-import { fetchTags, filterByTag, fetchTopicsForTag, toggleTags } from '../actions/TagActions'
-import { Visibility, Button, Segment } from 'semantic-ui-react'
+import { fetchTags, filterByTag, fetchTopicsForTag } from '../actions/TagActions'
+import { Visibility, Button, Segment, List } from 'semantic-ui-react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import { makeTile } from './MakeTile'
 import Missing from './Missing'
@@ -12,7 +12,8 @@ class TopicIndex extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tag: props.match.params.tag || false
+      tag: props.match.params.tag || false,
+      curTagName: ""
     }
     this.handleScrollBottom = this.handleScrollBottom.bind(this);
   }
@@ -21,9 +22,8 @@ class TopicIndex extends Component {
     this.props.dispatch(fetchTopicsIfNeeded())
     this.props.dispatch(fetchTags())
     if (this.state.tag) {
-      this.props.dispatch(toggleTags())
-      this.props.dispatch(fetchTopicsForTag(Number(this.state.tag)))
-      this.props.dispatch(filterByTag(Number(this.state.tag)))
+      this.props.dispatch(fetchTopicsForTag(this.state.tag))
+      this.props.dispatch(filterByTag(this.state.tag))
     }
   }
 
@@ -33,9 +33,10 @@ class TopicIndex extends Component {
   }
 
   handleTagClick(e, tag) {
-    if (this.props.tags.currentFilter !== tag) {
-      this.props.dispatch(fetchTopicsForTag(tag))
-      this.props.dispatch(filterByTag(tag))
+    this.setState({curTagName: tag.name})
+    if (this.props.tags.currentFilter !== tag.id) {
+      this.props.dispatch(fetchTopicsForTag(tag.id))
+      this.props.dispatch(filterByTag(tag.id))
     } else {
       this.props.dispatch(filterByTag(false))
     }
@@ -76,37 +77,53 @@ class TopicIndex extends Component {
   }
 
   makeTagGrid() {
+    let result = []
+    // result.push(<h2>{this.state.tagText}</h2>)
     return this.props.tags.items.map((tag, index) =>
-      <Col key={index} className="tag-col" xs={12} sm={4} md={3}>
-        <Button active={this.props.tags.currentFilter === tag.id}
-                fluid onClick={(e) => this.handleTagClick(e, tag.id)}>
-          {tag.name}
-        </Button>
-      </Col>
+      // <Col key={index} className="tag-col" xs={12} sm={4} md={3}>
+    // <div className="tag-col" key={index}>
+      <Button key={index} active={this.props.tags.currentFilter === tag.id}
+              onClick={(e) => this.handleTagClick(e, tag)}>
+        {tag.name}
+      </Button>
+    // </div>
+      // </Col>
     )
   }
 
   render() {
     let grid = <span display="none"></span>;
-    let footerText = "No topics left!"
+    let footerText = "Loading more topics...";
 
     if (this.props.loaded) {
       let topics = this.filterTopics()
       let rows = this.makeTileGrid(topics)
-      grid = <Grid id="topic-index">{rows}</Grid>;
-      footerText = "Loading more topics...";
+      grid = <Grid id="topic-index">
+        {(this.state.curTagName !== "") &&
+            <Row style={{padding: "2rem", fontSize: "6rem"}}>
+              <Col xs={12}> <h1>{this.state.curTagName}</h1></Col>
+            </Row>}
+        {rows}</Grid>;
+      footerText = "No topics left!"
     }
 
     let tags = (this.props.tags.isFetching) ? null : this.makeTagGrid()
-    let tags_style = (this.props.tags.showing) ? {display: "block"} : {display: "none"}
+    let tags_style = (this.props.tags.showing) ? {display: "inline-block"} : {display: "none"}
+
+    console.log("TAAAAAG");
+    console.log(this.state.curTagName);
 
     return (<div className="app-shell">
             <Segment id="tag-drawer" style={tags_style} raised>
-              <Grid>
-                 <Row>
+              {/* <Grid>
+                 <Row> */}
+                {/* <List horizontal> */}
+                <div id="tag-drawer-inner">
                   {tags}
-                </Row>
-              </Grid>
+                </div>
+                {/* </List> */}
+                {/* </Row>
+              </Grid> */}
             </Segment>
             {grid}
             <Visibility className="topic-index-bottom" onOnScreen={this.handleScrollBottom} once={false}>
