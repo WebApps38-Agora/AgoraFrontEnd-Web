@@ -53,11 +53,14 @@ p {
   #topic-headlines {
     margin-bottom: 1rem;
   }
+  #topic-index {
+    margin-top: 8rem;
+  }
 }
 
 .app-wrapper {
-  height: calc(100vh - 6rem);
-  max-height: calc(100vh - 6rem);
+  height: calc(100vh - 8rem);
+  max-height: calc(100vh - 8rem);
   margin: 6rem auto;
   margin-bottom: 0;
   /*padding: 0 1rem;*/
@@ -84,7 +87,8 @@ p {
 }
 
 .app-shell {
-  margin-top: 6rem;
+  margin: 0 auto;
+  margin-top: 8rem;
 }
 
 .container {
@@ -194,10 +198,61 @@ a, a:hover, a:visited, a:focus {
   border-bottom: 1px solid var(--app-light-color);
 }
 
-.primary {
-  background-color: var(--app-snd-color) !important;
+.sidebar > .container {
+  background-color: var(--app-main-color);
+  border: none;
 }
 
 .card {
   background: white;
+}
+
+.tag-col {
+  display: flex;
+}
+
+.tag-col > .button {
+  text-align: left;
+  height: 4rem;
+  margin: 2.5%;
+  width: 100%;
+}
+
+.primary, .ui.menu .item > .label, .tag-col > .button, .tag-col > .button:hover,
+    .tag-col > .button:visited, .tag-col > .button:active {
+  background-color: var(--app-snd-color) !important;
+  color: white !important;
+}
+
+.tag-col > .button {
+  transition: 0.3s easy-in-out;
+}
+
+.tag-col > .button:hover {
+  border-bottom: 5px solid white;
+}
+
+.tag-col > .button.active {
+  background-color: var(--app-snd-color) !important;
+  border: 5px solid white;
+}
+
+#tag-drawer {
+  max-width: 930px;
+  min-width: 300px;
+  margin: 2rem auto;
+  margin-top: 8rem;
+  background-color: var(--app-main-color);
+  max-height: 362px;
+
+  -webkit-transition: 3s easy-in-out;
+  transition: 3s easy-in-out;
+}
+
+@media only screen and (max-width: 992px) {
+  #tag-drawer {
+    margin: 35px;
+    margin-top: 8rem;
+    overflow-y: scroll;
+  }
 }

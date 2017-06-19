@@ -18,7 +18,7 @@ import {
   RECEIVE_MARK_NOTIFICATION_SEEN, RECEIVE_NOTIFICATIONS, RECEIVE_CURRENT_PROFILE, RECEIVE_PROFILE, ADD_PROFILE_RESPONSE, ADD_PROFILE_WARNING, REMOVE_PROFILE_WARNING, HANDLE_PROFILE_ERROR
 } from '../actions/ProfileActions'
 import {
-  REQUEST_TAGS, RECEIVE_TAGS, FILTER_BY_TAG, RECEIVE_TOPICS_FOR_TAG
+  REQUEST_TAGS, RECEIVE_TAGS, FILTER_BY_TAG, RECEIVE_TOPICS_FOR_TAG, TOGGLE_TAGS
 } from '../actions/TagActions'
 
 import Globals from '../globals'
@@ -42,6 +42,8 @@ export function loginKey(state = false, action) {
 }
 
 export function tags(state = {}, action) {
+  let MAX_TAG_NUM = 12
+
   switch (action.type) {
     case REQUEST_TAGS: {
       return update(state, {
@@ -53,7 +55,7 @@ export function tags(state = {}, action) {
       return update(state, {
         isFetching: {$set: false},
         items: {
-          $merge: action.tags
+          $merge: action.tags.slice(0, MAX_TAG_NUM)
         }
       })
     }
@@ -61,6 +63,12 @@ export function tags(state = {}, action) {
     case FILTER_BY_TAG: {
       return update(state, {
         currentFilter: {$set: action.tag}
+      })
+    }
+
+    case TOGGLE_TAGS: {
+      return update(state, {
+        showing: {$set: !state.showing}
       })
     }
 

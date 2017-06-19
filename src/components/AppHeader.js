@@ -1,18 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Menu, Image, Dropdown } from 'semantic-ui-react'
-import Badge from 'material-ui/Badge'
-import { filterByTag } from '../actions/TagActions'
+import { Menu, Image, Label, Dropdown } from 'semantic-ui-react'
 import { markNotificationSeen } from "../actions/ProfileActions"
+import { filterByTag, toggleTags } from '../actions/TagActions'
 
 import 'semantic-ui-css/semantic.min.css';
+import '../style/App.css'
 
 class AppHeader extends Component {
 
   constructor(props) {
     super(props)
     this.handleLogoClick = this.handleLogoClick.bind(this)
+    this.handleTagClick = this.handleTagClick.bind(this)
+    this.handleNewClick = this.handleNewClick.bind(this)
+    this.handlePopClick = this.handlePopClick.bind(this)
   }
 
   handleLogoClick() {
@@ -22,6 +25,18 @@ class AppHeader extends Component {
   handleNotificationClick(e, id, href) {
     this.props.dispatch(markNotificationSeen(id))
     window.location.replace(href)
+  }
+
+  handleNewClick() {
+    this.props.dispatch(filterByTag("new"))
+  }
+
+  handlePopClick() {
+    this.props.dispatch(filterByTag("popular"))
+  }
+
+  handleTagClick() {
+    this.props.dispatch(toggleTags())
   }
 
   render() {
@@ -97,6 +112,14 @@ class AppHeader extends Component {
         <Menu.Item as={Link} to='/' onClick={this.handleLogoClick}>
           <img src={require("../images/agora_logo.png")} alt="logo" />
         </Menu.Item>
+        <Menu.Menu>
+          <Menu.Item name="popular" active={this.props.currentFilter === "popular"} onClick={this.handlePopClick} />
+          <Menu.Item name="new" active={this.props.currentFilter === "new"} onClick={this.handleNewClick} />
+          <Menu.Item name="tags" onClick={this.handleTagClick}>
+            Tags
+            <Label>51</Label>
+          </Menu.Item>
+        </Menu.Menu>
         <Menu.Item position="right" style={{padding: 0}}>
           <Dropdown item icon="alarm outline" text={unseen_notifications + "   "}>
             <Dropdown.Menu style={{right: 0, left: "auto"}}>
@@ -116,9 +139,11 @@ class AppHeader extends Component {
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.loginKey,
+    tags: state.tags || [],
     myProfile: state.profiles[state.myProfile],
     isTagged: state.tags.filterByTag || false,
-    notifications: state.notifications.items
+    notifications: state.notifications.items,
+    currentFilter: state.currentFilter
   }
 }
 
